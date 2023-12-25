@@ -8,7 +8,7 @@
 
 R can be obtained and installed from [https://cran.rstudio.com](https://cran.rstudio.com).
 
-Python can be obtained and installed from [https://www.python.org/downloads/release/python-3114/](https://www.python.org/downloads/release/python-3114/).
+Python can be obtained and installed from [https://www.python.org/downloads/release/python-3114/](https://www.python.org).
 
 Please install R version 4.3.1 and python version 3.11.4 or higher.
 
