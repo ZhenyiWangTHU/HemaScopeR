@@ -10,7 +10,7 @@ R can be obtained and installed from [https://cran.rstudio.com](https://cran.rst
 
 Python can be obtained and installed from [https://www.python.org/downloads/release/python-3114/](https://www.python.org/downloads/release/python-3114/).
 
-Please install R upper 4.3.1 and python upper 3.11.4.
+Please install R version 4.3.1 and python version 3.11.4 or higher.
 
 Following installation of R, Rstudio can be obtained and installed from [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/). The free version of RStudio Desktop is sufficient.
 
