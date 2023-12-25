@@ -34,7 +34,7 @@ If something went wrong previously, you may have try installing some of HemaScop
 
 Because these packages must be installed before installing HemaScopeR (otherwise its installation will fail.)
 
-``` c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','URD','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')```
+``` c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')```
      
 ###### C. Install HemaScopeR
 
