@@ -1,7 +1,9 @@
 # HemaScopeR
 ![Fig. 1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/Figure1_latest.png)
 *Author: Zhenyi Wang*
-Any suggestions and remarks might be addressed to Zhenyi Wang: wangzy17@tsinghua.org.cn The author will reply and address the issue within 12 hours.
+Any suggestions and remarks might be addressed to Zhenyi Wang: wangzy17@tsinghua.org.cn 
+
+The author will reply and address the issue within 12 hours.
 
 **HemaScopeR** is a specialized bioinformatics toolkit designed for analyzing both single-cell and spatial transcriptome sequencing data from hematopoietic cells, including myeloid and lymphoid lineages.
 
