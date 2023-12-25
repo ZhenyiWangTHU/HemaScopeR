@@ -1,6 +1,6 @@
 # HemaScopeR
 ![Fig. 1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/Figure1_latest.png)
-*Author: Zhenyi Wang*
+*Authors: Zhenyi Wang and Yuxin Miao*
 
 Any suggestions and remarks might be addressed to Zhenyi Wang: wangzy17@tsinghua.org.cn, and the author will reply and address the issue within 12 hours.
 
