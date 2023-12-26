@@ -1,5 +1,5 @@
 # Install requirements: 'shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate',
-# 'SCENIC','feather','AUCell','GENIE3','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown'
+# 'SCENIC','feather','AUCell','GENIE3','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown'
 # Require R version >= 4.3.1
 
 if (as.numeric(R.version$major) <= 4 && as.numeric(R.version$minor) < 3) {
@@ -12,7 +12,7 @@ if (as.numeric(R.version$major) <= 4 && as.numeric(R.version$minor) < 3) {
 
   message("Installing required packages from Bioconductor.")
   if (!require("BiocManager", quietly = TRUE)){install.packages("BiocManager")}
-  BiocManager::install(c('monocle', 'slingshot', 'GSVA', 'limma', 'org.Mm.eg.db', 'org.Hs.eg.db', 'scran', 'AUCell', 'RcisTarget', 'GENIE3', 'clusterProfiler', 'biomaRt'))
+  BiocManager::install(c('monocle', 'slingshot', 'GSVA', 'limma', 'org.Mm.eg.db', 'org.Hs.eg.db', 'scran', 'AUCell', 'RcisTarget', 'GENIE3', 'clusterProfiler', 'hfang-bristol/OpenXGR', 'biomaRt'), dependencies=T)
 
   message("Installing required packages from GitHub.")
   if (requireNamespace("devtools", quietly = TRUE)) {
