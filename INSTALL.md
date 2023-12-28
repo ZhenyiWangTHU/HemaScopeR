@@ -50,4 +50,6 @@ Or download HemaScopeR_1.0.0.tar.gz and install in R
 
 ```install.packages('HemaScopeR_1.0.0.tar.gz')```
 
-### 3. Pull Docker image 'HemaScopeR' from Docker Hub
+### 3. Pull Docker image 'hemascoper' from Docker Hub
+
+*hemascoper* can be accessed via Docker Hub[https://hub.docker.com/r/l1hj/hemascoper] or Docker pull command 'docker pull l1hj/hemascoper'.
