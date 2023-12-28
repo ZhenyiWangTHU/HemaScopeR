@@ -68,7 +68,7 @@ install.packages('HemaScopeR_1.0.0.tar.gz')
 
 ### 3. Pull Docker image 'hemascoper' from Docker Hub
 
-*hemascoper* can be accessed via Docker Hub [https://hub.docker.com/r/l1hj/hemascoper](https://hub.docker.com/r/l1hj/hemascoper) or Docker pull command 
+*HemaScopeR* can be accessed via Docker Hub at [https://hub.docker.com/r/l1hj/hemascoper](https://hub.docker.com/r/l1hj/hemascoper) or through Docker pull command 
 
 ```shell
 docker pull l1hj/hemascoper
