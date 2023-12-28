@@ -19,3 +19,7 @@
 ### B. Follow the instructions on the GUI
 
 ## 4. Docker
+
+### A. Pull the 'hemascoper' docker image
+
+### B. Start a docker container
