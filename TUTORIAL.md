@@ -205,4 +205,20 @@ shinyApp(ui = ui,
 
 ### A. Pull the 'hemascoper' docker image
 
+```shell
+docker pull l1hj/hemascoper
+```
 ### B. Start a docker container
+
+```shell
+docker run -it --security-opt seccomp=unconfined hemascoper /bin/bash
+```
+
+Jupyter notebook is also available, which can be started as follow (e.g. set the port as 8888):
+```shell
+docker run -i -t -p 8888:8888 continuumio/miniconda3 /bin/bash -c "\
+    mkdir -p /opt/notebooks && \
+    jupyter notebook \
+    --notebook-dir=/opt/notebooks --ip='*' --port=8888 \
+    --no-browser --allow-root"
+```
