@@ -12,4 +12,5 @@ Any suggestions and remarks might be addressed to Zhenyi Wang via wangzy17@tsing
 # Installation  
 * To install, follow the instructions in [INSTALL.md](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/INSTALL.md)
 
-
+# Tutorial
+* For usage instructions, follow the commands in [TUTORIAL.md](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/TUTORIAL.md)
