@@ -156,15 +156,48 @@ scRNASeq_10x_pipeline(
 
 ### B. Run the scRNA-seq pipeline step by step
 
+Follow the documents of each function in HemaScopeR.
+
 ## 2. st-seq pipeline
 
 ### A. Run the complete st-seq pipeline automatically
 
+```R
+st_10x_visium_pipeline(
+    input.data.dir = 'Path/to/data',
+    output.dir = 'Path/to/save',
+    sampleName = 'Hema',
+    Step2_QC = T,
+    Step3_Clustering = T,
+    Step4_Find_DEGs = T,
+    Step5_SVFs = T,
+    Step6_Interaction = T,
+    Step7_CNV = T,
+    Step8_Deconvolution = T,
+    Step9_Cellcycle = T,
+    Step10_Nich = T,
+    
+    # settings
+    verbose = FALSE,
+    species = 'mouse', # human or mosue
+    genReport = TRUE
+)
+```
+
 ### B. Run the st-seq pipeline step by step
+
+Follow the documents of each function in HemaScopeR.
 
 ## 3. Graphical user interface
 
 ### A. Start the shiny GUI
+
+```R
+library(HemaScopeR)
+shinyApp(ui = ui, 
+         server = server, 
+         options = list(host = your_host, port = your_port))
+```
 
 ### B. Follow the instructions on the GUI
 
