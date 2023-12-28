@@ -94,6 +94,7 @@ Follow the documents of each function in HemaScopeR.
 ### A. Run the complete st-seq pipeline automatically
 
 ```R
+library(HemaScopeR)
 st_10x_visium_pipeline(
     input.data.dir = '/Path/to/data',
     output.dir = '/Path/to/save',
