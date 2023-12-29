@@ -1,0 +1,34 @@
+## Quality control
+
+### Data filtering
+
+The number of features, the number of counts and the percent of mitochondrial genes are shown below.
+
+<center>
+    <img src="..\\Step2.Quality_control\\datasets.before.batch.removal_nFeature_nCount_percentMt.png" width="70%"/>
+</center>
+
+The following arguments are used to filter data.
+
+| Arguments | value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
+| :---: | :---: | :---: |
+| `min.cells` | `r min.cells` | Include features detected in at least this many cells |
+| `min.feature` | `r min.feature` | Include cells where at least this many features are detected |
+| `percent.mt.limit` | `r percent.mt.limit` | Include cells where at most this percent of mitochondrial genes are detected |
+
+### Doublet identification
+
+The recognition of doublets is crucial for exploring meaningful biological conclusions using scRNA-seq data. Doublets in each sample are identified using the R package [doubletfinder](https://github.com/chris-mcginnis-ucsf/DoubletFinder), following the `Example code for 'real-world' applications` part. `r length(which(merged.data.combined@meta.data$doublet == 'Doublet'))` out of `r ncol(merged.data.combined)` cells are identified as doublets.
+
+<center>
+    <img src="..\\Step2.Quality_control\\sc_object  findDoublets.png" width="40%"/>
+</center>
+
+The relevant argument settings are as follows.
+
+| Arguments | Value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
+| :---: | :---: | :---: |
+| `doublet.percentage` | `r doublet.percentage` | Percentage of doublets |
+| `doublerFinderwraper.PCs` | `r doublerFinderwraper.PCs[1]`:`r doublerFinderwraper.PCs[length(doublerFinderwraper.PCs)]` | Number of statistically-significant principal components used in `paramSweep_v3` and `doubletFinder_v3` functions of `doubletfinder` |
+| `doublerFinderwraper.pN` | `r doublerFinderwraper.pN` | The argument `pN` of `doubletFinder_v3` function in `doubletfinder` |
+| `doublerFinderwraper.pK` | `r doublerFinderwraper.pK` | The argument `pK` of `doubletFinder_v3` function in `doubletfinder` |

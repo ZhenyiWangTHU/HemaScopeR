@@ -1,0 +1,7 @@
+## Cell cycle
+
+The cell cycle phases of each cell are classified using [cyclone](https://rdrr.io/bioc/scran/man/cyclone.html) function. The scores of G1 and G2M phases are defined as the average expression of cell cycle genes from [*Single-cell RNA-seq supports a developmental hierarchy in human oligodendroglioma*](https://www.nature.com/articles/nature20123). The proportion of cell cycle phases in each cluster is shown as follows.
+
+<center>
+    <img src="..\\Step8.Assign_cell_cycle\\CellCycle.png" width="40%"/>
+</center>

@@ -1,0 +1,7 @@
+## Transcription factor analysis
+
+Transcription factors (TFs) regulate the amount of messenger RNA (mRNA) produced by the gene. TF analysis is performed using [SCENIC](https://github.com/aertslab/SCENIC). The output files and reports of `SCENIC` are located in [this path](..\\Step13.TF_analysis\\int). The inferred expressions of TFs in each cluster are shown in the heatmap.
+
+<center>
+    <img src="..\\Step13.TF_analysis\\int\\TFs_Heatmap.png" width="70%"/>
+</center>
