@@ -99,7 +99,7 @@ st_10x_visium_pipeline <- function(
         cell2loc.sc.h5ad.dir = NULL,
         cell2loc.sc.max.epoch = 1000,
         cell2loc.st.max.epoch = 10000,
-        cell2loc.use.gpu = TRUE,
+        cell2loc.use.gpu = FALSE,
 
         # For Step9 Cellcycle
         Step9_Cellcycle = TRUE,
@@ -173,9 +173,9 @@ st_10x_visium_pipeline <- function(
         )
     }
 
-    #### Step4: Differential expressed genes ####
+    #### Step4: Differentially expressed genes ####
     if(Step4_Find_DEGs){
-        print('Finding differential expressed genes in each cluster...')
+        print('Finding differentially expressed genes in each cluster...')
         st.markers <- st_Find_DEGs(
             st_obj = st_obj,
             output.dir = file.path(output.dir, 'Step4_Find_DEGs'),

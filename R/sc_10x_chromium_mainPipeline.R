@@ -522,6 +522,11 @@ scRNASeq_10x_pipeline = function(
       if (!file.exists(paste0(output.dir, '/Step6.Find_DEGs/'))) {
         dir.create(paste0(output.dir, '/Step6.Find_DEGs/'))
       }   
+
+     if (!file.exists(paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'))) {
+        dir.create(paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'))
+      } 
+      
       sc_object.markers <- FindAllMarkers(sc_object, only.pos = TRUE, min.pct = min.pct, logfc.threshold = logfc.threshold)
       write.csv(sc_object.markers,
                 file = paste0(paste0(output.dir, '/Step6.Find_DEGs/'),'sc_object.markerGenes.csv'),
@@ -556,7 +561,10 @@ scRNASeq_10x_pipeline = function(
                   features = unique(sc_object.markers.top5$gene),
                   cols=c("lightgrey",'red'))+theme(axis.text.x =element_text(angle = 45, vjust = 1, hjust = 1)))
       dev.off()  
-      
+
+      OpenXGR_SAG(sc_object.markers = sc_object.markers,
+                  output.dir = paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'),
+                  subnet.size = 10)
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files

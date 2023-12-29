@@ -98,6 +98,51 @@ HemaScopeREnrichment = function(DEGs = NULL,
     }
 }
 
+# XGR enrichment-------------------------------------------------------------------------------------------------------------------
+OpenXGR_SAG = function(sc_object.markers = NULL,
+                       output.dir = NULL,
+                       subnet.size = 10){
+    for(i in unique(sc_object.markers$cluster)){
+        SAGdata <- sc_object.markers[which(sc_object.markers$cluster == i), ]
+        SAGdata <- SAGdata[,c('gene','p_val')]
+        #parameter 
+        placeholder <- "http://www.comptransmed.com/bigdata_openxgr"
+        network <- "STRING_high"
+        
+        #subnetwork analysis 
+        SAGig <- oDefineNet(network=network, STRING.only=c("experimental_score","database_score"), placeholder=placeholder)
+        SAGig2 <- oNetInduce(SAGig, nodes_query=V(SAGig)$name, largest.comp=T) %>% as.undirected()
+        SAGsubg <- oSubneterGenes(SAGdata, network.customised=SAGig2, subnet.size=subnet.size, placeholder=placeholder)
+        if(!is.null(SAGsubg)){
+            #crosstalk table 
+            SAGdf_subg <- SAGsubg %>% oIG2TB("nodes") %>% 
+                          transmute(Genes=name, Pvalue=as.numeric(significance),
+                          Description=description) %>% arrange(Pvalue)
+            write.csv(SAGdf_subg, paste0(output.dir,'/SAG-crosstalk','_cluster_', i ,'.csv'))
+            if(nrow(SAGdf_subg) > 2){
+                #network 
+                SAGsubg <- SAGsubg %>% oLayout(c("layout_with_kk","graphlayouts.layout_with_stress")[2])
+                SAGvec <- V(SAGsubg)$significance %>% as.numeric()
+                SAGvec[SAGvec==0] <- min(SAGvec[SAGvec!=0])
+                V(SAGsubg)$logP <- -log10(SAGvec)
+                SAGvec <- -log10(SAGvec)
+                if(max(SAGvec)<20){
+                  zlim <- c(0, ceiling(max(SAGvec)))
+                }else{
+                  zlim <- c(0, floor(max(SAGvec)/10)*10)
+                }
+                SAGnetwork <- oGGnetwork(g=SAGsubg, node.label="name", node.label.size=3, node.label.color="black",
+                                         node.label.alpha=0.95, node.label.padding=0.5, node.label.arrow=0, 
+                                         node.label.force=0.4, node.shape=19, node.xcoord="xcoord", node.ycoord="ycoord",
+                                         node.color="logP", node.color.title=expression(-log[10]("pvalue")), 
+                                         colormap="spectral.top", zlim=zlim, node.size.range=5, title="", edge.color="steelblue4",
+                                         edge.color.alpha=0.5, edge.size=0.3, edge.curve=0.05)
+                ggsave(paste0(output.dir, '/SAG-network','_cluster_', i ,'.pdf'),SAGnetwork,width = 6, height = 6)
+            }
+          }
+    }
+}
+                                                                                                
 # # cbind matrix
 # cbind_all = function(matrix_list) {
 #   result <- matrix_list[[1]]  
