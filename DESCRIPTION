@@ -1,0 +1,23 @@
+Package: HemaScopeR
+Type: Package
+Title: HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells
+Version: 1.0.0
+Author: Zhenyi Wang <wangzy17@tsinghua.org.cn> and Yuxin Miao <miaoyx21@mails.tsinghua.edu.cn>
+Maintainer: Zhenyi Wang <wangzy17@tsinghua.org.cn> and Yuxin Miao <miaoyx21@mails.tsinghua.edu.cn>
+Description: HemaScopeR, a specialized bioinformatics toolkit designed for comprehensive analysis of 
+             scRNA-seq and st-seq data derived from hematopoietic cells, including those from myeloid and lymphoid lineages.
+             HemaScopeR enables researchers to delve into scRNA-seq data, including identifying 
+             cell types, detecting differentially expressed genes, performing GO and KEGG enrichment, 
+             analyzing gene networks, performing cell cycle analysis and gene set variation analysis (GSVA), 
+             predicting trajectories, analyzing transcription factors, and exploring cell-cell interactions. 
+             Additionally, it facilitates the extraction of niche information from st-seq data through spot 
+             deconvolution, copy number variation (CNV) estimation, and analysis of spatial interactions.
+Depends: R (>= 4.2.3), shiny, textshaping, shinyjs, Seurat, phateR, DoubletFinder, monocle, slingshot, GSVA, 
+         limma,plyr,dplyr,org.Mm.eg.db,org.Hs.eg.db,CellChat,velocyto.R,SeuratWrappers,stringr,scran,ggpubr,
+         viridis, pheatmap, parallel, reticulate, SCENIC, feather, AUCell, RcisTarget, Matrix, foreach, doParallel,
+         clusterProfiler, OpenXGR, RColorBrewer, Rfast2, SeuratDisk, abcCellmap, biomaRt, copykat, gelnet, ggplot2,
+         parallelDist, patchwork, markdown
+License: GPL-3
+Encoding: UTF-8
+LazyData: true
+RoxygenNote: 7.2.3
