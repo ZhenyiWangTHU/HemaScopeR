@@ -1,0 +1,7 @@
+## Heterogeneity
+
+Cell heterogeneity within each cluster is reflected by the distribution of the Spearman correlation coefficients of gene expression of every pair of cells. The boxplot below shows the distribution of Spearman correlation coefficients for cluster.
+
+<center>
+    <img src="..\\Step9.Calculate_heterogeneity\\Heterogeneity_spearmanCorrelation.png" width="50%"/>
+</center>

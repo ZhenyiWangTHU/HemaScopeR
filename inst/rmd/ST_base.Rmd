@@ -1,0 +1,101 @@
+---
+title: "st_pipeline"
+output: html_document
+date: "2023-09-06"
+---
+
+<style type="text/css">
+    body{
+        font-size: 15px;
+        line-height: 22px;
+    }
+    h1.title {
+        font-size: 38px;
+    }
+    h1 {
+        font-size: 28px;
+        margin-top: 23px;
+    }
+    h2 {
+        font-size: 24px;
+        margin-top: 25px;
+    }
+    h3 {
+      font-size: 20px;
+        margin-top: 25px;
+    }
+    code.r{
+        font-size: 13px;
+    }
+    pre {
+        font-size: 14px;
+    }
+    p {
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    table {
+        width: 60%;
+        border-collapse: collapse;
+        font-family: Futura, Arial, sans-serif;
+    }
+    th,td {
+        padding: 5px;
+    }
+    th,td {
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        padding-right: 20px
+    }
+</style>
+
+```{r setup, include=FALSE}
+options(knitr.table.format = "html") 
+options(scipen=10)
+knitr::opts_chunk$set(echo = TRUE, fig.path = output.dir)
+knitr::opts_knit$set(root.dir = output.dir)
+```
+
+# `r sampleName`
+--------------------------------
+
+```{r Input, child=system.file('rmd', 'st_step1.Rmd', package = 'HemaScopeR'), eval=TRUE}
+```
+
+```{r QC, child=system.file('rmd', 'st_step2.Rmd', package = 'HemaScopeR'), eval=Step2_QC}
+```
+
+```{r Clustering, child=system.file('rmd', 'st_step3.Rmd', package = 'HemaScopeR'), eval=Step3_Clustering}
+```
+
+```{r DEGs, child=system.file('rmd', 'st_step4.Rmd', package = 'HemaScopeR'), eval=Step4_Find_DEGs}
+```
+
+```{r SVF, child=system.file('rmd', 'st_step5.Rmd', package = 'HemaScopeR'), eval=Step5_SVFs}
+```
+
+```{r Interaction, child=system.file('rmd', 'st_step6.Rmd', package = 'HemaScopeR'), eval=Step6_Interaction}
+```
+
+```{r CNV, child=system.file('rmd', 'st_step7.Rmd', package = 'HemaScopeR'), eval=Step7_CNV}
+```
+
+```{r Deconvolution, child=system.file('rmd', 'st_step8.Rmd', package = 'HemaScopeR'), eval=Step8_Deconvolution}
+```
+
+```{r CellCycle, child=system.file('rmd', 'st_step9.Rmd', package = 'HemaScopeR'), eval=Step9_Cellcycle}
+```
+
+## Outputs
+
+The outputs includes:
+
+1. **Html report** :
+[ST_base.html](./st_base.html).
+2. **Markdown report** :
+[ST_base.md](./st_base.md).
+3. **Files** :
+[`r sampleName`](../).
+4. **Final data**:
+[st_object.rds](./st_object.rds),
+[st_object.h5ad](./st_object.h5ad)

@@ -1,0 +1,20 @@
+## Normalization, dimensionality reduction and clustering
+
+Normalization, dimensionality reduction and clustering are performed according to the standard process of [Seurat](https://satijalab.org/seurat/articles/pbmc3k_tutorial). The results of clustering are shown bellow.
+
+<center class="half">
+    <img src="..\\Step3.Clustering\\sc_object umap_cluster.png" width="40%"/>
+    <img src="..\\Step3.Clustering\\sc_object tsne_cluster.png" width="40%"/>
+</center>
+
+
+The following arguments are used in the step above.
+
+| Arguments | value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
+| :---: | :---: | :---: |
+| `scale.factor` | `r scale.factor` | Sets the scale factor for cell-level normalization |
+| `vars.to.regress` | `r vars.to.regress` | Variables to regress out |
+| `ndims` | `r ndims` | Total Number of PCs to compute |
+| `PCs` | `r PCs[1]`:`r PCs[length(PCs)]` | Which dimensions of PCs to use in `FindNeighbors`, `RunTSNE` and `RunUMAP` functions of `Seurat` |
+| `n.neighbors` | `r n.neighbors` | The number of neighboring points used in `RunUMAP` and `FindNeighbors` functions |
+| `resolution` | `r resolution` | The argument `resolution` of `FindClusters` function in `Seurat` |

@@ -1,0 +1,24 @@
+## Trajectory analysis
+
+Trajectory analysis can help infer the differentiation process between hematopoietic cells at the single-cell level. In order to obtain reliable results, three methods, [monocle2](http://cole-trapnell-lab.github.io/monocle-release/docs/), [slingshot](https://github.com/kstreet13/slingshot) and [scVelo](https://scvelo.readthedocs.io/en/stable/), are used for trajectory analysis.
+
+The data is analyzed based on the [monocle2 tutorial](http://cole-trapnell-lab.github.io/monocle-release/docs/#constructing-single-cell-trajectories). `DDRTree` algorithm is used for dimensionality reduction. Clustering results of `Seurat` and states obtained from the `orderCell` function are presented along the minimum spanning tree as follows.
+
+<center class="half">
+    <img src="..\\Step12.Construct_trajectories\\monocle2\\monocle_cell_trajectory_cellTypes.png" width="40%"/>
+    <img src="..\\Step12.Construct_trajectories\\monocle2\\monocle_cell_trajectory_state.png" width="40%"/>
+</center>
+
+The data is also analyzed based on the [slingshot tutorial](https://bioconductor.org/packages/release/bioc/vignettes/slingshot/inst/doc/vignette.html). The smooth curves modeling development along various lineages are shown in the first two dimensions of principal component space.
+
+<center class="half">
+    <img src="..\\Step12.Construct_trajectories\\slingshot\\slingshot_curve.png" width="40%"/>
+    <img src="..\\Step12.Construct_trajectories\\slingshot\\slingshot_pseudotime.png" width="40%"/>
+</center>
+
+The data is then analyzed based on the [scVelo tutorial](https://scvelo.readthedocs.io/en/stable/DynamicalModeling/). The scatter plot and stream plot of inferred velocities are shown bellow.
+
+<center class="half">
+    <img src="..\\Step12.Construct_trajectories\\scVelo\\velocity_embedding_grid.png" width="40%"/>
+    <img src="..\\Step12.Construct_trajectories\\scVelo\\velocity_embedding_stream.png" width="40%"/>
+</center>

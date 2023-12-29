@@ -1,0 +1,7 @@
+## Cell-cell interaction
+
+Signal crosstalk between cells is crucial for cellular state and behavior. [CellChat](https://github.com/sqjin/CellChat) is used to infer and analyze the cell-cell communication based on the [tutorial](https://htmlpreview.github.io/?https://github.com/sqjin/CellChat/blob/master/tutorial/CellChat-vignette.html). The visualization of each cell-cell communication network is under [this path](..\\Step15.Cell_cell_interection). The heatmap of overall interaction strength is shown as follows.
+
+<center>
+    <img src="..\\Step15.Cell_cell_interection\\interaction_strength.png" width="50%"/>
+</center>

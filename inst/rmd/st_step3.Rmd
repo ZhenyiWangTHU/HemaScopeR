@@ -1,0 +1,25 @@
+## Normalization, dimensionality reduction and clustering
+
+Data is normalized using `r normalization.method`. Dimensionality reduction and clustering 
+are performed according to the standard process of [Seurat](https://satijalab.org/seurat/articles/spatial_vignette.html). 
+The results of clustering are shown bellow.
+
+<!-- <center> -->
+<!--     <img src="..\\Step3_Clustering\\png\\cluster_spatial.png" width="40%"/> -->
+<!-- </center> -->
+
+<center class="half">
+    <img src="..\\Step3_Clustering\\png\\cluster_spatial.png" width="32%"/>
+    <img src="..\\Step3_Clustering\\png\\cluster_UMAP.png" width="32%"/>
+    <img src="..\\Step3_Clustering\\png\\cluster_tSNE.png" width="32%"/>
+</center>
+
+
+The following arguments are used in the step above.
+
+| Arguments | value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
+| :---: | :---: | :---: |
+| `normalization.method` | `r normalization.method` | The method of nomalization |
+| `npcs` | `r npcs` | Total Number of PCs to compute and store |
+| `pcs.used` | `r pcs.used[1]`:`r pcs.used[length(pcs.used)]` | Which dimensions of PCs to use in `FindNeighbors`, `RunTSNE` and `RunUMAP` functions of `Seurat` |
+| `resolution` | `r resolution` | The argument `resolution` of `FindClusters` function in `Seurat` |

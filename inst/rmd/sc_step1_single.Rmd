@@ -1,0 +1,13 @@
+## Input data
+
+1 sample is read and processed, which is
+
+```{r echo=FALSE, results='asis', out.width='70%'}
+library(knitr)
+library(kableExtra)
+show.data.frame <- data.frame(`Input data path` = input.data.dirs, 
+                              row.names = 1:length(input.data.dirs), 
+                              check.names = F)
+kable(show.data.frame, format = 'html', table.attr = "style='width:50%;'") %>%
+    kableExtra::kable_styling()
+```
