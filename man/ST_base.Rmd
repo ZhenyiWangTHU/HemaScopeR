@@ -1,0 +1,152 @@
+---
+title: "ST_base"
+output: html_document
+date: "2023-05-24"
+---
+
+<style type="text/css">
+    body{
+        font-size: 15px;
+        line-height: 22px;
+    }
+    h1.title {
+        font-size: 38px;
+    }
+    h1 {
+        font-size: 28px;
+        margin-top: 23px;
+    }
+    h2 {
+        font-size: 24px;
+        margin-top: 25px;
+    }
+    h3 {
+      font-size: 20px;
+        margin-top: 25px;
+    }
+    code.r{
+        font-size: 13px;
+    }
+    pre {
+        font-size: 14px;
+    }
+    p {
+        margin-top:10px;
+        margin-bottom:10px;
+    }
+    table {
+        width: 60%;
+        border-collapse: collapse;
+        font-family: Futura, Arial, sans-serif;
+    }
+    th,td {
+        padding: 5px;
+    }
+    th,td {
+        border-bottom: 1px solid #ddd;
+        border-top: 1px solid #ddd;
+        padding-right: 20px
+    }
+</style>
+
+```{r setup, include=FALSE}
+options(knitr.table.format = "html") 
+options(scipen=10)
+knitr::opts_chunk$set(echo = TRUE, fig.path = savePath)
+knitr::opts_knit$set(root.dir = savePath)
+```
+
+# `r sampleName`
+--------------------------------
+
+## QC
+
+### Spot QC: the number of UMIs and detected genes in spots
+
+We display `nUMI` (total number of UMIs) and `nGene` (total number of detected genes) to demonstrate cell density and tissue characteristics to some extent. The dashed lines in the violin diagram represents the threshold for filtering spots as shown below.
+
+| Threshold name | Value |
+| :---: | :---: |
+| `min.gene` | `r min.gene` |
+| `max.gene` | `r max.gene` |
+| `min.nUMI` | `r min.nUMI` |
+| `max.nUMI` | `r max.nUMI` |
+
+<center class="half">
+    <img src=".\\figure\\png\\nUMI_spatial.png" width="40%"/>
+    <img src=".\\figure\\png\\nUMI_violin.png" width="40%"/>
+</center>
+
+<center class="half">
+    <img src=".\\figure\\png\\nGene_spatial.png" width="40%"/>
+    <img src=".\\figure\\png\\nGene_violin.png" width="40%"/>
+</center>
+
+The spot quality determined based on the above threshold is shown in the following figure.
+
+<center>
+    <img src=".\\figure\\png\\quality_spatial.png" width="40%"/>
+</center>
+
+### Gene QC: the number of spots expressing the gene and mitochondrial gene
+
+We display `nSpot` (the number of spots expressing the gene) to show the distribution of genes. The dashed lines in the histogram represents the threshold for filtering genes as shown below.
+
+| Threshold name | Value |
+| :---: | :---: |
+| `min.spot` | `r min.spot` |
+
+<center>
+    <img src=".\\figure\\png\\nSpot_hist.png" width="40%"/>
+</center>
+
+## Normalization, PCA and Clustering
+
+We normalized data using `r normalization.method`, performed PCA and clustered data using the first `r n.dim.used` PCs with `resolution=``r resolution`. The clustering results are shown in the following figures.
+
+<center class="half">
+    <img src=".\\figure\\png\\cluster_UMAP.png" width="40%"/>
+    <img src=".\\figure\\png\\cluster_spatial.png" width="40%"/>
+</center>
+
+Here is a dotplot showing the top 5 differential expressed genes for every cluster compared to all remaining cells.
+
+<center>
+    <img src=".\\figure\\png\\DEGs_dot.png" width="80%"/>
+</center>
+
+## Cell cycling analysis
+
+We scored cell cycle phases using `s.features` and `g2m.features` shown below.
+
+| Phase | Related genes |
+| :---: | :------------: |
+| S | `r s.features` |
+| G2M | `r g2m.features` |
+
+The figures display the scores of S phase and G2M phase, by which you can decide whether to regress out the cell cycle effect through setting `bool.regress.cycling` to `TRUE`.
+
+<center class="half">
+    <img src=".\\figure\\png\\S_Score_UMAP.png" width="40%"/>
+    <img src=".\\figure\\png\\S_Score_spatial.png" width="40%"/>
+</center>
+
+<center class="half">
+    <img src=".\\figure\\png\\G2M_Score_UMAP.png" width="40%"/>
+    <img src=".\\figure\\png\\G2M_Score_spatial.png" width="40%"/>
+</center>
+
+## Outputs
+
+The outputs includes:
+
+1. **Html report** :
+[ST_base.html](./ST_base.html).
+2. **Markdown report** :
+[ST_base.md](./ST_base.md).
+3. **Figure files** :
+[figure/](./figure/).
+4. **Raw data**:
+[raw_object](./raw_object.RDS).
+5. **Final data**:
+[st_object](./st_object.RDS)
