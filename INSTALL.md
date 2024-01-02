@@ -34,15 +34,55 @@ If something went wrong previously, you may have try installing some of HemaScop
 install.packages("devtools")
 ```
      
-###### B. Install required packages
+###### B. Install required R packages
 
-Because these packages must be installed before installing HemaScopeR (otherwise its installation will fail.)
+Installation of these packages is necessary prior to HemaScopeR installation; otherwise, the installation process will fail.
 
 ```R
 c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')
 ```
+
+###### C. Install required Python packages
+
+Because these packages must be installed for Python-based steps in HemaScopeR; otherwise, Python-based analysis steps cannot be performed.
+
+```Python
+# numpy version == 1.23.5
+# pandas version == 1.3.5
+import scvelo as scv
+import anndata as ad
+import pandas as pd
+import pickle
+import pandas as pd
+from arboreto.algo import grnboost2, genie3
+from arboreto.utils import load_tf_names
+import os
+import gc
+import ot
+import pickle
+import anndata
+import scanpy as sc
+import pandas as pd
+import numpy as np
+from scipy import sparse
+from scipy.stats import spearmanr, pearsonr
+from scipy.spatial import distance_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
+import commot as ct
+import scanpy as sc
+import anndata
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+import cell2location
+import scvi
+from matplotlib import rcParams
+import phate
+```
      
-###### C. Install HemaScopeR
+###### D. Install HemaScopeR
 
 *HemaScopeR* can be installed directly from the GitHub repository
 
