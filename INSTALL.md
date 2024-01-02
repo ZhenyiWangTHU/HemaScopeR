@@ -36,7 +36,7 @@ install.packages("devtools")
      
 ###### B. Install required R packages
 
-Installation of these packages is necessary prior to HemaScopeR installation; otherwise, the installation process will fail.
+Installation of these packages is necessary prior to HemaScopeR installation, otherwise, the installation process will fail.
 
 ```R
 c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')
@@ -44,7 +44,7 @@ c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','s
 
 ###### C. Install required Python packages
 
-Because these packages must be installed for Python-based steps in HemaScopeR; otherwise, Python-based analysis steps cannot be performed.
+These packages must be installed for Python-based steps in HemaScopeR, otherwise, Python-based analysis steps cannot be performed.
 
 ```Python
 numpy 1.23.5
