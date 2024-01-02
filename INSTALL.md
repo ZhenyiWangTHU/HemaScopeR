@@ -47,39 +47,21 @@ c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','s
 Because these packages must be installed for Python-based steps in HemaScopeR; otherwise, Python-based analysis steps cannot be performed.
 
 ```Python
-# numpy version == 1.23.5
-# pandas version == 1.3.5
-import scvelo as scv
-import anndata as ad
-import pandas as pd
-import pickle
-import pandas as pd
-from arboreto.algo import grnboost2, genie3
-from arboreto.utils import load_tf_names
-import os
-import gc
-import ot
-import pickle
-import anndata
-import scanpy as sc
-import pandas as pd
-import numpy as np
-from scipy import sparse
-from scipy.stats import spearmanr, pearsonr
-from scipy.spatial import distance_matrix
-import matplotlib.pyplot as plt
-import seaborn as sns
-import commot as ct
-import scanpy as sc
-import anndata
-import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import matplotlib as mpl
-import cell2location
-import scvi
-from matplotlib import rcParams
-import phate
+numpy 1.23.5
+pandas 1.3.5
+scvelo 0.2.5
+pickle 4.0
+arboreto 0.1.6
+ot 0.9.1
+anndata 0.9.2
+scanpy 1.9.4
+scipy 1.11.2
+seaborn 0.12.2
+commot 0.0.3
+matplotlib 3.7.2
+cell2location 0.1.3
+scvi 1.0.3
+phate 1.0.11
 ```
      
 ###### D. Install HemaScopeR
