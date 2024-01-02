@@ -2,9 +2,9 @@
 
 ## Quick Installation
 
-### 1. Install R, python and RStudio
+### 1. Install R, python and optionally RStudio
 
-**HemaScopeR** is a package written in R and Python, it also can be used in the RStudio interactive environment.
+**HemaScopeR** is a package written in R and Python. It can also be utilized within the interactive environment of RStudio.
 
 R can be obtained and installed from [https://cran.rstudio.com](https://cran.rstudio.com).
 
