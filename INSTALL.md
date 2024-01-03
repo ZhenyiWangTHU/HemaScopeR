@@ -39,7 +39,50 @@ install.packages("devtools")
 Installation of these R-packages is necessary prior to HemaScopeR installation, otherwise, the installation process will fail.
 
 ```R
-c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')
+shiny 1.7.5
+textshaping 0.3.6
+shinyjs 2.1.0
+Seurat 4.3.0.1
+phateR 1.0.7
+DoubletFinder 2.0.3
+monocle 2.28.0
+slingshot 2.8.0
+GSVA 1.48.3
+limma 3.56.2
+plyr 1.8.8
+dplyr 1.1.2
+org.Mm.eg.db 3.17.0
+org.Hs.eg.db 3.17.0
+CellChat 1.6.1
+velocyto.R 0.6
+SeuratWrappers 0.3.1
+stringr 1.5.0
+scran 1.28.2
+ggpubr
+viridis
+pheatmap
+parallel
+reticulate
+SCENIC
+feather
+AUCell
+RcisTarget
+Matrix
+foreach
+doParallel
+clusterProfiler
+OpenXGR
+RColorBrewer
+Rfast2
+SeuratDisk
+abcCellmap
+biomaRt
+copykat
+gelnet
+ggplot2
+parallelDist
+patchwork
+markdown
 ```
 
 ###### C. Install required Python-packages
