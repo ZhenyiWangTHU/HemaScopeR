@@ -58,31 +58,31 @@ velocyto.R 0.6
 SeuratWrappers 0.3.1
 stringr 1.5.0
 scran 1.28.2
-ggpubr
-viridis
-pheatmap
-parallel
-reticulate
-SCENIC
-feather
-AUCell
-RcisTarget
-Matrix
-foreach
-doParallel
-clusterProfiler
-OpenXGR
-RColorBrewer
-Rfast2
-SeuratDisk
-abcCellmap
-biomaRt
-copykat
-gelnet
-ggplot2
-parallelDist
-patchwork
-markdown
+ggpubr 0.6.0
+viridis 0.6.4
+pheatmap 1.0.12
+parallel 4.3.1
+reticulate 1.31
+SCENIC 1.1.2.1
+feather 0.3.5
+AUCell 1.22.0
+RcisTarget 1.20.0
+Matrix 1.6.1
+foreach 1.5.2
+doParallel 1.0.17
+clusterProfiler 4.8.3
+OpenXGR 1.0.0
+RColorBrewer 1.1.3
+Rfast2 0.1.5.1
+SeuratDisk 0.0.0.9020
+abcCellmap 0.1.0
+biomaRt 2.56.1
+copykat 1.1.0
+gelnet 1.2.1
+ggplot2 3.4.4
+parallelDist 0.2.6
+patchwork 1.1.3
+markdown 1.10
 ```
 
 ###### C. Install required Python-packages
