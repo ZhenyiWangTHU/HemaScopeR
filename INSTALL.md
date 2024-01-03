@@ -36,7 +36,7 @@ install.packages("devtools")
      
 ###### B. Install required R-packages
 
-Installation of these R-packages is necessary prior to HemaScopeR installation, otherwise, the installation process will fail.
+Installation of these R-packages is necessary prior to HemaScopeR installation.
 
 ```R
 shiny 1.7.5
@@ -87,7 +87,7 @@ markdown 1.10
 
 ###### C. Install required Python-packages
 
-These Python-packages must be installed for Python-based steps in HemaScopeR, otherwise, Python-based analysis steps cannot be performed.
+These Python-packages must be installed for Python-based steps in HemaScopeR.
 
 ```Python
 numpy 1.23.5
