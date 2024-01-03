@@ -14,7 +14,7 @@ Please install R version 4.2.3 and python version 3.11.4 or higher.
 
 Following installation of R, Rstudio can be obtained and installed from [https://www.rstudio.com/products/rstudio/download/](https://www.rstudio.com/products/rstudio/download/). The free version of RStudio Desktop is sufficient.
 
-### 2. Install required R packages and HemaScopeR
+### 2. Install required R-packages, Python-packages and HemaScopeR
 
 We wrote a script that will attempt to install all requirements for HemaScopeR and then HemaScopeR itself. Start RStudio and then run the installation script from the console:
 
@@ -34,17 +34,17 @@ If something went wrong previously, you may have try installing some of HemaScop
 install.packages("devtools")
 ```
      
-###### B. Install required R packages
+###### B. Install required R-packages
 
-Installation of these packages is necessary prior to HemaScopeR installation, otherwise, the installation process will fail.
+Installation of these R-packages is necessary prior to HemaScopeR installation, otherwise, the installation process will fail.
 
 ```R
 c('shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate','SCENIC','feather','AUCell','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown')
 ```
 
-###### C. Install required Python packages
+###### C. Install required Python-packages
 
-These packages must be installed for Python-based steps in HemaScopeR, otherwise, Python-based analysis steps cannot be performed.
+These Python-packages must be installed for Python-based steps in HemaScopeR, otherwise, Python-based analysis steps cannot be performed.
 
 ```Python
 numpy 1.23.5
@@ -87,6 +87,10 @@ Or download HemaScopeR_1.0.0.tar.gz and install in R
 ```R
 install.packages('HemaScopeR_1.0.0.tar.gz')
 ```
+
+###### E. Download databases
+In addition to the R-packages and Python-packages, you will also need to download the databases for HemaScopeR. The links to all the available databases are available in our Cloud Drive.
+https://cloud.tsinghua.edu.cn/d/98ea851d33d94860a3a9/
 
 ### 3. Pull Docker image 'hemascoper' from Docker Hub
 
