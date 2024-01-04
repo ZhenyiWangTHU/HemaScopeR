@@ -24,7 +24,7 @@ We wrote a script that will attempt to install all required R-packages for HemaS
 source("https://github.com/ZhenyiWangTHU/HemaScopeR/blob/master/HemaScopeR-install.R")
 ```
 
-#### If something went wrong previously, you may need to try manually installing some of HemaScopeR's dependent R-packages, as well as HemaScopeR itself, following steps B and C:
+#### If something went wrong previously, you may need to try manually installing some of HemaScopeR's dependent R-packages, as well as HemaScopeR itself, following steps B, C and E:
 
 #### B. Install and attach the *devtools* package
 
