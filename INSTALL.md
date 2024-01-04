@@ -16,7 +16,7 @@ Following installation of R, Rstudio can be obtained and installed from [https:/
 
 ### 2. Install required R-packages, Python-packages and HemaScopeR
 
-###### A. Install required R-packages and HemaScopeR automatically
+#### A. Install required R-packages and HemaScopeR automatically
 
 We wrote a script that will attempt to install all required R-packages for HemaScopeR and then HemaScopeR itself. Start RStudio and then run the installation script from the console:
 
@@ -26,7 +26,7 @@ source("https://github.com/ZhenyiWangTHU/HemaScopeR/blob/master/HemaScopeR-insta
 
 If something went wrong previously, you may have try installing some of HemaScopeR's dependencies manually:
 
-###### B. Install and attach the *devtools* package
+#### B. Install and attach the *devtools* package
 
 *devtools* is required to compile and install HemaScopeR, since it's distributed through GitHub.
 
@@ -34,7 +34,7 @@ If something went wrong previously, you may have try installing some of HemaScop
 install.packages("devtools")
 ```
      
-###### C. Install required R-packages
+#### C. Install required R-packages
 
 Installation of these R-packages is necessary prior to HemaScopeR installation.
 
@@ -85,7 +85,7 @@ patchwork 1.1.3
 markdown 1.10
 ```
 
-###### D. Install required Python-packages
+#### D. Install required Python-packages
 
 These Python-packages must be installed for Python-based steps in HemaScopeR.
 
@@ -107,7 +107,7 @@ scvi 1.0.3
 phate 1.0.11
 ```
      
-###### E. Install HemaScopeR
+#### E. Install HemaScopeR
 
 *HemaScopeR* can be installed directly from the GitHub repository
 
@@ -131,7 +131,7 @@ Or download HemaScopeR_1.0.0.tar.gz and install in R
 install.packages('HemaScopeR_1.0.0.tar.gz')
 ```
 
-###### F. Download databases
+#### F. Download databases
 In addition to the R-packages and Python-packages, you will also need to download the databases for HemaScopeR. The databases are available in our Cloud Drive via this link [https://cloud.tsinghua.edu.cn/d/759fd04333274d3f9946/](https://cloud.tsinghua.edu.cn/d/759fd04333274d3f9946/).
 
 ### 3. Pull Docker image 'hemascoper' from Docker Hub
