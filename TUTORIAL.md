@@ -157,3 +157,84 @@ docker run -i -t -p 8888:8888 continuumio/miniconda3 /bin/bash -c "\
 
 ## 5. Demo datasets
 The demo datasets are available in our Cloud Drive via this link [https://cloud.tsinghua.edu.cn/d/3d363e32665249409571/](https://cloud.tsinghua.edu.cn/d/3d363e32665249409571/).
+
+### A. scRNA-seq demo
+We use the SRR7881414 dataset from demo datasets to demonstrate the scRNA-seq pipeline in HemaScopeR.
+```R
+library(HemaScopeR)
+scRNASeq_10x_pipeline(
+                     # input and output
+                     input.data.dirs = c('./testData/SRR7881414_filtered_feature_bc_matrix'),
+                     project.names = c('SRR7881414'), 
+                     output.dir = './testData/SRR7881414_result',
+                     pythonPath = '/python/path',
+                     # quality control and preprocessing
+                     gene.column = 2,
+                     min.cells = 10,
+                     min.feature = 200,
+                     mt.pattern = '^MT-',
+                     nFeature_RNA.limit = 200,
+                     percent.mt.limit = 20,
+                     scale.factor = 10000,
+                     nfeatures = 3000,
+                     ndims = 50,
+                     vars.to.regress = NULL,
+                     PCs = 1:35,
+                     resolution = 0.4,
+                     n.neighbors = 50,
+                     # remove doublets
+                     doublet.percentage = 0.04,
+                     doublerFinderwraper.PCs = 1:20,
+                     doublerFinderwraper.pN = 0.25,
+                     doublerFinderwraper.pK = 0.1,
+                     # phateR
+                     phate.knn = 50,
+                     phate.npca = 20,
+                     phate.t = 10,
+                     phate.ndim = 2,
+                     min.pct = 0.25,
+                     logfc.threshold = 0.25,
+                     # visualization
+                     ViolinPlot.cellTypeOrders = NULL,
+                     ViolinPlot.cellTypeColors = NULL,
+                     Org = 'hsa',
+                     loom.files.path = c('./testData/SRR7881414.loom'),
+                     # cell cycle
+                     cellcycleCutoff = NULL,
+                     # cell chat
+                     sorting = FALSE,
+                     ncores = 10,
+                     # Verbose = FALSE,
+                     # activeEachStep
+                     Whether_load_previous_results = FALSE,
+                     Step1_Input_Data = TRUE,
+                     Step1_Input_Data.type = 'cellranger-count',
+                     Step2_Quality_Control = TRUE,
+                     Step2_Quality_Control.RemoveBatches = FALSE,
+                     Step2_Quality_Control.RemoveDoublets = TRUE,
+                     Step3_Clustering = TRUE,
+                     Step4_Identify_Cell_Types = TRUE,
+                     Step4_Use_Which_Labels = 'clustering',
+                     Step4_Cluster_Labels = NULL,
+                     Step4_Changed_Labels = NULL,
+                     Step4_run_sc_CNV = TRUE,
+                     Step5_Visualization = TRUE,
+                     Step6_Find_DEGs = TRUE,
+                     Step7_Assign_Cell_Cycle = TRUE,
+                     Step8_Calculate_Heterogeneity = TRUE,
+                     Step9_Violin_Plot_for_Marker_Genes = TRUE,
+                     Step10_Calculate_Lineage_Scores = TRUE,
+                     Step11_GSVA = TRUE,
+                     Step11_GSVA.identify.cellType.features=TRUE,
+                     Step11_GSVA.identify.diff.features=FALSE,
+                     Step11_GSVA.comparison.design=NULL,
+                     Step12_Construct_Trajectories = TRUE,
+                     Step12_Construct_Trajectories.clusters = NULL, 
+                     Step12_Construct_Trajectories.monocle = TRUE,
+                     Step12_Construct_Trajectories.slingshot = TRUE,
+                     Step12_Construct_Trajectories.scVelo = TRUE,
+                     Step13_TF_Analysis = TRUE,
+                     Step14_Cell_Cell_Interaction = TRUE,
+                     Step15_Generate_the_Report = TRUE
+        )
+```
