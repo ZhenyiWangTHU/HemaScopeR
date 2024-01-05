@@ -240,7 +240,7 @@ scRNASeq_10x_pipeline(
 ```
 
 ### B. st-seq demo
-We use the GSE230207 dataset from demo datasets to demonstrate the st-seq pipeline in HemaScopeR.
+We use one sample from the GSE230207 dataset in the demo datasets to showcase the st-seq pipeline in HemaScopeR. The other st-seq datasets within the demo can be run using the same code. And you just need to adjust specific paths and parameters.
 ```R 
 library(HemaScopeR)
 st_10x_visium_pipeline(
