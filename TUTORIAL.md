@@ -238,3 +238,28 @@ scRNASeq_10x_pipeline(
                      Step15_Generate_the_Report = TRUE
         )
 ```
+
+### B. st-seq demo
+We use the GSE230207 dataset from demo datasets to demonstrate the st-seq pipeline in HemaScopeR.
+```R 
+library(HemaScopeR)
+st_10x_visium_pipeline(
+    input.data.dir = './testData/GSE230207_RAW/hot',
+    output.dir = './testData/GSE230207_hot_result',
+    sampleName = 'GSE230207_hot',
+    Step2_QC = TRUE,
+    Step3_Clustering = TRUE,
+    Step4_Find_DEGs = TRUE,
+    Step5_SVFs = TRUE,
+    Step6_Interaction = TRUE,
+    Step7_CNV = TRUE,
+    Step8_Deconvolution = TRUE,
+    Step9_Cellcycle = TRUE,
+    Step10_Nich = TRUE,
+    
+    # settings
+    verbose = FALSE,
+    species = 'human', # human or mosue
+    genReport = TRUE
+)
+```
