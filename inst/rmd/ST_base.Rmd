@@ -86,6 +86,9 @@ knitr::opts_knit$set(root.dir = output.dir)
 ```{r CellCycle, child=system.file('rmd', 'st_step9.Rmd', package = 'HemaScopeR'), eval=Step9_Cellcycle}
 ```
 
+```{r Niche, child=system.file('rmd', 'st_step10.Rmd', package = 'HemaScopeR'), eval=Step10_Niche}
+```
+
 ## Outputs
 
 The outputs includes:

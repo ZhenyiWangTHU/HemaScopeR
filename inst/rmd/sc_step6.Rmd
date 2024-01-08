@@ -1,6 +1,6 @@
 ## Differentially expressed genes
 
-Differentially expressed genes are identified using [FindAllMarkers](https://satijalab.org/seurat/reference/findallmarkers) function. All markers found are stored in [this CSV file](..\\Step6.Find_DEGs\\sc_object.markerGenes.csv). The first 5 markers of each cluster are shown below.
+Differentially expressed genes are identified using [FindAllMarkers](https://satijalab.org/seurat/reference/findallmarkers) function. All markers found are stored in [../Step6.Find_DEGs/sc_object.markerGenes.csv](..\\Step6.Find_DEGs\\sc_object.markerGenes.csv). The first 5 markers of each cluster are shown below.
 
 <center>
     <img src="..\\Step6.Find_DEGs\\sc_object_markerGenesTop5.png" width="90%"/>

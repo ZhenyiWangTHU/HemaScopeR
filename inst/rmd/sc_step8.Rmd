@@ -1,7 +1,7 @@
-## Cell cycle
+## Heterogeneity
 
-The cell cycle phases of each cell are classified using [cyclone](https://rdrr.io/bioc/scran/man/cyclone.html) function. The scores of G1 and G2M phases are defined as the average expression of cell cycle genes from [*Single-cell RNA-seq supports a developmental hierarchy in human oligodendroglioma*](https://www.nature.com/articles/nature20123). The proportion of cell cycle phases in each cluster is shown as follows.
+Cell heterogeneity within each cluster is reflected by the distribution of the Spearman correlation coefficients of gene expression of every pair of cells. The boxplot below shows the distribution of Spearman correlation coefficients for cluster.
 
 <center>
-    <img src="..\\Step8.Assign_cell_cycle\\CellCycle.png" width="40%"/>
+    <img src="..\\Step8.Calculate_heterogeneity\\Heterogeneity_spearmanCorrelation.png" width="70%"/>
 </center>

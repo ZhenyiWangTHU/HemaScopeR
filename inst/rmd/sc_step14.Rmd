@@ -1,7 +1,15 @@
-## GSVA
+## Cell-cell interaction
 
-Gene Set Variation Analysis (GSVA) evaluates the enrichment of gene sets in each cluster to infer the function of them. [GSVA](https://www.bioconductor.org/packages/release/bioc/html/GSVA.html) package is used to perform GSVA on the Kyoto Encyclopedia of Genes and Genomes (KEGG) pathway gene set. The pathways with an adjusted *P*-value less than 0.05 are shown in the heatmap.
+Signal crosstalk between cells is crucial for cellular state and behavior. [CellChat](https://github.com/sqjin/CellChat) is used to infer and analyze the cell-cell communication based on the [tutorial](https://htmlpreview.github.io/?https://github.com/sqjin/CellChat/blob/master/tutorial/CellChat-vignette.html). The visualization of each cell-cell communication network is under [../Step15.Cell_cell_interection](..\\Step15.Cell_cell_interection). The circle plot of overall interaction information is shown as follows.
 
-<center>
-    <img src="..\\Step14.GSVA\\GSVA_Heatmap.png" width="70%"/>
+<center class="half">
+    <img src="..\\Step14.Cell_cell_interection\\circle plot of the interaction weights or strength.png" width="40%" alt="The interaction weights or strength"/>
+    <img src="..\\Step14.Cell_cell_interection\\circle plot of the number of interactions.png" width="40%" alt="The interaction number"/>
+</center>
+
+The incoming and outgoing signaling patterns are also shown as follows.
+
+<center class="half">
+    <img src="..\\Step14.Cell_cell_interection\\incoming signaling.png" width="40%" alt="Incoming signaling patterns"/>
+    <img src="..\\Step14.Cell_cell_interection\\outgoing signaling.png" width="40%" alt="outgoing signaling patterns"/>
 </center>

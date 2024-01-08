@@ -1,1 +1,18 @@
 ## Visualization
+
+To facilitate data visualization, we used [phateR](https://github.com/KrishnaswamyLab/phater), umap and tsne for dimensionality reduction. The visualizations are shown bellow.
+
+<center class="half">
+    <img src="..\\Step5.Visualization\\phateR.png" width="50%" alt="phateR"/>
+</center>
+<center style="font-size:14px;color:#C0C0C0;text-decoration:underline">phateR</center>
+
+<center class="half">
+    <img src="..\\Step5.Visualization\\sc_object tsne cell types.png" width="50%" alt="tSNE"/>
+</center>
+<center style="font-size:14px;color:#C0C0C0;text-decoration:underline">tSNE</center>
+
+<center class="half">
+    <img src="..\\Step5.Visualization\\sc_object umap cell types.png" width="50%" alt="UMAP"/>
+</center>
+<center style="font-size:14px;color:#C0C0C0;text-decoration:underline">UMAP</center>

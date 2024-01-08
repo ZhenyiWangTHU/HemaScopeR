@@ -1,13 +1,21 @@
 ## Spatial interaction
 
-Signal crosstalk between cells is crucial for cellular state and behavior. Spatial transcriptome provides positional information for more effective interaction analysis. [COMMOT](https://github.com/zcang/COMMOT) is used to infer and analyze cell-cell communication in spatial transcriptomics based on the [tutorial](https://commot.readthedocs.io/en/latest/notebooks/visium-mouse_brain.html). The interaction strengths of each pathway and each LR pair are shown as follows.
+Signal crosstalk between cells is crucial for cellular state and behavior. Spatial transcriptome provides positional information for more effective interaction analysis. [COMMOT](https://github.com/zcang/COMMOT) is used to infer and analyze cell-cell communication in spatial transcriptomics based on the [tutorial](https://commot.readthedocs.io/en/latest/notebooks/visium-mouse_brain.html). The interaction strengths of each pathway and each LR pair within and between clusters are shown as follows.
 
 <center>
-    <img src="..\\Step6_Interaction\\png\\Pathway_interaction_Dotplot.png" width="50%"/>
+    <img src="..\\Step6_Interaction\\png\\Pathway_interaction_within_Dotplot.png" width="30%"/>
 </center>
 
 <center>
-    <img src="..\\Step6_Interaction\\png\\LR_interaction_Dotplot.png" width="50%"/>
+    <img src="..\\Step6_Interaction\\png\\LR_interaction_within_Dotplot.png" width="30%"/>
+</center>
+
+<center>
+    <img src="..\\Step6_Interaction\\png\\Pathway_interaction_between_Dotplot.png" width="30%"/>
+</center>
+
+<center>
+    <img src="..\\Step6_Interaction\\png\\LR_interaction_between_Dotplot.png" width="30%"/>
 </center>
 
 The relevant argument settings are as follows.
