@@ -263,3 +263,6 @@ st_10x_visium_pipeline(
     genReport = TRUE
 )
 ```
+
+### C. Examples of HTML-formatted analysis reports
+The HTML-formatted demo analysis reports can be accessed via these links [https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/sc_base.html](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/sc_base.html), at the same time, we are continually updating and optimizing the format and content of these reports.
