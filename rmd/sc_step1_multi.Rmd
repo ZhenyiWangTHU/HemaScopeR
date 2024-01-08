@@ -1,5 +1,10 @@
 ## Input data
 
+```{r echo=FALSE, include=FALSE, warning=FALSE}
+library(knitr)
+library(kableExtra)
+```
+
 ```{r include=FALSE}
 n.sample <- length(input.data.dirs)
 ```
@@ -7,8 +12,6 @@ n.sample <- length(input.data.dirs)
 `r n.sample` samples are read and processed, which are:
 
 ```{r echo=FALSE, results='asis', out.width='70%'}
-library(knitr)
-library(kableExtra)
 show.data.frame <- data.frame(`Input data path` = input.data.dirs, 
                               row.names = 1:length(input.data.dirs), 
                               check.names = F)

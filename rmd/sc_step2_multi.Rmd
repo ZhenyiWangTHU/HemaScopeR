@@ -20,42 +20,9 @@ The following arguments are used to filter data.
 | `min.feature` | `r min.feature` | Include cells where at least this many features are detected |
 | `percent.mt.limit` | `r percent.mt.limit` | Include cells where at most this percent of mitochondrial genes are detected |
 
-### Doublet identification
+```{r doublet, child=system.file('rmd', 'sc_step2_doublet.Rmd', package = 'HemaScopeR'), eval=Step2_Quality_Control.RemoveDoublets}
+```
 
-The recognition of doublets is crucial for exploring meaningful biological conclusions using scRNA-seq data. Doublets in each sample are identified using the R package [doubletfinder](https://github.com/chris-mcginnis-ucsf/DoubletFinder), following the `Example code for 'real-world' applications` part. `r length(which(merged.data.combined@meta.data$doublet == 'Doublet'))` out of `r ncol(merged.data.combined)` cells are identified as doublets.
 
-<center>
-    <img src="..\\Step2.Quality_control\\sc_object  findDoublets.png" width="40%"/>
-</center>
-
-The relevant argument settings are as follows.
-
-| Arguments | Value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
-| :---: | :---: | :---: |
-| `doublet.percentage` | `r doublet.percentage` | Percentage of doublets |
-| `doublerFinderwraper.PCs` | `r doublerFinderwraper.PCs[1]`:`r doublerFinderwraper.PCs[length(doublerFinderwraper.PCs)]` | Number of statistically-significant principal components used in `paramSweep_v3` and `doubletFinder_v3` functions of `doubletfinder` |
-| `doublerFinderwraper.pN` | `r doublerFinderwraper.pN` | The argument `pN` of `doubletFinder_v3` function in `doubletfinder` |
-| `doublerFinderwraper.pK` | `r doublerFinderwraper.pK` | The argument `pK` of `doubletFinder_v3` function in `doubletfinder` |
-
-### Batch effect removal
-
-Batch effects widely exist between different datasets. To illustrate the batch effects between samples, dimensionality reduction is performed on the merged data.
-
-<center class="half">
-    <img src="..\\Step2.Quality_control\\datasets.before.batch.removal_umap_datasetID.png" width="40%"/>
-    <img src="..\\Step2.Quality_control\\datasets.before.batch.removal_tsne_datasetID.png" width="40%"/>
-</center>
-
-In order to remove batch effects, the `FindIntegrationAnchors` function in [Seurat](https://github.com/satijalab/seurat) is used and an `integrated` data assay is created for downstream analysis. The dimensionality reduction visualization after the batch effect removal is as follows.
-
-<center class="half">
-    <img src="..\\Step2.Quality_control\\datasets.after.batch.removal_umap_datasetID.png" width="40%"/>
-    <img src="..\\Step2.Quality_control\\datasets.after.batch.removal_tsne_datasetID.png" width="40%"/>
-</center>
-
-The relevant argument settings are as follows.
-
-| Arguments | value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
-| :---: | :---: | :---: |
-| `PCs` | `r PCs[1]`:`r PCs[length(PCs)]` | The argument `dims` of `FindIntegrationAnchors` and `IntegrateData` functions in `Seurat` |
-| `nfeatures` | `r nfeatures` | The argument `anchor.features` of `FindIntegrationAnchors` function in `Seurat` |
+```{r batch, child=system.file('rmd', 'sc_step2_batch.Rmd', package = 'HemaScopeR'), eval=Step2_Quality_Control.RemoveBatches}
+```

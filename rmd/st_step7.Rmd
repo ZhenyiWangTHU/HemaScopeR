@@ -12,11 +12,11 @@ Here is the generated heatmap plot for estimated copy numbers. Rows are single c
     <img src="..\\Step7_CNV_analysis\\png\\CNV_heatmap.png" width="70%"/>
 </center>
 
-The visualization of two copy number subpopulations of aneuploidy tumor cells is as follows.
+<!-- The visualization of two copy number subpopulations of aneuploidy tumor cells is as follows. -->
 
-<center>
-    <img src="..\\Step7_CNV_analysis\\png\\Tumor_subpopulations.png" width="70%"/>
-</center>
+<!-- <center> -->
+<!--     <img src="..\\Step7_CNV_analysis\\png\\Tumor_subpopulations.png" width="70%"/> -->
+<!-- </center> -->
 
 The relevant argument settings are as follows.
 

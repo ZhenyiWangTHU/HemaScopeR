@@ -1,7 +1,15 @@
-## Heterogeneity
+## Marker genes
 
-Cell heterogeneity within each cluster is reflected by the distribution of the Spearman correlation coefficients of gene expression of every pair of cells. The boxplot below shows the distribution of Spearman correlation coefficients for cluster.
+The marker genes of following lineages are visualized using violin diagrams.
+
+| Lineage | Marker genes | Source |
+| :---: | :---: | :---: |
+| Hematopoietic stem cells | Slamf1, Itga2b, Kit, Ly6a, Bmi1, Gata2, Hlf, Meis1, Mpl, Mcl1, Gfi1, Gfi1b, Hoxb5 | [*Single-cell characterization of haematopoietic progenitors and their trajectories in homeostasis and perturbed haematopoiesis*](https://www.nature.com/articles/s41556-018-0121-4) |
+| Multipotent progenitor | Mki67, Mpo, Elane, Ctsg, Calr | [*The bone marrow microenvironment at single-cell resolution*](https://www.nature.com/articles/s41586-019-1104-8) |
+| Erythroid lineage | Klf1, Gata1, Mpl, Epor, Vwf, Zfpm1, Fhl1, Adgrg2, Cavin2, Gypa, Tfrc, Hbb-bs, Hbb-y | [*Single-cell characterization of haematopoietic progenitors and their trajectories in homeostasis and perturbed haematopoiesis*](https://www.nature.com/articles/s41556-018-0121-4) |
+| Lymphoid lineage | Tcf3, Ikzf1, Notch1, Flt3, Dntt, Btg2, Tcf7, Rag1, Ptprc, Ly6a, Blnk | [*Single-cell characterization of haematopoietic progenitors and their trajectories in homeostasis and perturbed haematopoiesis*](https://www.nature.com/articles/s41556-018-0121-4) |
+| Myeloid lineage | Gfi1, Spi1, Mpo, Csf2rb, Csf1r, Gfi1b, Hk3, Csf2ra, Csf3r, Sp1, Fcgr3 | [*Single-cell characterization of haematopoietic progenitors and their trajectories in homeostasis and perturbed haematopoiesis*](https://www.nature.com/articles/s41556-018-0121-4) |
 
 <center>
-    <img src="..\\Step9.Calculate_heterogeneity\\Heterogeneity_spearmanCorrelation.png" width="50%"/>
+    <img src="..\\Step9.Violin_plot_for_marker_genes\\combinedViolin.png" width="70%"/>
 </center>

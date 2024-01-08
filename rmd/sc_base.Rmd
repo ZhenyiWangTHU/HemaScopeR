@@ -83,19 +83,19 @@ knitr::opts_knit$set(root.dir = output.dir)
 ```{r DEGs, child=system.file('rmd', 'sc_step6.Rmd', package = 'HemaScopeR'), eval=Step6_Find_DEGs}
 ```
 
-```{r Query, child=system.file('rmd', 'sc_step7.Rmd', package = 'HemaScopeR'), eval=Step7_Query_Data}
+```{r CellCycle, child=system.file('rmd', 'sc_step7.Rmd', package = 'HemaScopeR'), eval=Step7_Assign_Cell_Cycle}
 ```
 
-```{r CellCycle, child=system.file('rmd', 'sc_step8.Rmd', package = 'HemaScopeR'), eval=Step8_Assign_Cell_Cycle}
+```{r Heterogeneity, child=system.file('rmd', 'sc_step8.Rmd', package = 'HemaScopeR'), eval=Step8_Calculate_Heterogeneity}
 ```
 
-```{r Heterogeneity, child=system.file('rmd', 'sc_step9.Rmd', package = 'HemaScopeR'), eval=Step9_Calculate_Heterogeneity}
+```{r MarkerGenes, child=system.file('rmd', 'sc_step9.Rmd', package = 'HemaScopeR'), eval=Step9_Violin_Plot_for_Marker_Genes}
 ```
 
-```{r MarkerGenes, child=system.file('rmd', 'sc_step10.Rmd', package = 'HemaScopeR'), eval=Step10_Violin_Plot_fo_Marker_Genes}
+```{r Lineage, child=system.file('rmd', 'sc_step10.Rmd', package = 'HemaScopeR'), eval=Step10_Calculate_Lineage_Scores}
 ```
 
-```{r Lineage, child=system.file('rmd', 'sc_step11.Rmd', package = 'HemaScopeR'), eval=Step11_Calculate_Lineage_Scores}
+```{r GSVA, child=system.file('rmd', 'sc_step11.Rmd', package = 'HemaScopeR'), eval=Step11_GSVA }
 ```
 
 ```{r Trajectory, child=system.file('rmd', 'sc_step12.Rmd', package = 'HemaScopeR'), eval=Step12_Construct_Trajectories}
@@ -104,8 +104,16 @@ knitr::opts_knit$set(root.dir = output.dir)
 ```{r TF, child=system.file('rmd', 'sc_step13.Rmd', package = 'HemaScopeR'), eval=Step13_TF_Analysis}
 ```
 
-```{r GSVA, child=system.file('rmd', 'sc_step14.Rmd', package = 'HemaScopeR'), eval=Step14_GSVA}
+```{r Interaction, child=system.file('rmd', 'sc_step14.Rmd', package = 'HemaScopeR'), eval=Step14_Cell_Cell_Interaction}
 ```
 
-```{r Interaction, child=system.file('rmd', 'sc_step15.Rmd', package = 'HemaScopeR'), eval=Step15_Cell_Cell_Interaction}
-```
+## Outputs
+
+The outputs includes:
+
+1. **Html report** :
+[SC_base.html](./sc_base.html).
+2. **Markdown report** :
+[SC_base.md](./sc_base.md).
+3. **Files** :
+[`r project.names`](../).

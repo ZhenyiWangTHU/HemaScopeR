@@ -1,1 +1,7 @@
-## Lineage scores
+## GSVA
+
+Gene Set Variation Analysis (GSVA) evaluates the enrichment of gene sets in each cluster to infer the function of them. [GSVA](https://www.bioconductor.org/packages/release/bioc/html/GSVA.html) package is used to perform GSVA on the Kyoto Encyclopedia of Genes and Genomes (KEGG) pathway gene set. The pathways with an adjusted *P*-value less than 0.05 are shown in the heatmap.
+
+<center>
+    <img src="..\\Step11.GSVA\\GSVA.identify.cellType.features\\GSVA_Heatmap.png" width="70%"/>
+</center>

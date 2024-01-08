@@ -1,13 +1,13 @@
-## Data mapping
+## Cell cycle
 
-Mapping data to a reference dataset can identify shared cell states that are present across different datasets. We provided a reference dataset containing 1354 cells with 10 labels. [FindTransferAnchors](https://satijalab.org/seurat/reference/findtransferanchors) function are used to integrate the query data and the reference data. The predicted labels of the query data shown below are determined by [TransferData](https://satijalab.org/seurat/reference/transferdata) function. 
+The cell cycle phases of each cell are classified using [cyclone](https://rdrr.io/bioc/scran/man/cyclone.html) function. The scores of G1 and G2M phases are defined as the average expression of cell cycle genes from [*Single-cell RNA-seq supports a developmental hierarchy in human oligodendroglioma*](https://www.nature.com/articles/nature20123). The proportion of cell cycle phases in each cluster is shown as follows.
 
 <center>
-    <img src="..\\Step7.Query_data\\predicted.id.png" width="40%"/>
+    <img src="..\\Step7.Assign_cell_cycles\\CellCycle.png" width="40%"/>
 </center>
 
-The relevant argument settings are as follows.
+The distribution of G1G2 score is also shown as follows.
 
-| Arguments | value | &nbsp;&nbsp;&nbsp;&nbsp; Meaning &nbsp;&nbsp;&nbsp;&nbsp; |
-| :---: | :---: | :---: |
-| `PCs` | `r PCs[1]`:`r PCs[length(PCs)]` | The argument `dims` of `FindTransferAnchors` and `TransferData` functions in `Seurat` |
+<center>
+    <img src="..\\Step7.Assign_cell_cycles\\G1G2Score.png" width="30%"/>
+</center>

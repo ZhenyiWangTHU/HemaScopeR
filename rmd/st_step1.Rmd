@@ -3,8 +3,6 @@
 The following sample is read and processed, which is
 
 ```{r echo=FALSE, results='asis', out.width='70%'}
-library(knitr)
-library(kableExtra)
 show.data.frame <- data.frame(`Input data path` = input.data.dir, 
                               row.names = 1:length(input.data.dir), 
                               check.names = F)

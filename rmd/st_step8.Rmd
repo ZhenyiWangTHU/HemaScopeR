@@ -7,13 +7,13 @@ Deconvolution of spatial transcriptome data can identify the positions of differ
 </center>
 <center style="font-size:14px;color:#C0C0C0;text-decoration:underline">The absolute abundance of each cell type</center>
 
-<center>
-    <img src="..\\Step8_Deconvolution\\png\\Cell2loc_total_norm.png" width="100%" alt="The relative abundance of each cell type"/>
-</center>
-<center style="font-size:14px;color:#C0C0C0;text-decoration:underline">The relative abundance of each cell type</center>
+<!-- <center> -->
+<!--     <img src="..\\Step8_Deconvolution\\png\\Cell2loc_total_norm.png" width="100%" alt="The relative abundance of each cell type"/> -->
+<!-- </center> -->
+<!-- <center style="font-size:14px;color:#C0C0C0;text-decoration:underline">The relative abundance of each cell type</center> -->
 
-where the calculation method for relative abundance is
-$$abundance_{relative} = \frac{abundance_{absolute}}{nUMI} * median(nUMI)$$
+<!-- where the calculation method for relative abundance is -->
+<!-- $$abundance_{relative} = \frac{abundance_{absolute}}{nUMI} * median(nUMI)$$ -->
 
 The relevant argument settings are as follows.
 
