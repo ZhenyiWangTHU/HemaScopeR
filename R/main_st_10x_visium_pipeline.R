@@ -119,7 +119,8 @@ st_10x_visium_pipeline <- function(
 
         # For Step10 Nich
         Step10_Niche = TRUE,
-        Nich.cluster.n = 4,
+        coexistence.method = 'correlation',
+        Niche.cluster.n = 4,
 
         # settings
         condaenv = 'r-reticulate',
@@ -328,7 +329,7 @@ st_10x_visium_pipeline <- function(
     if(Step10_Niche){
         print('Performing niche analysis...')
         if(!file.exists(file.path(output.dir, 'Step8_Deconvolution', 'cell2loc_res.csv'))){
-            stop('Please run step 8  deconvolution first.')
+            stop('Please run step 8 deconvolution first.')
         }
         tmp <- read.csv(file.path(output.dir, 'Step8_Deconvolution', 'cell2loc_res.csv'),
                         row.names = 1)
@@ -349,7 +350,8 @@ st_10x_visium_pipeline <- function(
             st_obj,
             features = features,
             save_path = file.path(output.dir, 'Step10_NicheAnalysis'),
-            kmeans.n = Nich.cluster.n,
+            coexistence.method = coexistence.method,
+            kmeans.n = Niche.cluster.n,
             st_data_path = file.path(output.dir, 'Step1_Loading_Data'),
             slice = slice,
             species = species,
@@ -376,6 +378,7 @@ st_10x_visium_pipeline <- function(
     #### Generate the report ####
     print('Generating the report...')
     if(genReport){
+        library(kableExtra)
         knitr::knit(file.path(system.file(package = "HemaScopeR"), "rmd/st_base.Rmd"),
                     file.path(output.dir.final, 'st_pipeline.md'))
         markdown::markdownToHTML(file.path(output.dir.final, 'st_pipeline.md'),

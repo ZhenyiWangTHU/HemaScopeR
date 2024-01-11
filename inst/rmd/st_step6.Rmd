@@ -11,11 +11,11 @@ Signal crosstalk between cells is crucial for cellular state and behavior. Spati
 </center>
 
 <center>
-    <img src="..\\Step6_Interaction\\png\\Pathway_interaction_between_Dotplot.png" width="30%"/>
+    <img src="..\\Step6_Interaction\\png\\Pathway_interaction_between_Dotplot.png" width="60%"/>
 </center>
 
 <center>
-    <img src="..\\Step6_Interaction\\png\\LR_interaction_between_Dotplot.png" width="30%"/>
+    <img src="..\\Step6_Interaction\\png\\LR_interaction_between_Dotplot.png" width="60%"/>
 </center>
 
 The relevant argument settings are as follows.

@@ -310,6 +310,7 @@ st_NicheAnalysis <- function(
         st_obj,
         features,
         save_path = '.',
+        coexistence.method = 'correlation',
         kmeans.n = 4,
         st_data_path = NULL,
         slice = 'slice1',
@@ -326,7 +327,8 @@ st_NicheAnalysis <- function(
         st_obj = st_obj,
         features = features,
         save_path = save_path,
-        slice = slice
+        slice = slice,
+        method = coexistence.method
     )
 
     # Local Nich
