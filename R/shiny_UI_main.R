@@ -69,7 +69,7 @@ ui <- fluidPage(
           uiOutput("stepContent")
        )
       )
-     )
+     ),
 
   # ui3
   div(id = "ui3", style = "display: none;",
