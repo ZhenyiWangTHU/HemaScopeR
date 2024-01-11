@@ -2014,7 +2014,7 @@ server = function(input, output, session){
             only.pos.temp(only.pos)
             min.pct.temp(min.pct)
             logfc.threshold.temp(logfc.threshold)
-            test.use.temp(test.use))
+            test.use.temp(test.use)
 
             shinyjs::enable('only.pos')
             shinyjs::enable('min.pct')
