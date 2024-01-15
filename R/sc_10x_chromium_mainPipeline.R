@@ -116,7 +116,7 @@
 #'
 #' 14. Cell-Cell Interactions: Analyzing cell-cell interactions and communication.
 #'
-#' 15. Generate formatted analysis report.
+#' 15. Generate a well-formatted HTML analysis report.
 #'
 #' Note that, if you will use Step 5 or scVelo in Step 12, please ensure that you have installed required Python-packages in your Python environment and specify
 #' the Python path using the 'pythonPath' parameter.
