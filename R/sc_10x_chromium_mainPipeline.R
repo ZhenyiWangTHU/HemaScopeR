@@ -4,38 +4,78 @@
 #' pipeline for 10x single-cell RNA-Seq data within the HemascopeR package.
 #'
 #' @param input.data.dirs A character vector containing directory paths where 10x single-cell RNA-Seq data is stored. Each element corresponds to a path for a dataset.
-#' @param project.names A character vector specifying project names for each dataset in `input.data.dirs`. Its length should match the number of datasets in `input.data.dirs`, providing project names for each dataset. Please note that the 'project.names' parameter should be same with the 'id' parameter in cellranger count.
+#' @param project.names A character vector specifying project names for each dataset in input.data.dirs. Its length should match the number of datasets in input.data.dirs, providing project names for each dataset. Please note that the 'project.names' parameter should be the same as the 'id' parameter in cellranger count.
 #' @param output.dir The directory where analysis results and reports will be stored.
 #' @param pythonPath The path to the Python environment to use for the analysis.
-#' @param gene.column The column number in the data where gene information is stored. (Default: `2`)
-#' @param min.cells The minimum number of cells for a gene to be considered. (Default: `10`)
-#' @param min.feature The minimum number of features (genes) for a cell to be considered. (Default: `200`)
-#' @param mt.pattern The regular expression pattern to identify mitochondrial genes. (Default: `'^mt-'`)
-#' @param nFeature_RNA.limit The limit for the number of features (genes) in the RNA. (Default: `200`)
-#' @param percent.mt.limit The maximum percentage of mitochondrial genes allowed. (Default: `20`)
-#' @param scale.factor The factor for data scaling. (Default: `10000`)
-#' @param nfeatures The number of features (genes) to consider. (Default: `3000`)
-#' @param ndims The number of dimensions for analysis. (Default: `50`)
-#' @param vars.to.regress Variables to regress during data normalization. (Default: `NULL`)
-#' @param PCs The principal components (PCs) to use for analysis. (Default: `1:35`)
-#' @param resolution The resolution parameter for clustering. (Default: `0.4`)
-#' @param n.neighbors The number of neighbors for analysis. (Default: `50`)
-#' @param doublet.percentage The percentage used for doublet removal. (Default: `0.04`)
-#' @param doublerFinderwraper.PCs The PCs used in the doublet removal process. (Default: `1:20`)
-#' @param doublerFinderwraper.pN The pN parameter for doublet removal. (Default: `0.25`)
-#' @param doublerFinderwraper.pK The pK parameter for doublet removal. (Default: `0.1`)
-#' @param phate.knn The number of nearest neighbors for PhateR analysis. (Default: `50`)
-#' @param phate.npca The number of principal components for PhateR analysis. (Default: `20`)
-#' @param phate.t The t parameter for PhateR analysis. (Default: `10`)
-#' @param phate.ndim The number of dimensions for PhateR analysis. (Default: `2`)
-#' @param min.pct The minimum percentage for a gene to be considered in differential gene detection. (Default: `0.25`)
-#' @param logfc.threshold The log-fold change threshold for differential gene detection. (Default: `0.25`)
-#' @param ViolinPlot.cellTypeOrders The order of cell types for violin plot visualization. (Default: `NULL`)
-#' @param ViolinPlot.cellTypeColors The colors for different cell types in violin plot visualization. (Default: `NULL`)
-#' @param Org The organism for analysis (e.g., 'mmu' for mouse, 'hsa' for human). (Default: `NULL`)
-#' @param loom.files.path The path to loom files for scVelo analysis. (Default: `NULL`)
-#' @param sorting Boolean indicating whether to perform cell sorting in CellChat analysis. (Default: `FALSE`)
-#' @param ncores The number of CPU cores to use for parallel processing. (Default: `1`)
+#' @param gene.column The column number in the data where gene information is stored. (Default: 2)
+#' @param min.cells The minimum number of cells for a gene to be considered. (Default: 10)
+#' @param min.feature The minimum number of features (genes) for a cell to be considered. (Default: 200)
+#' @param mt.pattern The regular expression pattern to identify mitochondrial genes. (Default: '^mt-')
+#' @param nFeature_RNA.limit The limit for the number of features (genes) in the RNA. (Default: 200)
+#' @param percent.mt.limit The maximum percentage of mitochondrial genes allowed. (Default: 20)
+#' @param scale.factor The factor for data scaling. (Default: 10000)
+#' @param nfeatures The number of features (genes) to consider. (Default: 3000)
+#' @param ndims The number of dimensions for analysis. (Default: 50)
+#' @param vars.to.regress Variables to regress during data normalization. (Default: NULL)
+#' @param PCs The principal components (PCs) to use for analysis. (Default: 1:35)
+#' @param resolution The resolution parameter for clustering. (Default: 0.4)
+#' @param n.neighbors The number of neighbors for analysis. (Default: 50)
+#' @param doublet.percentage The percentage used for doublet removal. (Default: 0.04)
+#' @param doublerFinderwraper.PCs The PCs used in the doublet removal process. (Default: 1:20)
+#' @param doublerFinderwraper.pN The pN parameter for doublet removal. (Default: 0.25)
+#' @param doublerFinderwraper.pK The pK parameter for doublet removal. (Default: 0.1)
+#' @param phate.knn The number of nearest neighbors for PhateR analysis. (Default: 50)
+#' @param phate.npca The number of principal components for PhateR analysis. (Default: 20)
+#' @param phate.t The t parameter for PhateR analysis. (Default: 10)
+#' @param phate.ndim The number of dimensions for PhateR analysis. (Default: 2)
+#' @param min.pct The minimum percentage for a gene to be considered in differential gene detection. (Default: 0.25)
+#' @param marker.genes A character vector specifying marker genes for cell type identification.
+#' @param logfc.threshold The log-fold change threshold for differential gene detection. (Default: 0.25)
+#' @param ViolinPlot.cellTypeOrders The order of cell types for violin plot visualization. (Default: NULL)
+#' @param ViolinPlot.cellTypeColors The colors for different cell types in violin plot visualization. (Default: NULL)
+#' @param Org The organism for analysis (e.g., 'mmu' for mouse, 'hsa' for human). (Default: NULL)
+#' @param lineage.genelist A list of gene names for defining cell lineages.
+#' @param lineage.names A character vector specifying names for each lineage in lineage.genelist.
+#' @param groups_colors A named list specifying colors for different groups.
+#' @param slingshot.start.clus The starting cluster for slingshot analysis. (Default: NULL)
+#' @param slingshot.end.clus The ending cluster for slingshot analysis. (Default: NULL)
+#' @param slingshot.colors A vector specifying colors for slingshot analysis. (Default: NULL)
+#' @param loom.files.path The path to loom files for scVelo analysis. (Default: NULL)
+#' @param cellcycleCutoff The cell cycle cutoff for cell cycle assignment.
+#' @param sorting Boolean indicating whether to perform cell sorting in CellChat analysis. (Default: FALSE)
+#' @param ncores The number of CPU cores to use for parallel processing. (Default: 1)
+#' @param Whether_load_previous_results Boolean indicating whether to load previous analysis results. (Default: FALSE)
+#' @param Step1_Input_Data Boolean indicating whether to perform Step 1: Input Data. (Default: TRUE)
+#' @param Step1_Input_Data.type The type of input data for Step 1 (e.g., '10x', 'CEL', 'H5AD'). (Default: NULL)
+#' @param Step2_Quality_Control Boolean indicating whether to perform Step 2: Quality Control. (Default: TRUE)
+#' @param Step2_Quality_Control.RemoveBatches Boolean indicating whether to remove batches during quality control. (Default: FALSE)
+#' @param Step2_Quality_Control.RemoveDoublets Boolean indicating whether to remove doublets during quality control. (Default: FALSE)
+#' @param Step3_Clustering Boolean indicating whether to perform Step 3: Clustering. (Default: TRUE)
+#' @param Step4_Identify_Cell_Types Boolean indicating whether to perform Step 4: Identify Cell Types. (Default: TRUE)
+#' @param Step4_Use_Which_Labels Character vector specifying which labels to use for cell type identification in Step 4. (Default: NULL)
+#' @param Step4_Cluster_Labels Boolean indicating whether to cluster labels during cell type identification in Step 4. (Default: FALSE)
+#' @param Step4_Changed_Labels Boolean indicating whether to consider changed labels during cell type identification in Step 4. (Default: FALSE)
+#' @param Step4_run_sc_CNV Boolean indicating whether to run single-cell copy number variation analysis in Step 4. (Default: FALSE)
+#' @param Step5_Visualization Boolean indicating whether to perform Step 5: Visualization. (Default: TRUE)
+#' @param Step6_Find_DEGs Boolean indicating whether to perform Step 6: Find Differentially Expressed Genes (DEGs). (Default: TRUE)
+#' @param Step7_Assign_Cell_Cycle Boolean indicating whether to perform Step 7: Assign Cell Cycle. (Default: TRUE)
+#' @param Step8_Calculate_Heterogeneity Boolean indicating whether to perform Step 8: Calculate Heterogeneity. (Default: TRUE)
+#' @param Step9_Violin_Plot_for_Marker_Genes Boolean indicating whether to perform Step 9: Violin Plot for Marker Genes. (Default: TRUE)
+#' @param Step10_Calculate_Lineage_Scores Boolean indicating whether to perform Step 10: Calculate Lineage Scores. (Default: TRUE)
+#' @param Step11_GSVA Boolean indicating whether to perform Step 11: Gene Set Variation Analysis (GSVA). (Default: TRUE)
+#' @param Step11_GSVA.identify.cellType.features Boolean indicating whether to identify cell type-specific features in GSVA. (Default: TRUE)
+#' @param Step11_GSVA.identify.diff.features Boolean indicating whether to identify differentially expressed features in GSVA. (Default: TRUE)
+#' @param Step11_GSVA.comparison.design Character vector specifying the comparison design for GSVA. (Default: NULL)
+#' @param Step12_Construct_Trajectories Boolean indicating whether to perform Step 12: Construct Trajectories. (Default: TRUE)
+#' @param Step12_Construct_Trajectories.clusters Boolean indicating whether to use clusters for trajectory construction in Step 12. (Default: FALSE)
+#' @param Step12_Construct_Trajectories.monocle Boolean indicating whether to use Monocle for trajectory construction in Step 12. (Default: FALSE)
+#' @param Step12_Construct_Trajectories.slingshot Boolean indicating whether to use slingshot for trajectory construction in Step 12. (Default: FALSE)
+#' @param Step12_Construct_Trajectories.scVelo Boolean indicating whether to use scVelo for trajectory construction in Step 12. (Default: FALSE)
+#' @param Step13_TF_Analysis Boolean indicating whether to perform Step 13: Transcription Factor (TF) Analysis. (Default: TRUE)
+#' @param Step13_TF_Analysis.cellTypes_colors Boolean indicating whether to use cell type-specific colors in TF analysis in Step 13. (Default: TRUE)
+#' @param Step13_TF_Analysis.groups_colors Boolean indicating whether to use group-specific colors in TF analysis in Step 13. (Default: TRUE)
+#' @param Step14_Cell_Cell_Interaction Boolean indicating whether to perform Step 14: Cell-Cell Interaction. (Default: TRUE)
+#' @param Step15_Generate_the_Report Boolean indicating whether to perform Step 15: Generate the Report. (Default: TRUE)
 #'
 #' @details
 #' This pipeline offers a comprehensive workflow for the analysis of 10x single-cell
@@ -51,42 +91,40 @@
 #' dimensionality reduction.
 #' 
 #' 4. Automated Cell Type Identification: Automatically assigning cell types to clusters
-#' based on marker genes or other criteria.
+#' based on marker genes and mapping single-cell data to an internal reference atlas of
+#' hematopoietic cells.
 #' 
-#' 5. Visualization: Creating visualizations such as violin plots and dot plots to explore
-#' marker genes and cluster characteristics.
-#' 
-#' 6. PhateR Dimensionality Reduction: If needed, running phateR for additional dimensionality
-#' reduction.
+#' 5. Visualization: Run phateR for additional dimensionality reduction and visualization.
 #'
-#' 7. Differential Gene Detection: Identifying differentially expressed genes (DEGs) between
+#' 6. Differential Gene Detection: Identifying differentially expressed genes (DEGs) between
 #' cell clusters.
 #'
-#' 8. Mapping to Reference Atlas: Mapping single-cell data to an internal reference atlas of
-#' hematopoietic cells.
+#' 7. Cell Cycle Assignment: Assigning cells to specific cell cycle phases.
 #'
-#' 9. Cell Cycle Assignment: Assigning cells to specific cell cycle phases.
+#' 8. Assessment of Heterogeneity: Assessing heterogeneity within cell populations.
 #'
-#' 10. Assessment of Heterogeneity: Assessing heterogeneity within cell populations.
+#' 9. Creating violin plots to explore marker genes and cluster characteristics.
+#' 
+#' 10. Prediction of Lineage Scores: Predicting lineage scores for individual cells.
 #'
-#' 11. Prediction of Lineage Scores: Predicting lineage scores for individual cells.
+#' 11. Gene Set Variation Analysis (GSVA): Calculating gene set variation scores for cell types.
 #'
 #' 12. Cell Differentiation Trajectory Prediction: Predicting cell differentiation trajectories
-#' using Monocle, Slingshot, URD, and scVelo.
+#' using Monocle2, Slingshot and scVelo.
 #'
 #' 13. Transcription Factor (TF) Analysis: Analyzing transcription factors and their activity.
 #'
-#' 14. Gene Set Variation Analysis (GSVA): Calculating gene set variation scores for cell types.
+#' 14. Cell-Cell Interactions: Analyzing cell-cell interactions and communication.
 #'
-#' 15. Cell-Cell Interactions: Analyzing cell-cell interactions and communication.
+#' 15. Generate formatted analysis report.
 #'
-#' Note that, if you will use phateR, please ensure that you have phate installed in your Python environment and specify
+#' Note that, if you will use Step 5 or scVelo in Step 12, please ensure that you have installed required Python-packages in your Python environment and specify
 #' the Python path using the 'pythonPath' parameter.
 #'
 #' @return Returns the user with a well-formatted HTML analysis report and organizes the analyzed.
 #' results and publication-quality vector images for each step of the analysis workflow.
 #'
-#' @author Zhenyi Wang <wangzy17@tsinghua.org.cn> and Yuxin Miao <miaoyx21@mails.tsinghua.edu.cn>
+#' @author Zhenyi Wang wangzy17@tsinghua.org.cn and Yuxin Miao miaoyx21@mails.tsinghua.edu.cn
 #'
 #' @export
 
