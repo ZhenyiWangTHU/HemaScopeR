@@ -93,9 +93,8 @@ These Python-packages must be installed for Python-based steps in HemaScopeR.
 numpy 1.23.5
 pandas 1.3.5
 scvelo 0.2.5
-pickle 4.0
 arboreto 0.1.6
-ot 0.9.1
+pot 0.9.1
 anndata 0.9.2
 scanpy 1.9.4
 scipy 1.11.2
@@ -103,7 +102,7 @@ seaborn 0.12.2
 commot 0.0.3
 matplotlib 3.7.2
 cell2location 0.1.3
-scvi 1.0.3
+scvi-tools 1.0.3
 phate 1.0.11
 ```
      
