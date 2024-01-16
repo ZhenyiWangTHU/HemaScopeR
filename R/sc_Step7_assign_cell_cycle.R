@@ -5,11 +5,16 @@
 #' @param sc_object A Seurat object containing single-cell RNA sequencing data.
 #' @param counts_matrix The 'counts' slot in the Seurat object.
 #' @param data_matrix The 'data' slot in the Seurat object.
+#' @param cellcycleCutoff The cutoff value for distinguishing between cycling and quiescent cells. Cells with a G1G2Score below this cutoff are considered quiescent.
+#' @param cellTypeOrders The order of cell types for visualization. If not provided, the function will use the unique cell types in the input Seurat object.
 #' @param output.dir The path to the directory where the resulting plots will be stored.
 #' @param Org A character vector specifying the species of cell cycle genes, can be 'mmu' (mouse) or 'hsa' (human).
 #' 
 #' @details
-#' This function assigns cell cycle phases based on the input single-cell RNA sequencing data by analyzing cell cycle-related genes and generates plots of the cell cycle analysis results. It uses external data, including lists of cell cycle genes and cell cycle marker genes, which should be prepared and loaded before using the function. Note that scran was refered to https://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html. Cell cycle genes are from Dysfunctional CD8 T Cells Form a Proliferative, Dynamically Regulated Compartment within Human Melanoma(Table S6)first sheet, supplementary table 1, https://www.nature.com/articles/nature20123#supplementary-information
+#' This function assigns cell cycle phases based on the input single-cell RNA sequencing data by analyzing cell cycle-related genes and generates plots of the cell cycle analysis results. 
+#' It uses external data, including lists of cell cycle genes and cell cycle marker genes, which should be prepared and loaded before using the function. 
+#' Note that scran was refered to https://bioconductor.org/packages/release/bioc/vignettes/scran/inst/doc/scran.html. Cell cycle genes are from Dysfunctional CD8 T Cells Form a Proliferative, 
+#' Dynamically Regulated Compartment within Human Melanoma(Table S6)first sheet, supplementary table 1, https://www.nature.com/articles/nature20123#supplementary-information
 #' 
 #' @return Returns an updated Seurat object that includes the assigned cell cycle phases.
 #' 

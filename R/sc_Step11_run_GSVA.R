@@ -5,7 +5,11 @@
 #' @param sc_object A Seurat object containing the single-cell RNA-seq data.
 #' @param GSVA.genelist A list of gene sets for GSVA analysis.
 #' @param GSVA.cellTypes A character vector specifying the cell types or labels for each cell.
+#' @param GSVA.cellTypes.orders A character vector specifying the order of cell types for visualization.
 #' @param GSVA.cellGroups A character vector specifying the cell groups or conditions for each cell.
+#' @param GSVA.identify.cellType.features Logical. If TRUE, identify cell type-specific features.
+#' @param GSVA.identify.diff.features Logical. If TRUE, identify differentially expressed features between cell groups.
+#' @param GSVA.comparison.design A list specifying the experimental design for differential GSVA analysis.
 #' @param OrgDB An organism-specific annotation database (OrgDb) for gene symbol conversion. e.g. org.Mm.eg.db or org.Hs.eg.db.
 #' @param output.dir The directory where the GSVA results and output files will be saved.
 #' 

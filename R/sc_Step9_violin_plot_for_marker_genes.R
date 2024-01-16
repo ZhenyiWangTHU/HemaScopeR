@@ -7,6 +7,7 @@
 #' @param CellTypes A factor vector containing cell type annotations for each cell.
 #' @param cellTypeOrders A character vector specifying the order of cell types for plotting. Defaults to unique values in `CellTypes`.
 #' @param cellTypeColors A character vector specifying the colors to use for cell type groups. Defaults to a color palette.
+#' @param Org A character specifying the organism ('mmu' for mouse, 'hsa' for human).
 #' @param output.dir The path to the directory where the resulting violin plots will be saved.
 #' 
 #' @details

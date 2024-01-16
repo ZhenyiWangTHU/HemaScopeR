@@ -8,6 +8,8 @@
 #' @param lowerDetectionLimit The lower detection limit for gene expression. Genes with expression values below this limit will be treated as non-detected.
 #' @param expressionFamily The family of the expression distribution used in Monocle analysis.
 #' @param cellTypes A character vector specifying cell types or labels used for coloring in trajectory plots.
+#' @param monocle.orders A character vector specifying the order of cell types in the Monocle analysis.
+#' @param monocle.colors A character vector specifying colors for cell types in trajectory plots.
 #' @param output.dir The directory where the Monocle analysis results and plots will be saved.
 #' 
 #' @details

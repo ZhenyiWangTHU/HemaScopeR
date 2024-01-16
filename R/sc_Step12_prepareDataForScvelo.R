@@ -2,7 +2,11 @@
 #'
 #' Function \code{prepareDataForScvelo} prepares the data for scVelo analysis by formatting and saving the necessary input files.
 #' 
-#' @param 
+#' @param sc_object A Seurat object containing the single-cell RNA-seq data.
+#' @param loom.files.path A character vector specifying the path(s) to the loom files for scVelo analysis.
+#' @param scvelo.reduction A character specifying the reduction method used for scVelo analysis (default is 'pca').
+#' @param scvelo.column A character specifying the column in the Seurat object metadata containing cell types.
+#' @param output.dir A character specifying the directory where the scVelo input files will be saved.
 #' 
 #' @details
 #' This function takes a Seurat object, cell embeddings, and cell type information as input and performs the following steps:

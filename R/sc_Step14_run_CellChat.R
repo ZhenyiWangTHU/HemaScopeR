@@ -4,6 +4,8 @@
 #'
 #' @param data.input A matrix of expression data, where rows represent genes and columns represent cells. Row names should be in the format of gene symbols.
 #' @param labels A vector of cluster labels for each cell, corresponding to the columns of data.input.
+#' @param cell.orders A character vector specifying the order of cell types or clusters in the analysis.
+#' @param cell.colors A character vector specifying colors for cell types or clusters in the analysis.
 #' @param sample.names A vector of sample or cell names, corresponding to the columns of data.input.
 #' @param Org A string indicating the organism used in the analysis. It should be either "mmu" (mouse) or "hsa" (human).
 #' @param sorting A logical value indicating whether to consider cell population size in communication analysis.

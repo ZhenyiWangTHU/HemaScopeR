@@ -7,6 +7,8 @@
 #' @param seuratObjects The input Seurat objects.
 #' @param datasetID The ID of each dataset (e.g. c('ctrl', 'case')). Please do not include ':' in the datasetID.
 #' @param output.dir The path of directory for saving putputs.
+#' @param Step2_Quality_Control.RemoveBatches A logical value indicating whether to perform batch removal. Default is FALSE.
+#' @param Step2_Quality_Control.RemoveDoublets A logical value indicating whether to remove doublets. Default is FALSE.
 #' @param nFeature_RNA.limit The cutoff of the minimum number of detected genes in each cell.
 #' @param percent.mt.limit The cutoff of the maximum percentage of mitochondria genes in each cell. 
 #' @param scale.factor The scale factor for the 'data' slot in the seurat object.

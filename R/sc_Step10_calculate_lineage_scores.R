@@ -10,6 +10,8 @@
 #' @param groups_orders A character vector specifying the order of groups or clusters for plotting.
 #' @param groups_colors A character vector specifying the colors to use for group or cluster annotations. e.g. c('group1'='#d73027','group2'='#2171b5')
 #' @param lineage.genelist A list of gene sets representing lineage markers.
+#' @param lineage.names A character vector specifying the names of the lineages.
+#' @param Org A character specifying the organism ('mmu' for mouse, 'hsa' for human).
 #' @param output.dir The path to the directory where the resulting visualizations and scores will be saved.
 #' 
 #' @details

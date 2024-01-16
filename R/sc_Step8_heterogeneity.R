@@ -4,6 +4,7 @@
 #' 
 #' @param expression_matrix A numeric matrix representing the expression data, where rows are genes and columns are cells.
 #' @param cell_types_groups A data frame specifying cell type annotations for each cell, including cell type labels and group information.
+#' @param cellTypeOrders The order of cell types for visualization. If not provided, the function will use the unique cell types in the input cell_types_groups.
 #' @param output.dir The path to the directory where the resulting plots will be saved.
 #' 
 #' @details
