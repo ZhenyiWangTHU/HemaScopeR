@@ -1,12 +1,12 @@
 # Install requirements: 'shiny','textshaping','shinyjs','Seurat','phateR','DoubletFinder','monocle','slingshot','GSVA','limma','plyr','dplyr','org.Mm.eg.db','org.Hs.eg.db','CellChat','velocyto.R','SeuratWrappers','stringr','scran','ggpubr','viridis','pheatmap','parallel','reticulate',
 # 'SCENIC','feather','AUCell','GENIE3','RcisTarget','Matrix','foreach','doParallel','clusterProfiler','OpenXGR','RColorBrewer','Rfast2','SeuratDisk','abcCellmap','biomaRt','copykat','gelnet','ggplot2','parallelDist','patchwork','markdown'
-# Require R version >= 4.3.1
+# Require R version >= 4.2
 
-if (as.numeric(R.version$major) <= 4 && as.numeric(R.version$minor) < 3) {
-  # R < 4.3
-  message("Require R version >= 4.3.1")
+if (as.numeric(R.version$major) <= 4 && as.numeric(R.version$minor) < 2) {
+  # R < 4.2
+  message("Require R version >= 4.2")
 } else {
-  # R >= 4.3
+  # R >= 4.2
   message("Installing required packages from cran.")
   install.packages(c('remotes', 'shiny', 'textshaping', 'shinyjs', 'Seurat', 'phateR', 'plyr', 'dplyr', 'stringr', 'ggpubr', 'viridis', 'pheatmap', 'reticulate', 'feather', 'Matrix', 'foreach', 'doParallel', 'RColorBrewer', 'Rfast2', 'gelnet', 'ggplot2', 'parallelDist', 'patchwork', 'markdown'))
 
