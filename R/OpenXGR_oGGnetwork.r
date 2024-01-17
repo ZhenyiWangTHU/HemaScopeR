@@ -41,7 +41,7 @@
 #' @note none
 #' @export
 #' @seealso \code{\link{oGGnetwork}}
-#' @include oGGnetwork.r
+#' @include OpenXGR_oGGnetwork.r
 #' @examples
 #' \dontrun{
 #' ###########################

@@ -10,7 +10,12 @@
 #' @param doublerFinderwraper.pK The pK parameter controls the doublet cell detection by determining the number of nearest neighbors and influencing the calculation of pANN scores and the final cell classification results. Adjusting the pK value allows optimization of the doublet cell detection process based on specific data and analysis requirements.
 #'
 #' @details
-#' 
+#' The function \code{doublerFinderwraper} uses doubletFinder to identify doublets within the given Seurat object. It performs the following steps:
+#' 1. Identifies pK using paramSweep_v3 and find.pK.
+#' 2. Estimates homotypic Doublet Proportion.
+#' 3. Runs doubletFinder with varying classification stringencies based on provided parameters.
+#' 4. Adds a column 'doublet' to the meta.data to label cells as singlets or doublets.
+#'
 #' @return A seurat object with 'singlet' and 'doublet' labels in the column named 'doublet' in meta.data.
 #' 
 #' @author Zhenyi Wang wangzy17@tsinghua.org.cn and Yuxin Miao miaoyx21@mails.tsinghua.edu.cn

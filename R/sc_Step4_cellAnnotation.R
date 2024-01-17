@@ -11,7 +11,7 @@
 #' @param host A character indicating the host to connect to in `useMart` function of `biomaRt`
 #' @param assay A character indicating the source `assay` of count matrix
 #'
-#' @value The following documents are from 'abcCellmap' package: Users can predict the cell types of hematopoietic cells by implementing two approaches (Scmap and Seurat). 
+#' @details The following documents are from 'abcCellmap' package: Users can predict the cell types of hematopoietic cells by implementing two approaches (Scmap and Seurat). 
 #' Cells in our ABC are labeled by 43 different RNA clusters according to unsupervised clustering of single-cell transcriptional profiles, 
 #' and also labeled by 32 immunophenotypic cell types, involving HSPC, B cell, T cell, NK cell, Neutrophil, Monocyte and Erythrocyte population. The format of result are as follows:
 #' queryCell, Seurat.RNACluster, Seurat.RNACluster.score, Seurat.Immunophenotype, Seurat.Immunophenotype.score, 

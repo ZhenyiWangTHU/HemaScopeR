@@ -13,7 +13,7 @@
 #' @note The input graph will treat as an unweighted graph if there is no 'weight' edge attribute associated with
 #' @export
 #' @seealso \code{\link{oRDS}}, \code{\link{oIG2TB}}, \code{\link{oTB2IG}}
-#' @include oDefineNet.r
+#' @include OpenXGR_oDefineNet.r
 #' @examples
 #' \dontrun{
 #' # STRING (high quality)

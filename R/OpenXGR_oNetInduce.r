@@ -16,7 +16,7 @@
 #' @note The given vertices plus their k nearest neighbors will be used to induce the subgraph.
 #' @export
 #' @seealso \code{\link{oNetInduce}}
-#' @include oNetInduce.r
+#' @include OpenXGR_oNetInduce.r
 #' @examples
 #' \dontrun{
 #' # 1) generate a random graph according to the ER model

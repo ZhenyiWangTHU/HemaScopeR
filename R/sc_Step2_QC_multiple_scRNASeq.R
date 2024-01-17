@@ -24,6 +24,17 @@
 #' @param doublerFinderwraper.pK The pK parameter controls the doublet cell detection by determining the number of nearest neighbors and influencing the calculation of pANN scores and the final cell classification results. Adjusting the pK value allows optimization of the doublet cell detection process based on specific data and analysis requirements.
 #' 
 #' @details
+#' The function \code{QC_multiple_scRNASeq} takes Seurat objects representing scRNA-Seq datasets as input and performs the following quality control steps:
+#' 1. Normalize data using the LogNormalize method.
+#' 2. Find variable features using the vst method.
+#' 3. Scale data using the identified variable features and specified variables to regress out.
+#' 4. Perform principal component analysis (PCA) on the scaled data.
+#' 5. Find K nearest neighbors based on PCA dimensions.
+#' 6. Perform clustering analysis based on the found neighbors.
+#' 7. Optionally, remove doublets using doubletFinder.
+#' 8. Optionally, integrate multiple datasets by removing batch effects.
+#'
+#' The resulting Seurat object contains data after quality control.
 #' 
 #' @return Return a Seurat object containing data after quality control.
 #' @author Zhenyi Wang wangzy17@tsinghua.org.cn and Yuxin Miao miaoyx21@mails.tsinghua.edu.cn
