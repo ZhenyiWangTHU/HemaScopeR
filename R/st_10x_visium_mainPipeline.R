@@ -3,28 +3,69 @@
 #' Function \code{st_10x_visium_pipeline} encompasses the complete downstream
 #' analysis pipeline for 10x Visium data within HemascopeR.
 #' @param input.data.dirs A character of data path, where there are filtered_feature_bc_matrix.h5
-#' and spatial folder
-#' @param output.dir A character of path to store the results and figures
-#' @param sampleName A character of the name of the sample
-#' @param min.gene An integer representing the minimum number of genes detected in a spot
-#' @param max.gene An integer representing the maximum number of genes detected in a spot
-#' @param min.nUMI An integer representing the minimum number of nUMI detected in a spot
-#' @param max.nUMI An integer representing the maximum number of nUMI detected in a spot
-#' @param min.spot An integer representing the minimum number of spots expressing each gene
-#' @param verbose verbose as `Seurat`
-#' @param normalization.method 'SCTransform' or other choice of `normalization.method` in `NormalizaData`
-#' @param n.dim.used An integer representing the number of dimension used for finding neighbors
-#' @param resolution An float parameter of `FindClusters` of `Seurat`
-#' @param species A character representing the species of sample, `human` or `mouse`
-#' @param bool.remove.mito A bool value indicating whether removing mitochondrial gene
-#' @param bool.regress.cycling A bool value indicating whether regressing cycling
+#' and spatial folder.
+#' @param output.dir A character of path to store the results and figures.
+#' @param sampleName A character of the name of the sample.
+#' @param min.gene An integer representing the minimum number of genes detected in a spot.
+#' @param max.gene An integer representing the maximum number of genes detected in a spot.
+#' @param min.nUMI An integer representing the minimum number of nUMI detected in a spot.
+#' @param max.nUMI An integer representing the maximum number of nUMI detected in a spot.
+#' @param min.spot An integer representing the minimum number of spots expressing each gene.
+#' @param normalization.method 'SCTransform' or other choice of `normalization.method` in `NormalizaData`.
+#' @param resolution An float parameter of `FindClusters` of `Seurat`.
+#' @param npcs The total number of PCs to compute.
+#' @param pcs.used Dimensions of PCs to use as input.
+#' @param only.pos A bool value to indicate whether only return positive markers.
+#' @param min.pct The parameter of `FindAllMarkers`.
+#' @param logfc.threshold The parameter of `FindAllMarkers`.
+#' @param test.use The test used in `FindAllMarkers`.
+#' @param selection.method Method for selecting spatially variable features, `markvariogram` or `moransi`.
+#'
+#' @param commot.signaling_type The parameter of `Commot` to determine the type of interaction.
+#' Choose from 'Secreted Signaling', 'Cell-Cell Contact', and 'ECM-Receptor' for CellChatDB or.
+#' 'Secreted Signaling' and 'Cell-Cell Contact' for CellPhoneDB_v4.0. If None, all pairs in the database are returned.
+#' @param commot.database The parameter of `Commot` to determine the database used. 'CellChat' or 'CellPhoneDB_v4.0'.
+#' @param commot.min_cell_pct The parameter of `Commot`. The minimum expression percentage required for LR pairs to be kept.
+#' @param commot.dis_thr The parameter of `Commot`. The threshold of spatial distance of signaling.
+#' @param commot.n_permutations The parameter of `Commot`. Number of label permutations for computing the p-value.
+#'
+#' @param copykat.genome 'hg20' or 'mm10'
+#' @param copykat.LOW.DR The parameter of `copykat`. The minimal population fractions of genes for smoothing.
+#' @param copykat.UP.DR The parameter of `copykat`. The minimal population fractions of genes for segmentation.
+#' @param copykat.win.size The parameter of `copykat`. The minimal window sizes for segmentation.
+#' @param copykat.distance The parameter of `copykat`. Distance methods include euclidean,
+#' and correlation converted distance include pearson and spearman.
+#' @param copykat.n.cores The parameter of `copykat`. The number of cores for parallel computing.
+#'
+#' @param cell2loc.sc.h5ad.dir A character of path of h5ad file of scRNA-seq reference data, default NULL and used default dataset.
+#' @param cell2loc.sc.max.epoch A integer representing the maximum epochs of training scRNA-seq data.
+#' @param cell2loc.st.max.epoch A integer representing the maximum epochs of training ST data.
+#' @param cell2loc.use.gpu A bool value indicating whether to use GPU.
+#' @param cell2loc.use.Dataset 'HematoMap' or 'LymphNode'.
+#'
+#' @param coexistence.method The method to analyze the coexistence of cell types. 'correlation' or 'Wasserstein'.
+#' @param Niche.cluster.n The number of clusters to cluster.
+#'
+#' @param verbose verbose as `Seurat`.
+#' @param species A character representing the species of sample, `human` or `mouse`.
+#' @param bool.remove.mito A bool value indicating whether removing mitochondrial gene.
+#' @param bool.regress.cycling A bool value indicating whether regressing cycling.
 #' @param bool.regress.cycling.standard A bool value indicating the method using in
-#' regressing cycling. See more at `https://satijalab.org/seurat/articles/cell_cycle_vignette.html`
+#' regressing cycling. See more at `https://satijalab.org/seurat/articles/cell_cycle_vignette.html`.
 #' @param s.features A gene vector used to calculate the S phase score. If NULL,
-#' the default gene set will be used
+#' the default gene set will be used.
 #' @param g2m.features A gene vector used to calculate the G2/M phase score. If NULL,
-#' the default gene set will be used
-#' @param genReport A bool value indicating whether generating the report
+#' the default gene set will be used.
+#' @param genReport A bool value indicating whether generating the report.
+#' @param Step2_QC A bool value indicating whether performing QC.
+#' @param Step3_Clustering A bool value indicating whether performing clustering.
+#' @param Step4_Find_DEGs A bool value indicating whether finding DEGs.
+#' @param Step5_SVFs A bool value indicating whether identifying spatially variable genes.
+#' @param Step6_Interaction A bool value indicating whether performing spatial interaction analysis.
+#' @param Step7_CNV A bool value indicating whether performing CNV analysis.
+#' @param Step8_Deconvolution A bool value indicating whether performing deconvolution analysis.
+#' @param Step9_Cellcycle A bool value indicating whether analyzing cell cycle.
+#' @param Step10_Niche A bool value indicating whether performing niche analysis.
 #' @details
 #' This workflow encompasses data quality control (spot QC and gene QC),
 #' normalization, PCA dimensionality reduction, clustering and visualization
@@ -100,11 +141,17 @@ st_10x_visium_pipeline <- function(
         cell2loc.sc.max.epoch = 1000,
         cell2loc.st.max.epoch = 10000,
         cell2loc.use.gpu = FALSE,
+        cell2loc.use.Dataset = 'LymphNode',
 
         # For Step9 Cellcycle
         Step9_Cellcycle = TRUE,
         s.features = NULL,
         g2m.features = NULL,
+
+        # For Step10 Nich
+        Step10_Niche = TRUE,
+        coexistence.method = 'correlation',
+        Niche.cluster.n = 4,
 
         # settings
         #condaenv = 'r-reticulate',
@@ -256,7 +303,8 @@ st_10x_visium_pipeline <- function(
             species = species,
             sc.max.epoch = cell2loc.sc.max.epoch,
             st.max.epoch = cell2loc.st.max.epoch,
-            use.gpu = cell2loc.use.gpu
+            use.gpu = cell2loc.use.gpu,
+            use.Dataset = cell2loc.use.Dataset
             # condaenv = condaenv
         )
     }
@@ -272,6 +320,40 @@ st_10x_visium_pipeline <- function(
             species = species,
             FeatureColors.bi = FeatureColors.bi
         )
+    }
+
+    #### Step10: Niche analysis ####
+    if(Step10_Niche){
+      print('Performing niche analysis...')
+      if(!file.exists(file.path(output.dir, 'Step8_Deconvolution', 'cell2loc_res.csv'))){
+        stop('Please run step 8 deconvolution first.')
+      }
+      tmp <- read.csv(file.path(output.dir, 'Step8_Deconvolution', 'cell2loc_res.csv'),
+                      row.names = 1)
+      features <- colnames(tmp)
+
+      if(!all(features %in% names(st_obj@meta.data))){
+        common.barcodes <- intersect(colnames(st_obj), rownames(tmp))
+        tmp <- tmp[common.barcodes, ]
+        st_obj <- st_obj[, common.barcodes]
+        st_obj <- AddMetaData(st_obj,
+                              metadata = tmp)
+      }
+
+      rm(tmp)
+      gc()
+
+      st_obj <- st_NicheAnalysis(
+        st_obj,
+        features = features,
+        save_path = file.path(output.dir, 'Step10_NicheAnalysis'),
+        coexistence.method = coexistence.method,
+        kmeans.n = Niche.cluster.n,
+        st_data_path = file.path(output.dir, 'Step1_Loading_Data'),
+        slice = slice,
+        species = species,
+        condaenv = condaenv
+      )
     }
 
     #### Save data ####
