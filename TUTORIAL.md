@@ -13,6 +13,7 @@ scRNASeq_10x_pipeline(
                                        'project2'), 
                      output.dir = '/output/path/',
                      pythonPath = '/python/path/',
+                     databasePath = '/database/path/',
                      # quality control and preprocessing
                      gene.column = 2,
                      min.cells = 10,
@@ -168,6 +169,7 @@ scRNASeq_10x_pipeline(
                      project.names = c('SRR7881414'), 
                      output.dir = './testData/SRR7881414_result',
                      pythonPath = '/python/path',
+                     databasePath = '/database/path/',
                      # quality control and preprocessing
                      gene.column = 2,
                      min.cells = 10,

@@ -13,6 +13,7 @@
 #' @param lineage.names A character vector specifying the names of the lineages.
 #' @param Org A character specifying the organism ('mmu' for mouse, 'hsa' for human).
 #' @param output.dir The path to the directory where the resulting visualizations and scores will be saved.
+#' @param databasePath The path to the database required for the analysis.
 #' 
 #' @details
 #' This function calculates lineage scores for specified gene sets based on the provided expression data. It then generates a heatmap of lineage scores and a heatmap of gene expression patterns. You can customize the order and colors of cell types, groups, and clusters for visualization. The resulting visualizations and lineage scores are saved to the specified output directory.
@@ -33,7 +34,8 @@ lineageScores = function(expression_matrix = NULL,
                          lineage.genelist = NULL,
                          lineage.names= NULL,
                          Org = NULL,
-                         output.dir = NULL){
+                         output.dir = NULL,
+                         databasePath = NULL){
   names(lineage.genelist) <- lineage.names
   cellTypes_groups_orders <- c()
   for (i in cellTypes_orders) {
@@ -53,10 +55,10 @@ lineageScores = function(expression_matrix = NULL,
   # check the feature names
   #data("genecode_geneSymbolandEnsembleID")
   if(Org == 'mmu'){
-     load("../data/mouseGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
      genecode_geneSymbolandEnsembleID <- mouseGeneSymbolandEnsembleID
   }else if(Org == 'hsa'){
-     load("../data/humanGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/humanGeneSymbolandEnsembleID.rdata"))
      genecode_geneSymbolandEnsembleID <- humanGeneSymbolandEnsembleID
   }
         
