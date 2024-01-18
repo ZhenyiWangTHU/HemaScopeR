@@ -134,7 +134,7 @@ install.packages('HemaScopeR_1.0.0.tar.gz')
 In addition to the R-packages and Python-packages, you will also need to download the databases for HemaScopeR. The databases are available in our Cloud Drive via this link [https://cloud.tsinghua.edu.cn/d/759fd04333274d3f9946/](https://cloud.tsinghua.edu.cn/d/759fd04333274d3f9946/).
 
 #### G. Configure HemaScopeR
-Please note the installation path of Python and the storage path of databases. When running HemaScopeR, assign these two paths respectively to 'pythonPath' and 'databasesPath' parameters.
+Please note the installation path of Python and the storage path of databases. When running HemaScopeR, assign these two paths respectively to 'pythonPath' and 'databasePath' parameters.
 
 ### 3. Pull Docker image 'hemascoper' from Docker Hub
 
