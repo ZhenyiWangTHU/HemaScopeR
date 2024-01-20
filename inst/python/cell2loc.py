@@ -13,8 +13,7 @@ rcParams['pdf.fonttype'] = 42 # enables correct plotting of text for PDFs
 
 def run_cell2loc(
     st_data_path,
-    sc_h5ad_path = None,
-    library_id = 'Hema_ST',
+    sc_h5ad_path,
     save_path = '.',
     labels_key = 'seurat_clusters',
     sc_batch_key = None,
@@ -25,8 +24,7 @@ def run_cell2loc(
     nonz_mean_cutoff=1.12, 
     sc_max_epochs=1000,
     st_max_epochs=10000,
-    species='human', 
-    default_path = None
+    species='human'
 ):
 
     ref_run_name = f'{save_path}/reference_signatures'
@@ -35,10 +33,10 @@ def run_cell2loc(
     if species == 'human':
         mt_genes_head = 'MT-'
     elif species == 'mouse':
-        mt_genes_head = 'Mt-'
+        mt_genes_head = 'mt-'
 
     ## st data
-    adata_vis = sc.read_visium(st_data_path, library_id = library_id)
+    adata_vis = sc.read_visium(st_data_path)
     adata_vis.var_names_make_unique()
     adata_vis.var['SYMBOL'] = adata_vis.var_names
 
@@ -47,67 +45,56 @@ def run_cell2loc(
     adata_vis = adata_vis[:, ~adata_vis.var['MT_gene'].values]
 
     ## sc ref
-    if sc_h5ad_path is not None:
-        adata_ref = sc.read_h5ad(sc_h5ad_path)
-        adata_ref.var_names_make_unique()
-        adata_ref.var['SYMBOL'] = adata_ref.var_names
-        
-        adata_ref.var['MT_gene'] = [gene.startswith(mt_genes_head) for gene in adata_ref.var['SYMBOL']]
-        adata_ref.obsm['MT'] = adata_ref[:, adata_ref.var['MT_gene'].values].X.toarray()
-        adata_ref = adata_ref[:, ~adata_ref.var['MT_gene'].values]
+    adata_ref = sc.read_h5ad(sc_h5ad_path)
+    adata_ref.var_names_make_unique()
+    adata_ref.var['SYMBOL'] = adata_ref.var_names
 
-        from cell2location.utils.filtering import filter_genes
-        selected = filter_genes(
-            adata_ref, 
-            cell_count_cutoff=cell_count_cutoff, 
-            cell_percentage_cutoff2=cell_percentage_cutoff2, 
-            nonz_mean_cutoff=nonz_mean_cutoff
-        )
-        adata_ref = adata_ref[:, selected].copy()
+    adata_ref.var['MT_gene'] = [gene.startswith(mt_genes_head) for gene in adata_ref.var['SYMBOL']]
+    adata_ref.obsm['MT'] = adata_ref[:, adata_ref.var['MT_gene'].values].X.toarray()
+    adata_ref = adata_ref[:, ~adata_ref.var['MT_gene'].values]
 
-        ## training
-        cell2location.models.RegressionModel.setup_anndata(
-            adata=adata_ref, 
-            batch_key=sc_batch_key,
-            labels_key=labels_key
-        )
-        from cell2location.models import RegressionModel
-        mod = RegressionModel(adata_ref)
+    from cell2location.utils.filtering import filter_genes
+    selected = filter_genes(
+        adata_ref, 
+        cell_count_cutoff=cell_count_cutoff, 
+        cell_percentage_cutoff2=cell_percentage_cutoff2, 
+        nonz_mean_cutoff=nonz_mean_cutoff
+    )
+    adata_ref = adata_ref[:, selected].copy()
 
-        mod.train(max_epochs=sc_max_epochs, use_gpu=use_gpu)
-        mod.plot_history(int(sc_max_epochs * 0.02))
-        plt.savefig(f'{save_path}/png/sc_train.png', bbox_inches='tight')
-        plt.close()
-    
-        adata_ref = mod.export_posterior(
-            adata_ref, 
-            sample_kwargs={'num_samples': 1000, 
-                           'batch_size': 2500, 
-                           'use_gpu': use_gpu}
-        )
+    ## training
+    cell2location.models.RegressionModel.setup_anndata(
+        adata=adata_ref, 
+        batch_key=sc_batch_key,
+        labels_key=labels_key
+    )
+    from cell2location.models import RegressionModel
+    mod = RegressionModel(adata_ref)
 
-        # Save model
-        mod.save(f"{ref_run_name}", overwrite=True)
+    mod.train(max_epochs=sc_max_epochs, use_gpu=use_gpu)
+    adata_ref = mod.export_posterior(
+        adata_ref, 
+        sample_kwargs={'num_samples': 1000, 
+                       'batch_size': 2500, 
+                       'use_gpu': use_gpu}
+    )
 
-        adata_ref.__dict__['_raw'].__dict__['_var'] = adata_ref.__dict__['_raw'].__dict__['_var'].rename(columns={'_index': 'features'})
-        
-        adata_file = f"{ref_run_name}/sc.h5ad"
-        adata_ref.write(adata_file)
-        
-        if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
-            inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
-                                            for i in adata_ref.uns['mod']['factor_names']]].copy()
-        else:
-            inf_aver = adata_ref.var[[f'means_per_cluster_mu_fg_{i}'
-                                            for i in adata_ref.uns['mod']['factor_names']]].copy()
-        inf_aver.columns = adata_ref.uns['mod']['factor_names']
-        
+    # Save model
+    mod.save(f"{ref_run_name}", overwrite=True)
+
+    adata_file = f"{ref_run_name}/sc.h5ad"
+    adata_ref.write(adata_file)
+
+    if 'means_per_cluster_mu_fg' in adata_ref.varm.keys():
+        inf_aver = adata_ref.varm['means_per_cluster_mu_fg'][[f'means_per_cluster_mu_fg_{i}'
+                                        for i in adata_ref.uns['mod']['factor_names']]].copy()
     else:
-        inf_aver = pd.read_csv(default_path, 
-                        index_col=0)
-        
+        inf_aver = adata_ref.var[[f'means_per_cluster_mu_fg_{i}'
+                                        for i in adata_ref.uns['mod']['factor_names']]].copy()
+    inf_aver.columns = adata_ref.uns['mod']['factor_names']
+
     intersect = np.intersect1d(adata_vis.var_names, 
-                               inf_aver.index)
+                            inf_aver.index)
     adata_vis = adata_vis[:, intersect].copy()
     inf_aver = inf_aver.loc[intersect, :].copy()
 
@@ -120,15 +107,10 @@ def run_cell2loc(
         N_cells_per_location=30,
         detection_alpha=20
     )
-    mod.train(
-        max_epochs=st_max_epochs,
-        batch_size=None,
-        train_size=1,
-        use_gpu=use_gpu
-    )
-    mod.plot_history(int(st_max_epochs * 0.02))
-    plt.savefig(f'{save_path}/png/st_train.png', bbox_inches='tight')
-    plt.close()
+    mod.train(max_epochs=st_max_epochs,
+            batch_size=None,
+            train_size=1,
+            use_gpu=use_gpu)
 
     adata_vis = mod.export_posterior(
         adata_vis, 
@@ -142,13 +124,10 @@ def run_cell2loc(
 
     ## save results
     adata_vis.obs[adata_vis.uns['mod']['factor_names']] = adata_vis.obsm['q05_cell_abundance_w_sf']
-    # adata_file = f"{save_path}/st.h5ad"
-    # 
-    # del adata_vis.obsm
-    # del adata_vis.uns
-    # del adata_vis.var
-    # 
-    # adata_vis.write(adata_file)
+    adata_file = f"{save_path}/st.h5ad"
     
-    res = adata_vis.obs.iloc[:, 6:]
-    res.to_csv(f"{save_path}/cell2loc_res.csv")
+    del adata_vis.obsm
+    del adata_vis.uns
+    del adata_vis.var
+    
+    adata_vis.write(adata_file)

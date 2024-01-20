@@ -926,7 +926,7 @@ scRNASeq_10x_pipeline = function(
                                    output.dir = paste0(output.dir, '/Step12.Construct_trajectories/scVelo/'))
         
               reticulate::py_run_string(paste0("import os\noutputDir = '", output.dir, "'"))
-              reticulate::py_run_file("~/HemaScopeR/R/sc_run_scvelo.py", convert = FALSE)
+              reticulate::py_run_file(file.path(system.file(package = "HemaScopeR"), "python/sc_run_scvelo.py"), convert = FALSE)
           }
       }
       # URD
@@ -951,7 +951,7 @@ scRNASeq_10x_pipeline = function(
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
       }  
-  }else{print('Skip Step12. Construct trajectories.')} 
+  }else{print('Skip Step12. Construct trajectories.')}
     
   # Step13. TF Analysis------------------------------------------------------------------------------------
   if(Step13_TF_Analysis == TRUE){

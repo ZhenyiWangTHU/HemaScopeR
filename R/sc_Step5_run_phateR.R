@@ -27,7 +27,7 @@ run_phateR = function(sc_object = NULL,
                       phate.npca = 20,
                       phate.t = 10,
                       phate.ndim = 2){
-  if(is.null(pythonPath)==FALSE){  reticulate::use_python(pythonPath)  }
+  if(is.null(pythonPath)==FALSE){reticulate::use_python(pythonPath)}
 
   phate.object <- phate(subset(GetAssayData(object = sc_object, slot = "scale.data"),
                                rownames(GetAssayData(object = sc_object, slot = "scale.data"))%in% VariableFeatures(object = sc_object))%>%t(),
