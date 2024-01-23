@@ -8,6 +8,7 @@
 #' @param cellcycleCutoff The cutoff value for distinguishing between cycling and quiescent cells. Cells with a G1G2Score below this cutoff are considered quiescent.
 #' @param cellTypeOrders The order of cell types for visualization. If not provided, the function will use the unique cell types in the input Seurat object.
 #' @param output.dir The path to the directory where the resulting plots will be stored.
+#' @param databasePath The path to the database required for the analysis.
 #' @param Org A character vector specifying the species of cell cycle genes, can be 'mmu' (mouse) or 'hsa' (human).
 #' 
 #' @details
@@ -28,19 +29,20 @@ cellCycle = function(sc_object = NULL,
                      cellcycleCutoff = NULL,
                      cellTypeOrders = NULL,
                      output.dir = NULL,
+                     databasePath = NULL,
                      Org=NULL){
 
   counts_matrix <- counts_matrix[, rownames(sc_object@meta.data)]
   rownames(counts_matrix) <- toupper(rownames(counts_matrix))
   #data("genecode_geneSymbolandEnsembleID")
   if(Org == 'mmu'){
-     load("../data/mouseGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
      rownames(counts_matrix) <- mapvalues(rownames(counts_matrix),
                                           from = mouseGeneSymbolandEnsembleID$geneName,
                                           to = mouseGeneSymbolandEnsembleID$ensemblIDNoDot,
                                           warn_missing = FALSE)
   }else if(Org == 'hsa'){
-     load("../data/humanGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/humanGeneSymbolandEnsembleID.rdata"))
      rownames(counts_matrix) <- mapvalues(rownames(counts_matrix),
                                           from = humanGeneSymbolandEnsembleID$geneName,
                                           to = humanGeneSymbolandEnsembleID$ensemblIDNoDot,
@@ -61,7 +63,7 @@ cellCycle = function(sc_object = NULL,
   data_matrix <- data_matrix[, rownames(sc_object@meta.data)]
 
   #data("CellCycleGeneSets")  
-  load("../data/CellCycleGeneSets.rdata")
+  load(paste0(databasePath,"/CellCycleGeneSets.rdata"))
   if(Org == 'hsa'){
       cycle_genes$Gene <- toupper(cycle_genes$Gene)
   }  

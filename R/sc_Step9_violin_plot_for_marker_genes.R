@@ -9,6 +9,7 @@
 #' @param cellTypeColors A character vector specifying the colors to use for cell type groups. Defaults to a color palette.
 #' @param Org A character specifying the organism ('mmu' for mouse, 'hsa' for human).
 #' @param output.dir The path to the directory where the resulting violin plots will be saved.
+#' @param databasePath The path to the database required for the analysis.
 #' 
 #' @details
 #' This function creates violin plots for marker genes across different cell types. You can provide the expression data in the form of a data frame or matrix. The `features` parameter should contain the names of marker genes to be plotted. The `CellTypes` parameter should contain cell type annotations, and `cellTypeOrders` can be used to specify the order in which cell types are displayed in the plots. You can also customize the colors of cell type groups using `cellTypeColors`. The resulting plots are saved to the specified output directory.
@@ -25,13 +26,14 @@ combinedViolinPlot = function(dataMatrix = NULL,
                               cellTypeOrders = NULL,
                               cellTypeColors = NULL,
                               Org = NULL,
-                              output.dir = NULL){
+                              output.dir = NULL,
+                              databasePath = NULL){
   # data("genecode_geneSymbolandEnsembleID")
   if(Org == 'mmu'){
-     load("../data/mouseGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
      genecode_geneSymbolandEnsembleID <- mouseGeneSymbolandEnsembleID
   }else if(Org == 'hsa'){
-     load("../data/humanGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/humanGeneSymbolandEnsembleID.rdata"))
      genecode_geneSymbolandEnsembleID <- humanGeneSymbolandEnsembleID
   }
         

@@ -102,7 +102,7 @@ run_SCENIC = function(countMatrix = NULL,
   if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{print('Please set the path of Python.')}  
  
   reticulate::py_run_string(paste0("import os\nos.chdir('", output.dir, "')"))   
-  reticulate::py_run_file("/public/home/rp1008csj/rp1020wangzy/HemaScopeR/R/run_pyscenic_grnboost.py", convert = FALSE)
+  reticulate::py_run_file(file.path(system.file(package = "HemaScopeR"), "python/run_pyscenic_grnboost.py"), convert = FALSE)
    
   # import GRNBoost results
   GRNBoost_output <- read.delim("./03.grnboot2_network_links.tsv", header=TRUE)

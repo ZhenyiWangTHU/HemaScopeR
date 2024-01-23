@@ -7,6 +7,7 @@
 #' @param project.names A character vector specifying project names for each dataset in input.data.dirs. Its length should match the number of datasets in input.data.dirs, providing project names for each dataset. Please note that the 'project.names' parameter should be the same as the 'id' parameter in cellranger count.
 #' @param output.dir The directory where analysis results and reports will be stored.
 #' @param pythonPath The path to the Python environment to use for the analysis.
+#' @param databasePath The path to the database required for the analysis.
 #' @param gene.column The column number in the data where gene information is stored. (Default: 2)
 #' @param min.cells The minimum number of cells for a gene to be considered. (Default: 10)
 #' @param min.feature The minimum number of features (genes) for a cell to be considered. (Default: 200)
@@ -134,6 +135,7 @@ scRNASeq_10x_pipeline = function(
                                  project.names = NULL, 
                                  output.dir = NULL,
                                  pythonPath = NULL,
+                                 databasePath = NULL,
                                  # quality control and preprocessing
                                  gene.column = 2,
                                  min.cells = 10,
@@ -423,7 +425,7 @@ scRNASeq_10x_pipeline = function(
                                        output.dir = paste0(output.dir,'/Step4.Identify_Cell_Types/'))
 
       if(Org == 'hsa'){
-      load("../data/HematoMap.reference.rdata")  
+      load(paste0(databasePath,"/HematoMap.reference.rdata"))
         if(length(intersect(rownames(HematoMap.reference), rownames(sc_object))) < 1000){
               HematoMap.reference <- RenameGenesSeurat(obj = HematoMap.reference,
                                                        newnames = toupper(rownames(HematoMap.reference)),
@@ -626,6 +628,7 @@ scRNASeq_10x_pipeline = function(
                              cellcycleCutoff = cellcycleCutoff,
                              cellTypeOrders = unique(sc_object@meta.data$selectLabels),
                              output.dir=paste0(output.dir, '/Step7.Assign_cell_cycles/'),
+                             databasePath = databasePath,
                              Org = Org)
       
       # Get the names of all variables in the current environment
@@ -719,7 +722,8 @@ scRNASeq_10x_pipeline = function(
                          cellTypeOrders = ViolinPlot.cellTypeOrders,
                          cellTypeColors = ViolinPlot.cellTypeColors,
                          Org = Org,
-                         output.dir = paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'))
+                         output.dir = paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'),
+                         databasePath = databasePath)
       
       # Get the names of all variables in the current environment
       variable_names <- ls()
@@ -776,7 +780,8 @@ scRNASeq_10x_pipeline = function(
                     lineage.genelist = lineage.genelist,
                     lineage.names = lineage.names,
                     Org = Org,
-                    output.dir = paste0(output.dir, '/Step10.Calculate_lineage_scores/'))
+                    output.dir = paste0(output.dir, '/Step10.Calculate_lineage_scores/'),
+                    databasePath = databasePath)
       
       # Get the names of all variables in the current environment
       variable_names <- ls()
@@ -797,11 +802,11 @@ scRNASeq_10x_pipeline = function(
       setwd(wdir)
 
       if(Org=='mmu'){
-        load('../data/mouse_c2_v5p2.rdata')
+        load(paste0(databasePath,"/mouse_c2_v5p2.rdata"))
         GSVA.genelist <- Mm.c2
         assign('OrgDB', org.Mm.eg.db)
       }else if(Org=='hsa'){
-        load('../data/human_c2_v5p2.rdata')
+        load(paste0(databasePath,"/human_c2_v5p2.rdata"))
         GSVA.genelist <- Hs.c2
         assign('OrgDB', org.Hs.eg.db)
       }else{
@@ -841,13 +846,13 @@ scRNASeq_10x_pipeline = function(
   gene_metadata <- as.data.frame(rownames(countsSlot))
   rownames(gene_metadata) <- gene_metadata[,1]        
   if(Org == 'mmu'){
-     load("../data/mouseGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
      gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
                                              from = mouseGeneSymbolandEnsembleID$geneName,
                                              to = mouseGeneSymbolandEnsembleID$ensemblIDNoDot,
                                              warn_missing = FALSE)
   }else if(Org == 'hsa'){
-     load("../data/humanGeneSymbolandEnsembleID.rdata")
+     load(paste0(databasePath,"/humanGeneSymbolandEnsembleID.rdata"))
      gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
                                              from = humanGeneSymbolandEnsembleID$geneName,
                                              to = humanGeneSymbolandEnsembleID$ensemblIDNoDot,
@@ -921,7 +926,7 @@ scRNASeq_10x_pipeline = function(
                                    output.dir = paste0(output.dir, '/Step12.Construct_trajectories/scVelo/'))
         
               reticulate::py_run_string(paste0("import os\noutputDir = '", output.dir, "'"))
-              reticulate::py_run_file("~/HemaScopeR/R/sc_run_scvelo.py", convert = FALSE)
+              reticulate::py_run_file(file.path(system.file(package = "HemaScopeR"), "python/sc_run_scvelo.py"), convert = FALSE)
           }
       }
       # URD
@@ -946,7 +951,7 @@ scRNASeq_10x_pipeline = function(
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
       }  
-  }else{print('Skip Step12. Construct trajectories.')} 
+  }else{print('Skip Step12. Construct trajectories.')}
     
   # Step13. TF Analysis------------------------------------------------------------------------------------
   if(Step13_TF_Analysis == TRUE){

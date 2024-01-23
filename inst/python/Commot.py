@@ -18,7 +18,6 @@ import commot as ct
 
 def run_Commot(
     st_data_path,
-    library_id = 'Hema_ST',
     metadata_path = None,
     label_key = None,
     save_path = '.',
@@ -29,7 +28,7 @@ def run_Commot(
     dis_thr = 500,
     n_permutations = 1000
 ):
-    adata = sc.read_visium(st_data_path, library_id = library_id)
+    adata = sc.read_visium(st_data_path)
     adata.var_names_make_unique()
     adata.raw = adata
     sc.pp.normalize_total(adata, inplace=True)
@@ -95,10 +94,7 @@ def run_Commot(
                                          database + '-' + pathway_name]['communication_pvalue']
         communication_matrix = adata.uns['commot_cluster-' + label_key + '-' + 
                                          database + '-' + pathway_name]['communication_matrix']
-        
-        communication_matrix.to_csv(save_path + r'/Pathway_matrix/' + pathway_name + '.csv')
-        communication_pvalue.to_csv(save_path + r'/Pathway_pvalue/' + pathway_name + '.csv')
-        
+                                     
         within_cluster_pathway_matrix = []
         within_cluster_pathway_pvalue = []
         for i in range(communication_matrix.shape[0]):
@@ -139,10 +135,7 @@ def run_Commot(
                                          database + '-' + LR_pair]['communication_pvalue']
         communication_matrix = adata.uns['commot_cluster-' + label_key + '-' + 
                                          database + '-' + LR_pair]['communication_matrix']
-        
-        communication_matrix.to_csv(save_path + r'/LR_matrix/' + LR_pair + '.csv')
-        communication_pvalue.to_csv(save_path + r'/LR_pvalue/' + LR_pair + '.csv')
-        
+                                         
         within_cluster_pathway_matrix = []
         within_cluster_pathway_pvalue = []
         for i in range(communication_matrix.shape[0]):
@@ -161,7 +154,7 @@ def run_Commot(
     within_cluster_commot_matrix.to_csv(save_path + r'/LR_within_cluster_matrix.csv')
     within_cluster_commot_pvalue.to_csv(save_path + r'/LR_within_cluster_pvalue.csv')
     
-    adata.write_h5ad(save_path + './adata_Commot.h5ad')
+    adata.write_h5ad(save_path + '/adata_Commot.h5ad')
     
     # # Draw the strength of each pathway on the image
     # print('Drawing the strength of each pathway on the image')
