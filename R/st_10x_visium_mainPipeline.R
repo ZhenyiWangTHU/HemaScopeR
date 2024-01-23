@@ -66,6 +66,7 @@
 #' @param Step8_Deconvolution A bool value indicating whether performing deconvolution analysis.
 #' @param Step9_Cellcycle A bool value indicating whether analyzing cell cycle.
 #' @param Step10_Niche A bool value indicating whether performing niche analysis.
+#' @param pythonPath The path to the Python environment to use for the analysis.
 #' @details
 #' This workflow encompasses data quality control (spot QC and gene QC),
 #' normalization, PCA dimensionality reduction, clustering and visualization
@@ -269,7 +270,8 @@ st_10x_visium_pipeline <- function(
             database = commot.database,
             min_cell_pct = commot.min_cell_pct,
             dis_thr = commot.dis_thr,
-            n_permutations = commot.n_permutations
+            n_permutations = commot.n_permutations,
+            pythonPath = pythonPath
             #condaenv = condaenv
         )
     }
@@ -304,7 +306,8 @@ st_10x_visium_pipeline <- function(
             sc.max.epoch = cell2loc.sc.max.epoch,
             st.max.epoch = cell2loc.st.max.epoch,
             use.gpu = cell2loc.use.gpu,
-            use.Dataset = cell2loc.use.Dataset
+            use.Dataset = cell2loc.use.Dataset,
+            pythonPath = pythonPath
             # condaenv = condaenv
         )
     }
@@ -352,7 +355,8 @@ st_10x_visium_pipeline <- function(
         st_data_path = file.path(output.dir, 'Step1_Loading_Data'),
         slice = slice,
         species = species,
-        condaenv = condaenv
+        # condaenv = condaenv,
+        pythonPath = pythonPath
       )
     }
 

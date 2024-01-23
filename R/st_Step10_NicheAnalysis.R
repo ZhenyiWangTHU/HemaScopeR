@@ -300,7 +300,7 @@ NicheCluster <- function(
 #' @param st_data_path A path containing `spatial` file and `filtered_feature_bc_matrix.h5` file
 #' @param slice The slice to use
 #' @param species The species this sample belongs to
-#' @param condaenv The name of conda environment which downloaded `Commot`
+#' @param pythonPath The path to the Python environment to use for the analysis.
 #'
 #' @export
 #'
@@ -315,7 +315,8 @@ st_NicheAnalysis <- function(
         st_data_path = NULL,
         slice = 'slice1',
         species = 'mouse',
-        condaenv = 'r-reticulate'
+        pythonPath = NULL
+        # condaenv = 'r-reticulate'
 ){
     if(!dir.exists(save_path)){
         dir.create(save_path)
@@ -350,7 +351,8 @@ st_NicheAnalysis <- function(
             label_key = 'NicheCluster',
             save_path = save_path,
             species = species,
-            condaenv = condaenv
+            pythonPath = pythonPath
+            # condaenv = condaenv
         )
     }
 

@@ -7,7 +7,7 @@
 #' @param sc.labels.key A character indicating the key of scRNA-seq data labels
 #' used during running cell2location
 #' @param species A character, `human` or `mouse`
-#' @param condaenv A character of the name of conda environment used here
+#' @param pythonPath The path to the Python environment to use for the analysis.
 #' @param use.gpu A bool value indicating whether to use GPU
 #' @param sc.max.epoch A integer representing the maximum epochs of training scRNA-seq data
 #' @param st.max.epoch A integer representing the maximum epochs of training ST data
@@ -33,10 +33,12 @@ st_Deconvolution <- function(
     sc.max.epoch = 1000,
     st.max.epoch = 10000,
     use.gpu = TRUE,
-    condaenv = 'r-reticulate',
+    # condaenv = 'r-reticulate',
+    pythonPath = NULL,
     use.Dataset = 'LymphNode'
 ){
-    use_condaenv(condaenv)
+  if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{stop('Please set the path of Python.')}
+    # use_condaenv(condaenv)
     source_python(file.path(system.file(package = "HemaScopeR"),
                             "python/cell2loc.py"))
     if(is.null(save_path)){

@@ -12,7 +12,8 @@
 #' @param min_cell_pct The parameter of `Commot`. The minimum expression percentage required for LR pairs to be kept
 #' @param dis_thr The parameter of `Commot`. The threshold of spatial distance of signaling
 #' @param n_permutations The parameter of `Commot`. Number of label permutations for computing the p-value
-#' @param condaenv The name of virtual environment used in `conda`
+#' @param pythonPath The path to the Python environment to use for the analysis.
+#'
 #'
 #' @import reticulate
 #'
@@ -32,7 +33,8 @@ st_Interaction <- function(
         min_cell_pct = 0.05,
         dis_thr = 500,
         n_permutations = 100,
-        condaenv = 'r-reticulate'
+        pythonPath = NULL
+        # condaenv = 'r-reticulate'
 ){
     if(!dir.exists(save_path)){
         dir.create(save_path)
@@ -50,7 +52,9 @@ st_Interaction <- function(
         dir.create(file.path(save_path, 'LR_pvalue'))
     }
 
-    use_condaenv(condaenv)
+    if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{stop('Please set the path of Python.')}
+
+    # use_condaenv(condaenv)
     source_python(file.path(system.file(package = "HemaScopeR"),
                             "python/Commot.py"))
 

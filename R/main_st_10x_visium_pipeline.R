@@ -44,7 +44,7 @@
 #' @export
 #'
 
-st_10x_visium_pipeline <- function(
+st_10x_visium_pipeline_old <- function(
         input.data.dir,
         output.dir,
         sampleName = 'Hema_ST',
