@@ -68,8 +68,35 @@
 #' @param Step10_Niche A bool value indicating whether performing niche analysis.
 #' @param pythonPath The path to the Python environment to use for the analysis.
 #' @details
-#' This workflow encompasses data quality control (spot QC and gene QC),
-#' normalization, PCA dimensionality reduction, clustering and visualization
+#' The st_10x_visium_pipeline function encapsulates the complete downstream analysis pipeline
+#' for 10x Visium data within HemascopeR. It takes in various parameters to customize the analysis
+#' workflow and generates a well-formatted HTML analysis report along with meticulously organized
+#' and provided analyzed results and publication-quality vector images for each step of the analysis workflow.
+#'
+#' The function performs the following steps:
+#'
+#' 1. Loading data.
+#'
+#' 2. QC (Quality Control) of genes and spots.
+#'
+#' 3. Normalization, PCA, and clustering.
+#'
+#' 4. Finding differentially expressed genes in each cluster.
+#'
+#' 5. Identifying spatially variable features.
+#'
+#' 6. Performing spatial interaction analysis using Commot.
+#'
+#' 7. CNV (Copy Number Variation) analysis using copykat.
+#'
+#' 8. Deconvolution using cell2location.
+#'
+#' 9. Cell cycle analysis.
+#'
+#' 10. Niche analysis.
+#'
+#' Finally, it saves the analyzed data and generates the report.
+#'
 #' @return Return the user with a well-formatted HTML analysis report.
 #' Additionally, meticulously organize and provide the analyzed results and
 #' publication-quality vector images for each step of the analysis workflow.
@@ -390,80 +417,3 @@ st_10x_visium_pipeline <- function(
 
 
 
-# ### Regress cell-cycle ###
-# if(bool.regress.cycling){
-#
-#     print('Regressing out cell cycle scores...')
-#
-#     st_obj@active.assay <- 'Spatial'
-#     st_obj <- st_obj %>%
-#         NormalizeData(assay = 'Spatial', verbose = verbose) %>%
-#         FindVariableFeatures(verbose = verbose)
-#     if(bool.regress.cycling.standard){
-#         st_obj <- ScaleData(st_obj,
-#                             vars.to.regress = c('S.Score', 'G2M.Score'),
-#                             features = rownames(st_obj),
-#                             verbose = verbose)
-#     }else{
-#         st_obj$CC.Difference <- st_obj$S.Score - st_obj$G2M.Score
-#         st_obj <- ScaleData(st_obj,
-#                             vars.to.regress = 'CC.Difference',
-#                             features = rownames(st_obj),
-#                             verbose = verbose)
-#     }
-#     st_obj <- st_obj %>%
-#         RunPCA(assay = 'Spatial', verbose = verbose) %>%
-#         FindNeighbors(reduction = "pca", dims = 1:n.dim.used, verbose = verbose) %>%
-#         FindClusters(resolution = resolution, verbose = verbose) %>%
-#         RunUMAP(reduction = "pca", dims = 1:n.dim.used, verbose = verbose)
-#
-#     n.cluster.regress <- length(unique(st_obj$seurat_clusters))
-#
-#     ### Visualization ###
-#     suppressMessages(suppressWarnings(
-#         p.cluster.regress.spatial <- SpatialDimPlot(st_obj,
-#                                                     group.by = 'seurat_clusters',
-#                                                     stroke = NA) +
-#             scale_fill_manual(name = 'Cluster',
-#                               values = getDefaultClusterColor(n.cluster.regress)) +
-#             theme(legend.position = 'right',
-#                   legend.key = element_blank()) +
-#             guides(fill=guide_legend(override.aes = list(size=4)))
-#     ))
-#     saveImage(output.dir.figure,
-#               p.cluster.regress.spatial,
-#               'cluster_regress_spatial',
-#               height = 4,
-#               width = 4)
-#
-#     p.cluster.regress.umap <- DimPlot(st_obj, reduction = 'umap') +
-#         scale_color_manual(name = 'Cluster',
-#                            values = getDefaultClusterColor(n.cluster.regress)) +
-#         theme(legend.position = 'right',
-#               legend.key = element_blank()) +
-#         guides(color=guide_legend(override.aes = list(size=4)))
-#     saveImage(output.dir.figure,
-#               p.cluster.regress.umap,
-#               'cluster_regress_UMAP',
-#               height = 4,
-#               width = 4)
-#
-#     ### Differential expressed genes ###
-#     st_obj@active.ident <- st_obj$seurat_clusters
-#     st_obj.markers <- FindAllMarkers(st_obj, only.pos = TRUE,
-#                                      min.pct = 0.25, logfc.threshold = 0.25,
-#                                      verbose = verbose)
-#     st_obj.markers.top5 <- st_obj.markers %>% group_by(cluster) %>%
-#         top_n(n = 5, wt = .data[[grep('avg_log', colnames(st_obj.markers), value = T)]])
-#     st_obj.markers.top5 <- st_obj.markers.top5[!duplicated(st_obj.markers.top5$gene), ]
-#     p.degs.regress.dot <- DotPlot(st_obj, features = st_obj.markers.top5$gene,
-#                                   cols=c("lightgrey",'red'),
-#                                   group.by = 'seurat_clusters') +
-#         theme(axis.text.x = element_text(angle = 45,vjust = 0.5,hjust = 0.5)) +
-#         scale_y_discrete(limits = rev(levels(st_obj$seurat_clusters)))
-#     saveImage(output.dir.figure,
-#               p.degs.regress.dot,
-#               'DEGs_regress_dot',
-#               height = 3+0.2*n.cluster.regress,
-#               width = 2+0.25*nrow(st_obj.markers.top5))
-# }
