@@ -101,9 +101,12 @@ prepareDataForScvelo = function(sc_object = NULL,
         cell.embeddings <- cell.embeddings[order(cell.embeddings$cellNames, decreasing = FALSE),]
         cell.embeddings <- cell.embeddings[,-3]
         write.csv(cell.embeddings, file=paste0(output.dir, '/cell.embeddings.csv'), quote=FALSE, row.names = FALSE)
-        writeMM(t(splicedmat), file = paste0(output.dir, "/splicedmat.mtx"))
-        writeMM(t(umat), file = paste0(output.dir, "/umat.mtx"))
-        writeMM(t(amat), file = paste0(output.dir, "/amat.mtx"))
+        # writeMM(base::t(splicedmat), file = paste0(output.dir, "/splicedmat.mtx"))
+        # writeMM(base::t(umat), file = paste0(output.dir, "/umat.mtx"))
+        # writeMM(base::t(amat), file = paste0(output.dir, "/amat.mtx"))
+        writeMM(SeuratDisk::Transpose(splicedmat), file = paste0(output.dir, "/splicedmat.mtx"))
+        writeMM(SeuratDisk::Transpose(umat), file = paste0(output.dir, "/umat.mtx"))
+        writeMM(SeuratDisk::Transpose(amat), file = paste0(output.dir, "/amat.mtx"))
         write.csv(scvelo_combined.obs, file = paste0(output.dir, "/scvelo_combined.obs.csv"), row.names = FALSE)
         write.csv(rownames(splicedmat), file= paste0(output.dir, '/geneInfo.csv'), quote=FALSE,row.names = FALSE)
   }else{
