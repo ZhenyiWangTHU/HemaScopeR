@@ -139,7 +139,7 @@ shinyApp(ui = ui,
 
 #### Click the button 'Start scRNA-seq pipeline' to enter the following page:
 <p align="center">
-  <img src="https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_sc1.png" alt="sc1" width="50%">
+  <img src="https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_sc1.png" alt="sc1" width="80%">
 </p>
 
 #### After data loading, click the button 'Step 2. Quanlity Control' to enter the following page:
