@@ -145,7 +145,7 @@ shinyApp(ui = ui,
 #### After data loading, click the button 'Step 2. Quanlity Control' to enter the following page:
 ![sc2](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_sc2.png)
 
-Run the rest steps by following the instructions on the GUI to run the pipeline step by step.
+Proceed with the remaining steps by following the instructions on the GUI to execute the pipeline step by step.
 
 ## 4. Docker
 
