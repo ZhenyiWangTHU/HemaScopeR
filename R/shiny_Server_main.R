@@ -484,7 +484,7 @@ server = function(input, output, session){
     shinyjs::enable('RunStep2')
     output$step2_completed <- renderText({'Step2 completed.'})
 
-    output$file_list <- renderUI({
+    output$Step2.file_list <- renderUI({
       folder_path <- paste0(output.dir, '/Step2.Quality_control/')  # 指定的文件夹路径
       
       if (dir.exists(folder_path)) {
