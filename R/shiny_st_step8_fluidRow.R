@@ -12,5 +12,9 @@ step8_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep8"),
         div(class = "spacer"),  
-        uiOutput("step8_completed"))
+        uiOutput("step8_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 8. Deconvolution:"),
+            uiOutput("Step8.st.file_list"))
     )

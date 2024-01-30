@@ -9,5 +9,9 @@ step9_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep9"),
         div(class = "spacer"),  
-        uiOutput("step9_completed"))
+        uiOutput("step9_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 9. Cell cycle analysis:"),
+            uiOutput("Step9.st.file_list"))
     )

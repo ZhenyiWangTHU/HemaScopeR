@@ -14,5 +14,9 @@ step7_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep7"),
         div(class = "spacer"),  
-        uiOutput("step7_completed"))
+        uiOutput("step7_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 7. CNV analysis:"),
+            uiOutput("Step7.st.file_list"))
     )

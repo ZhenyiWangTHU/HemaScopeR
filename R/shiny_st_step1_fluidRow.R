@@ -10,6 +10,5 @@ step1_fluidRow_st <- fluidRow(
         actionButton("load_data_button", "Load Data"),
         div(class = "spacer"),
         uiOutput("loadingData"),
-        uiOutput("step1_completed")
-      )
+        uiOutput("step1_completed"))
     )
