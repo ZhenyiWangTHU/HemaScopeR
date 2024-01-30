@@ -134,6 +134,17 @@ shinyApp(ui = ui,
 
 ### B. Follow the instructions on the GUI
 
+This is the homepage of the GUI:
+![homepage](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_home.png)
+
+Click the button 'Start scRNA-seq pipeline' to enter the following page:
+![sc1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_sc1.png)
+
+After data loading, click the button 'Step 2. Quanlity Control' to enter the following page:
+![sc2](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/HemaScopeR_shiny_sc2.png)
+
+Run the rest steps by following the instructions on the GUI to run the pipeline step by step.
+
 ## 4. Docker
 
 ### A. Pull the 'hemascoper' docker image
