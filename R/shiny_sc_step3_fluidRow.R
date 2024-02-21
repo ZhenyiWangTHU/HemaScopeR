@@ -3,7 +3,7 @@ step3_fluidRow <- fluidRow(
           column(
             6, align = "left", h3("Step 3. Clustering"),
             p("Please input the parameters for clustering."),
-            textInput("PCs", "PCs for clustering (default: 1:20):", value = "1:20"),
+            textInput("PCs.clustering", "PCs for clustering (default: 1:20):", value = "1:20"),
             numericInput("n.neighbors", "n.neighbors for clustering (default: 50):", value = 50),
             numericInput("resolution", "resolution for clustering (default: 0.4):", value = 0.4),
             actionButton("RunStep3", "Run Step3"),

@@ -110,6 +110,7 @@ server = function(input, output, session){
   ndims.temp <- reactiveVal(NULL)
   vars.to.regress.temp <- reactiveVal(NULL)
   PCs.temp <- reactiveVal(NULL)
+  PCs.clustering.temp <- reactiveVal(NULL)
   resolution.temp <- reactiveVal(NULL)
   n.neighbors.temp <- reactiveVal(NULL)
   # remove doublets
@@ -563,12 +564,14 @@ server = function(input, output, session){
       Load_previous_results(previous_results_path = previous_results_path)
 
       # set parameters
-      PCs <- input$PCs
+      PCs.clustering <- input$PCs.clustering
       n.neighbors <- input$n.neighbors
       resolution <- input$resolution
+      # convert some parameters
+      PCs.clustering <- seq(from = as.numeric(unlist(strsplit(PCs.clustering, ":")))[1], to = as.numeric(unlist(strsplit(PCs.clustering, ":")))[2])
 
       shinyjs::runjs('$("#runningStep3").text("Running Step3...");')  
-      shinyjs::disable('PCs')
+      shinyjs::disable('PCs.clustering')
       shinyjs::disable('n.neighbors')
       shinyjs::disable('resolution')
       shinyjs::disable('RunStep3')
@@ -579,13 +582,18 @@ server = function(input, output, session){
 
       log_file <- file(paste0(output.dir, '/log.txt'), open = "a")
       sink(log_file, type = "output")
-
+      print('a')
       if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){graph.name <- 'integrated_snn'}else{graph.name <- 'RNA_snn'}
-      sc_object <- FindNeighbors(sc_object, dims = PCs, k.param = n.neighbors, force.recalc = TRUE)
+      print('b')
+      print(PCs.clustering)
+      print(n.neighbors)
+      sc_object <- FindNeighbors(sc_object, dims = PCs.clustering, k.param = n.neighbors, force.recalc = TRUE)
+      print('c')
       sc_object <- FindClusters(sc_object, resolution = resolution, graph.name = graph.name)
+      print('d')
       sc_object@meta.data$seurat_clusters <- as.character(as.numeric(sc_object@meta.data$seurat_clusters))
+      print('e')
       sink(NULL)
-
       # plot clustering
       pdf(paste0(paste0(output.dir,'/Step3.Clustering/'), '/sc_object ','tsne_cluster.pdf'), width = 6, height = 6)
        print(DimPlot(sc_object, reduction = "tsne", group.by = "seurat_clusters", label = FALSE, pt.size = 0.1))
@@ -612,11 +620,11 @@ server = function(input, output, session){
       }  
       
       #update parameters
-      PCs.temp(PCs)
+      PCs.clustering.temp(PCs.clustering)
       n.neighbors.temp(n.neighbors)
       resolution.temp(resolution)
 
-      shinyjs::enable('PCs')
+      shinyjs::enable('PCs.clustering')
       shinyjs::enable('n.neighbors')
       shinyjs::enable('resolution')
       shinyjs::enable('RunStep3')
@@ -642,7 +650,7 @@ server = function(input, output, session){
       # set parameters
       Org <- input$Org
       Step4_Use_Which_Labels <- input$Step4_Use_Which_Labels
-      Step4_run_sc_CNV <- input$Step4_run_sc_CNV
+      Step4_run_sc_CNV <- as.logical(input$Step4_run_sc_CNV)
       ncores <- input$ncores
 
       shinyjs::runjs('$("#runningStep4").text("Running Step4...");')  
@@ -1256,8 +1264,8 @@ server = function(input, output, session){
       Load_previous_results(previous_results_path = previous_results_path)
 
       # set parameters
-      Step11_GSVA.identify.cellType.features <- input$Step11_GSVA.identify.cellType.features
-      Step11_GSVA.identify.diff.features <- input$Step11_GSVA.identify.diff.features
+      Step11_GSVA.identify.cellType.features <- as.logical(input$Step11_GSVA.identify.cellType.features)
+      Step11_GSVA.identify.diff.features <- as.logical(input$Step11_GSVA.identify.diff.features)
       Step11_GSVA.comparison.design <- input$Step11_GSVA.comparison.design
       # convert some parameters
       if(Step11_GSVA.comparison.design=='NULL'){Step11_GSVA.comparison.design <- NULL}else{
@@ -1344,12 +1352,12 @@ server = function(input, output, session){
 
       # set parameters
       Step12_Construct_Trajectories.clusters <- input$Step12_Construct_Trajectories.clusters
-      Step12_Construct_Trajectories.monocle <- input$Step12_Construct_Trajectories.monocle
-      Step12_Construct_Trajectories.slingshot <- input$Step12_Construct_Trajectories.slingshot
+      Step12_Construct_Trajectories.monocle <- as.logical(input$Step12_Construct_Trajectories.monocle)
+      Step12_Construct_Trajectories.slingshot <- as.logical(input$Step12_Construct_Trajectories.slingshot)
       slingshot.start.clus <- input$slingshot.start.clus
       slingshot.end.clus <- input$slingshot.end.clus
       slingshot.colors <- input$slingshot.colors
-      Step12_Construct_Trajectories.scVelo <- input$Step12_Construct_Trajectories.scVelo
+      Step12_Construct_Trajectories.scVelo <- as.logical(input$Step12_Construct_Trajectories.scVelo)
       loom.files.path <- input$loom.files.path
       # convert some parameters
       if(Step12_Construct_Trajectories.clusters=='all'){Step12_Construct_Trajectories.clusters <- NULL}else{Step12_Construct_Trajectories.clusters <- unlist(strsplit(Step12_Construct_Trajectories.clusters, ","))}
@@ -1565,7 +1573,7 @@ server = function(input, output, session){
       Load_previous_results(previous_results_path = previous_results_path)
 
       # set parameters
-      sorting <- input$sorting
+      sorting <- as.logical(input$sorting)
 
       shinyjs::runjs('$("#runningStep14").text("Running Step14...");')  
       shinyjs::disable('sorting')
@@ -1842,7 +1850,7 @@ server = function(input, output, session){
     max.gene <- input$max.gene
     max.nUMI <- input$max.nUMI
     min.spot <- input$min.spot
-    bool.remove.mito <- input$bool.remove.mito
+    bool.remove.mito <- as.logical(input$bool.remove.mito)
     species <- input$species
 
     # convert some parameters
@@ -1983,7 +1991,7 @@ server = function(input, output, session){
     Load_previous_results(previous_results_path = previous_results_path)
 
     # set parameters
-    only.pos <- input$only.pos
+    only.pos <- as.logical(input$only.pos)
     min.pct <- input$min.pct
     logfc.threshold <- input$logfc.threshold
     test.use <- input$test.use
@@ -2268,7 +2276,7 @@ server = function(input, output, session){
     cell2loc.sc.h5ad.dir <- input$cell2loc.sc.h5ad.dir
     cell2loc.sc.max.epoch <- input$cell2loc.sc.max.epoch
     cell2loc.st.max.epoch <- input$cell2loc.st.max.epoch
-    cell2loc.use.gpu <- input$cell2loc.use.gpu
+    cell2loc.use.gpu <- as.logical(input$cell2loc.use.gpu)
 
     # convert some parameters
     if(cell2loc.sc.h5ad.dir=='NULL'){cell2loc.sc.h5ad.dir <- NULL}else{cell2loc.sc.h5ad.dir <- cell2loc.sc.h5ad.dir}
