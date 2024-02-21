@@ -92,7 +92,7 @@ server = function(input, output, session){
     shinyjs::show("ui2")
     #updateTabsetPanel(session, "mainTabs2", selected = "homeTab")  # ui2 tab
   })
-            
+
   step <- reactiveVal('sc_step1')
   input.data.dirs.temp <- reactiveVal(NULL)
   project.names.temp <- reactiveVal(NULL)
@@ -397,6 +397,8 @@ server = function(input, output, session){
     if (!file.exists(paste0(output.dir, '/Step2.Quality_control/'))) {
           dir.create(paste0(output.dir, '/Step2.Quality_control/'))
     }
+    Step2_Quality_Control.RemoveBatches <- as.logical(Step2_Quality_Control.RemoveBatches)
+    Step2_Quality_Control.RemoveDoublets <- as.logical(Step2_Quality_Control.RemoveDoublets)
 
     if(length(input.data.dirs) > 1){
         # preprocess and quality control for multiple scRNA-Seq data sets
@@ -575,10 +577,14 @@ server = function(input, output, session){
         dir.create(paste0(output.dir, '/Step3.Clustering/'))
       }
 
+      log_file <- file(paste0(output.dir, '/log.txt'), open = "a")
+      sink(log_file, type = "output")
+
       if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){graph.name <- 'integrated_snn'}else{graph.name <- 'RNA_snn'}
       sc_object <- FindNeighbors(sc_object, dims = PCs, k.param = n.neighbors, force.recalc = TRUE)
       sc_object <- FindClusters(sc_object, resolution = resolution, graph.name = graph.name)
       sc_object@meta.data$seurat_clusters <- as.character(as.numeric(sc_object@meta.data$seurat_clusters))
+      sink(NULL)
 
       # plot clustering
       pdf(paste0(paste0(output.dir,'/Step3.Clustering/'), '/sc_object ','tsne_cluster.pdf'), width = 6, height = 6)
@@ -1670,6 +1676,7 @@ server = function(input, output, session){
     shinyjs::hide("ui1")
     shinyjs::show("ui3")
   })
+
   step <- reactiveVal('st_step1')
   input.data.dir.temp <- reactiveVal(NULL)
   output.dir.temp <- reactiveVal(NULL)
