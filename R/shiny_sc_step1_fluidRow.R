@@ -7,6 +7,7 @@ step1_fluidRow <- fluidRow(
         textInput("project.names", "Enter project name:", value = "project.names"),
         textInput("output.dir", "Enter output path:", value = ""),
         textInput("pythonPath", "Enter the path of Python:", value = "NULL"),
+        textInput("databasePath", "Enter the path of database:", value = "NULL"),
         selectInput("Step1_Input_Data.type", "Select Data Type:", choices = c("cellranger-count", "Seurat", "Matrix")),
         numericInput("gene.column", "Gene Column (default: 2):", value = 2),
         numericInput("min.cells", "Minimum Cells (default: 10):", value = 10),

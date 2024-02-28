@@ -98,6 +98,7 @@ server = function(input, output, session){
   project.names.temp <- reactiveVal(NULL)
   output.dir.temp <- reactiveVal(NULL)
   pythonPath.temp <- reactiveVal(NULL)
+  databasePath.temp <- reactiveVal(NULL)
   # quality control and preprocessing
   gene.column.temp <- reactiveVal(NULL)
   min.cells.temp <- reactiveVal(NULL)
@@ -187,6 +188,7 @@ server = function(input, output, session){
       project.names <- input$project.names
       output.dir <- input$output.dir
       pythonPath <- input$pythonPath
+      databasePath <- input$databasePath
       gene.column <- input$gene.column
       Step1_Input_Data.type <- input$Step1_Input_Data.type
       gene.column <- input$gene.column
@@ -224,6 +226,7 @@ server = function(input, output, session){
         shinyjs::disable("project.names")
         shinyjs::disable("output.dir")
         shinyjs::disable("pythonPath")
+        shinyjs::disable("databasePath")
         shinyjs::disable("gene.column")
         shinyjs::disable("Step1_Input_Data.type")
         shinyjs::disable("gene.column")
@@ -313,6 +316,7 @@ server = function(input, output, session){
         project.names.temp(project.names)
         output.dir.temp(output.dir)
         pythonPath.temp(pythonPath)
+        databasePath.temp(databasePath)
         gene.column.temp(gene.column)
         Step1_Input_Data.type.temp(Step1_Input_Data.type)
         gene.column.temp(gene.column)
@@ -328,6 +332,7 @@ server = function(input, output, session){
         shinyjs::enable("project.names")
         shinyjs::enable("output.dir")
         shinyjs::enable("pythonPath")
+        shinyjs::enable("databasePath")
         shinyjs::enable("gene.column")
         shinyjs::enable("Step1_Input_Data.type")
         shinyjs::enable("gene.column")
@@ -580,20 +585,11 @@ server = function(input, output, session){
         dir.create(paste0(output.dir, '/Step3.Clustering/'))
       }
 
-      log_file <- file(paste0(output.dir, '/log.txt'), open = "a")
-      sink(log_file, type = "output")
-      print('a')
       if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){graph.name <- 'integrated_snn'}else{graph.name <- 'RNA_snn'}
-      print('b')
-      print(PCs.clustering)
-      print(n.neighbors)
       sc_object <- FindNeighbors(sc_object, dims = PCs.clustering, k.param = n.neighbors, force.recalc = TRUE)
-      print('c')
       sc_object <- FindClusters(sc_object, resolution = resolution, graph.name = graph.name)
-      print('d')
       sc_object@meta.data$seurat_clusters <- as.character(as.numeric(sc_object@meta.data$seurat_clusters))
-      print('e')
-      sink(NULL)
+
       # plot clustering
       pdf(paste0(paste0(output.dir,'/Step3.Clustering/'), '/sc_object ','tsne_cluster.pdf'), width = 6, height = 6)
        print(DimPlot(sc_object, reduction = "tsne", group.by = "seurat_clusters", label = FALSE, pt.size = 0.1))
@@ -643,6 +639,7 @@ server = function(input, output, session){
       # load previous parameters
       output.dir <- output.dir.temp()
       PCs <- PCs.temp()
+      databasePath <- databasePath.temp()
 
       # load previous results
       Load_previous_results(previous_results_path = previous_results_path)
@@ -670,7 +667,7 @@ server = function(input, output, session){
                                        output.dir = paste0(output.dir,'/Step4.Identify_Cell_Types/'))
 
       if(Org == 'hsa'){
-      load("../data/HematoMap.reference.rdata")  
+      load(paste0(databasePath,"/HematoMap.reference.rdata"))
         if(length(intersect(rownames(HematoMap.reference), rownames(sc_object))) < 1000){
               HematoMap.reference <- RenameGenesSeurat(obj = HematoMap.reference,
                                                        newnames = toupper(rownames(HematoMap.reference)),
@@ -761,6 +758,8 @@ server = function(input, output, session){
 
       shinyjs::enable('Org')
       shinyjs::enable('Step4_Use_Which_Labels')
+      shinyjs::enable('Step4_run_sc_CNV')
+      shinyjs::enable('ncores')
       shinyjs::enable('RunStep4')
       output$step4_completed <- renderText({'Step4 completed.'})
   })
@@ -769,7 +768,7 @@ server = function(input, output, session){
   observeEvent(input$step5, {
     step('sc_step5')
   })
-    
+
   observeEvent(input$RunStep5, {
       # load previous variables
       previous_results_path <- previous_results_path.temp()
@@ -939,12 +938,15 @@ server = function(input, output, session){
   observeEvent(input$step7, {
     step('sc_step7')
   })
-    
+      # log_file <- file(paste0(output.dir, '/log.txt'), open = "a")
+      # sink(log_file, type = "output")
+      # sink(NULL)
   observeEvent(input$RunStep7, {
       # load previous variables
       previous_results_path <- previous_results_path.temp()
 
       # load previous parameters
+      databasePath <- databasePath.temp()
       output.dir <- output.dir.temp()
       Org <- Org.temp()
 
@@ -968,6 +970,7 @@ server = function(input, output, session){
                              cellcycleCutoff = cellcycleCutoff,
                              cellTypeOrders = unique(sc_object@meta.data$selectLabels),
                              output.dir=paste0(output.dir, '/Step7.Assign_cell_cycles/'),
+                             databasePath = databasePath,
                              Org = Org)
 
       # Get the names of all variables in the current environment
@@ -1059,6 +1062,7 @@ server = function(input, output, session){
       # load previous parameters
       output.dir <- output.dir.temp()
       input.data.dirs <- input.data.dirs.temp()
+      databasePath <- databasePath.temp()
       Step2_Quality_Control.RemoveBatches <- Step2_Quality_Control.RemoveBatches.temp()
       Org <- Org.temp()
       ViolinPlot.cellTypeOrders <- ViolinPlot.cellTypeOrders.temp()
@@ -1125,7 +1129,8 @@ server = function(input, output, session){
                          cellTypeOrders = ViolinPlot.cellTypeOrders,
                          cellTypeColors = ViolinPlot.cellTypeColors,
                          Org = Org,
-                         output.dir = paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'))
+                         output.dir = paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'),
+                         databasePath = databasePath)
 
       # Get the names of all variables in the current environment
       variable_names <- ls()
@@ -1156,6 +1161,7 @@ server = function(input, output, session){
 
       # load previous parameters
       output.dir <- output.dir.temp()
+      databasePath <- databasePath.temp()
       ViolinPlot.cellTypeOrders <- ViolinPlot.cellTypeOrders.temp()
       ViolinPlot.cellTypeColors <- ViolinPlot.cellTypeColors.temp()
       Org <- Org.temp()
@@ -1224,7 +1230,8 @@ server = function(input, output, session){
                     lineage.genelist = lineage.genelist,
                     lineage.names = lineage.names,
                     Org = Org,
-                    output.dir = paste0(output.dir, '/Step10.Calculate_lineage_scores/'))
+                    output.dir = paste0(output.dir, '/Step10.Calculate_lineage_scores/'),
+                    databasePath = databasePath)
 
       # Get the names of all variables in the current environment
       variable_names <- ls()
@@ -1256,6 +1263,7 @@ server = function(input, output, session){
       previous_results_path <- previous_results_path.temp()
 
       # load previous parameters
+      databasePath <- databasePath.temp()
       output.dir <- output.dir.temp()
       Org <- Org.temp()
       ViolinPlot.cellTypeOrders <- ViolinPlot.cellTypeOrders.temp()
@@ -1285,11 +1293,11 @@ server = function(input, output, session){
       setwd(wdir)
 
       if(Org=='mmu'){
-        load('../data/mouse_c2_v5p2.rdata')
+        load(paste0(databasePath,"/mouse_c2_v5p2.rdata"))
         GSVA.genelist <- Mm.c2
         assign('OrgDB', org.Mm.eg.db)
       }else if(Org=='hsa'){
-        load('../data/human_c2_v5p2.rdata')
+        load(paste0(databasePath,"/human_c2_v5p2.rdata"))
         GSVA.genelist <- Hs.c2
         assign('OrgDB', org.Hs.eg.db)
       }else{
@@ -1345,6 +1353,7 @@ server = function(input, output, session){
       output.dir <- output.dir.temp()
       Org <- Org.temp()
       pythonPath <- pythonPath.temp()
+      databasePath <- databasePath.temp()
       ViolinPlot.cellTypeColors <- ViolinPlot.cellTypeColors.temp()
 
       # load previous results
@@ -1384,13 +1393,13 @@ server = function(input, output, session){
       gene_metadata <- as.data.frame(rownames(countsSlot))
       rownames(gene_metadata) <- gene_metadata[,1]        
       if(Org == 'mmu'){
-         load("../data/mouseGeneSymbolandEnsembleID.rdata")
+         load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
          gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
                                                  from = mouseGeneSymbolandEnsembleID$geneName,
                                                  to = mouseGeneSymbolandEnsembleID$ensemblIDNoDot,
                                                  warn_missing = FALSE)
       }else if(Org == 'hsa'){
-         load("../data/humanGeneSymbolandEnsembleID.rdata")
+         load(paste0(databasePath,"/humanGeneSymbolandEnsembleID.rdata"))
          gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
                                                  from = humanGeneSymbolandEnsembleID$geneName,
                                                  to = humanGeneSymbolandEnsembleID$ensemblIDNoDot,
