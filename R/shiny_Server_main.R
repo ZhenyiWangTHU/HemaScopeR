@@ -956,6 +956,9 @@ server = function(input, output, session){
       # set parameters
       cellcycleCutoff <- input$cellcycleCutoff
 
+      # convert some parameters
+      if(cellcycleCutoff=='NULL'){cellcycleCutoff <- NULL}else{cellcycleCutoff <- as.numeric(cellcycleCutoff)}
+
       shinyjs::runjs('$("#runningStep7").text("Running Step7...");')  
       shinyjs::disable('cellcycleCutoff')
       shinyjs::disable('RunStep7')
