@@ -132,7 +132,7 @@ server = function(input, output, session){
   ViolinPlot.cellTypeColors.temp <- reactiveVal(NULL)
   Org.temp <- reactiveVal(NULL)
   lineage.genelist.temp <- reactiveVal(NULL)
-  lineage.names <- reactiveVal(NULL)
+  lineage.names.temp <- reactiveVal(NULL)
   groups_colors.temp <- reactiveVal(NULL)
   slingshot.start.clus.temp <- reactiveVal(NULL)
   slingshot.end.clus.temp <- reactiveVal(NULL)
@@ -165,13 +165,20 @@ server = function(input, output, session){
   # Step11_GSVA = TRUE,
   # Step11_GSVA.identify.cellType.features=TRUE,
   # Step11_GSVA.identify.diff.features=FALSE,
+  Step11_GSVA.identify.cellType.features.temp <- reactiveVal(NULL)
+  Step11_GSVA.identify.diff.features.temp <- reactiveVal(NULL)
   Step11_GSVA.comparison.design.temp <- reactiveVal(NULL)
   # Step12_Construct_Trajectories = TRUE,
   Step12_Construct_Trajectories.clusters.temp <- reactiveVal(NULL)
+  Step12_Construct_Trajectories.monocle.temp <- reactiveVal(NULL)
+  Step12_Construct_Trajectories.slingshot.temp <- reactiveVal(NULL)
+  Step12_Construct_Trajectories.scVelo.temp <- reactiveVal(NULL)
   # Step12_Construct_Trajectories.monocle = TRUE,
   # Step12_Construct_Trajectories.slingshot = TRUE,
   # Step12_Construct_Trajectories.scVelo = TRUE,
   # Step13_TF_Analysis = TRUE,
+  Step13_TF_Analysis.cellTypes_colors.temp <- reactiveVal(NULL)
+  Step13_TF_Analysis.groups_colors.temp <- reactiveVal(NULL)
   # Step14_Cell_Cell_Interaction = TRUE,
   # Step15_Generate_the_Report = TRUE
 
@@ -1488,7 +1495,7 @@ server = function(input, output, session){
       
       #update parameters
       Step12_Construct_Trajectories.clusters.temp(Step12_Construct_Trajectories.clusters)
-      Step12_Construct_Trajectories.monocle.temp(Step12_Construct_Trajectories.monocle)
+      Step12_Construct_Trajectories.monocle.temp(Step12_Construct_Trajectories.monocle) 
       Step12_Construct_Trajectories.slingshot.temp(Step12_Construct_Trajectories.slingshot)
       slingshot.start.clus.temp(slingshot.start.clus)
       slingshot.end.clus.temp(slingshot.end.clus)
