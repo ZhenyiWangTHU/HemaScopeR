@@ -13,8 +13,8 @@ step11_fluidRow <- fluidRow(
                             list(c("sample5","sample6"),
                                  c("sample7","sample8")))<br>
                             which indicates "sample1 and sample2 vs sample 3 and sample4",<br>
-                             and "sample5 and sample6 vs sample 7 and sample8" :', 
-                  value = "NULL")),
+                             and "sample5 and sample6 vs sample 7 and sample8" :'), 
+                  value = "NULL"),
         actionButton("RunStep11", "Run Step11"),
         div(class = "spacer"), 
         uiOutput("runningStep11"),

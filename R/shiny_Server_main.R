@@ -1360,11 +1360,13 @@ server = function(input, output, session){
       previous_results_path <- previous_results_path.temp()
 
       # load previous parameters
+      input.data.dirs <- input.data.dirs.temp()
       output.dir <- output.dir.temp()
       Org <- Org.temp()
       pythonPath <- pythonPath.temp()
       databasePath <- databasePath.temp()
       ViolinPlot.cellTypeColors <- ViolinPlot.cellTypeColors.temp()
+      Step2_Quality_Control.RemoveBatches <- Step2_Quality_Control.RemoveBatches.temp()
 
       # load previous results
       Load_previous_results(previous_results_path = previous_results_path)
