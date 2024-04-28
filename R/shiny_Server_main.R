@@ -1367,6 +1367,7 @@ server = function(input, output, session){
       databasePath <- databasePath.temp()
       ViolinPlot.cellTypeColors <- ViolinPlot.cellTypeColors.temp()
       Step2_Quality_Control.RemoveBatches <- Step2_Quality_Control.RemoveBatches.temp()
+      PCs <- PCs.temp()
 
       # load previous results
       Load_previous_results(previous_results_path = previous_results_path)
@@ -1390,7 +1391,7 @@ server = function(input, output, session){
         loom.files.path <- gsub("^([^/].*)$", "/\\1", loom.files.path)
       }
 
-      shinyjs::runjs('$("#runningStep12").text("Running Step12...");')  
+      shinyjs::runjs('$("#runningStep12").text("Running Step12...");')
       shinyjs::disable('Step12_Construct_Trajectories.clusters')
       shinyjs::disable('Step12_Construct_Trajectories.monocle')
       shinyjs::disable('Step12_Construct_Trajectories.slingshot')
