@@ -1,4 +1,4 @@
-# HemaScopeR
+# HemaScopeR (We are currently undergoing a major version update. During this process, this version may not work properly. Please stay tuned for further updates. Thank you.)
 ![Fig. 1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/Figure1_latest.png)
 *Authors: Zhenyi Wang and Yuxin Miao*
 
