@@ -82,25 +82,25 @@ st_Deconvolution <- function(
                  species = species,
                  default_path = default_path)
 
-    # suppressMessages(suppressWarnings(
-    #     Convert(file.path(save_path, 'st.h5ad'),
-    #             dest = 'h5seurat',
-    #             assay = 'Spatial',
-    #             overwrite = TRUE)
-    # ))
-    # suppressMessages(suppressWarnings(
-    #     st_obj.cell2loc <- LoadH5Seurat(file.path(save_path, 'st.h5seurat'),
-    #                                     assay = 'Spatial')
-    # ))
-    # # saveRDS(st_obj.cell2loc,
-    # #         file.path(save_path, 'st_cell2loc.rds'))
-    #
-    # labels.name <- colnames(st_obj.cell2loc@meta.data)
-    # labels.name <- labels.name[7:length(labels.name)]
-    # cell2loc.meta <- st_obj.cell2loc[[labels.name]]
-    # write.csv(cell2loc.meta,
-    #           file.path(save_path, 'cell2loc_res.csv'),
-    #           row.names = TRUE)
+    suppressMessages(suppressWarnings(
+        Convert(file.path(save_path, 'st.h5ad'),
+                dest = 'h5seurat',
+                assay = 'Spatial',
+                overwrite = TRUE)
+    ))
+    suppressMessages(suppressWarnings(
+        st_obj.cell2loc <- LoadH5Seurat(file.path(save_path, 'st.h5seurat'),
+                                        assay = 'Spatial')
+    ))
+    # saveRDS(st_obj.cell2loc,
+    #         file.path(save_path, 'st_cell2loc.rds'))
+
+    labels.name <- colnames(st_obj.cell2loc@meta.data)
+    labels.name <- labels.name[7:length(labels.name)]
+    cell2loc.meta <- st_obj.cell2loc[[labels.name]]
+    write.csv(cell2loc.meta,
+              file.path(save_path, 'cell2loc_res.csv'),
+              row.names = TRUE)
     cell2loc.meta <- read.csv(file.path(save_path, 'cell2loc_res.csv'),
                               row.names = 1)
     labels.name <- colnames(cell2loc.meta)
