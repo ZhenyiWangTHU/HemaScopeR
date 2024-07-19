@@ -11,6 +11,6 @@ step14_fluidRow <- fluidRow(
             uiOutput("step14_completed")),
           column(
             6, align = "left",
-            h3("Browse files in Step14.Cell_cell_interection:"),
+            h3("Browse files in Step 14. Cell-Cell Interection:"),
             uiOutput("Step14.file_list"))
           )

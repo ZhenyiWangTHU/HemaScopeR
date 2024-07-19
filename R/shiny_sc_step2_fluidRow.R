@@ -25,6 +25,6 @@ step2_fluidRow <- fluidRow(
         uiOutput("step2_completed")),
       column(
             6, align = "left",
-            h3("Browse files in Step2.Quality_control:"),
+            h3("Browse files in Step 2. Quality Control:"),
             uiOutput("Step2.file_list"))
     )

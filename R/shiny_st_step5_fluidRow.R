@@ -11,5 +11,9 @@ step5_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep5"),
         div(class = "spacer"),  
-        uiOutput("step5_completed"))
+        uiOutput("step5_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 5. Spatially variable features:"),
+            uiOutput("Step5.st.file_list"))
     )

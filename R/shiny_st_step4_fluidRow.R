@@ -11,5 +11,9 @@ step4_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep4"),
         div(class = "spacer"),  
-        uiOutput("step4_completed"))
+        uiOutput("step4_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 4. Differentially expressed genes:"),
+            uiOutput("Step4.st.file_list"))
     )

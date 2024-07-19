@@ -12,5 +12,9 @@ step3_fluidRow_st <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep3"),
         div(class = "spacer"),  
-        uiOutput("step3_completed"))
+        uiOutput("step3_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 3. Clustering:"),
+            uiOutput("Step3.st.file_list"))
     )

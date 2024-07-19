@@ -115,13 +115,13 @@ library(devtools)
 ```  
 
 ```R
-install_github(repo="ZhenyiWangTHU/HemaScopeR",subdir = "/HemaScopeR")
+install_github(repo="ZhenyiWangTHU/HemaScopeR")
 ```
 
 If you do not want to update the installed dependencies, you could run this command
 
 ```R
-install_github(repo="ZhenyiWangTHU/HemaScopeR",subdir = "/HemaScopeR", dep = FALSE)
+install_github(repo="ZhenyiWangTHU/HemaScopeR", dep = FALSE)
 ```
 
 Or download HemaScopeR_1.0.0.tar.gz and install in R

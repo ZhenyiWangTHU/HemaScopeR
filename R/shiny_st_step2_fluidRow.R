@@ -1,4 +1,4 @@
-step2_fluidRow <- fluidRow(
+step2_fluidRow_st <- fluidRow(
       style = "margin-left: 10px;",
       column(
         6, align = "left", h3("Step 2. Quality Control."),
@@ -15,5 +15,9 @@ step2_fluidRow <- fluidRow(
         div(class = "spacer"), 
         uiOutput("runningStep2"),
         div(class = "spacer"),  
-        uiOutput("step2_completed"))
+        uiOutput("step2_completed")),
+      column(
+            6, align = "left",
+            h3("Browse files in Step 2. Quality Control:"),
+            uiOutput("Step2.st.file_list"))
     )

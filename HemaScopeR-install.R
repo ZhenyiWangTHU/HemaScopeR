@@ -49,7 +49,7 @@ if (as.numeric(R.version$major) <= 4 && as.numeric(R.version$minor) < 2) {
 
 # Install HemaScopeR
   message("Installing HemaScopeR")
-  devtools::install_github(repo="ZhenyiWangTHU/HemaScopeR",subdir = "/HemaScopeR")
+  devtools::install_github(repo="ZhenyiWangTHU/HemaScopeR")
 
 # Check that HemaScopeR installed.
 if (requireNamespace("HemaScopeR", quietly = TRUE)) {
