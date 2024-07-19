@@ -63,7 +63,7 @@ st_CNV <- function(
                 save_path = save_path)
 
     pred.test <- data.frame(copykat.test$prediction)
-    pred.test <- pred.test[colnames(st_obj), 'copykat.pred']
+    pred.test <- pred.test[make.names(colnames(st_obj)), 'copykat.pred']
     st_obj <- AddMetaData(st_obj, pred.test, col.name = 'CNV_state')
     st_obj$CNV_state[st_obj$CNV_state == 'aneuploid'] <- 'Aneuploid'
     st_obj$CNV_state[st_obj$CNV_state == 'diploid'] <- 'Diploid'
@@ -127,7 +127,7 @@ copykatPlot <- function(
 
     pdf(file.path(save_path, 'pdf', 'CNV_heatmap.pdf'),
         width = 10, height = 10)
-    heatmap.3(t(CNA.test[,8:ncol(CNA.test)]),dendrogram="r",
+    heatmap.3(t(CNA.test[, rownames(pred.test)]),dendrogram="r",
               distfun = function(x) parallelDist::parDist(x,threads =4, method = "euclidean"),
               hclustfun = function(x) hclust(x, method="ward.D2"),
               ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
@@ -135,13 +135,21 @@ copykatPlot <- function(
               keysize=1, density.info="none", trace="none",
               cexRow=0.1,cexCol=0.1,cex.main=1,cex.lab=0.1,
               symm=F,symkey=F,symbreaks=T,cex=1, cex.main=4, margins=c(5,5))
+    # heatmap.3(t(CNA.test[,8:ncol(CNA.test)]),dendrogram="r",
+    #           distfun = function(x) parallelDist::parDist(x,threads =4, method = "euclidean"),
+    #           hclustfun = function(x) hclust(x, method="ward.D2"),
+    #           ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
+    #           notecol="black",col=my_palette,breaks=col_breaks, key=TRUE,
+    #           keysize=1, density.info="none", trace="none",
+    #           cexRow=0.1,cexCol=0.1,cex.main=1,cex.lab=0.1,
+    #           symm=F,symkey=F,symbreaks=T,cex=1, cex.main=4, margins=c(5,5))
     legend("topright", paste("pred.",names(table(com.preN)),sep=""),
            pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=0.6, bty="n")
     dev.off()
 
     png(file.path(save_path, 'png', 'CNV_heatmap.png'),
         width = 1000, height = 1000)
-    heatmap.3(t(CNA.test[,8:ncol(CNA.test)]),dendrogram="r",
+    heatmap.3(t(CNA.test[, rownames(pred.test)]),dendrogram="r",
               distfun = function(x) parallelDist::parDist(x,threads =4, method = "euclidean"),
               hclustfun = function(x) hclust(x, method="ward.D2"),
               ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
@@ -149,6 +157,14 @@ copykatPlot <- function(
               keysize=1, density.info="none", trace="none",
               cexRow=0.1,cexCol=0.1,cex.main=1,cex.lab=0.1,
               symm=F,symkey=F,symbreaks=T,cex=1, cex.main=4, margins=c(5,5))
+    # heatmap.3(t(CNA.test[,8:ncol(CNA.test)]),dendrogram="r",
+    #           distfun = function(x) parallelDist::parDist(x,threads =4, method = "euclidean"),
+    #           hclustfun = function(x) hclust(x, method="ward.D2"),
+    #           ColSideColors=chr1,RowSideColors=cells,Colv=NA, Rowv=TRUE,
+    #           notecol="black",col=my_palette,breaks=col_breaks, key=TRUE,
+    #           keysize=1, density.info="none", trace="none",
+    #           cexRow=0.1,cexCol=0.1,cex.main=1,cex.lab=0.1,
+    #           symm=F,symkey=F,symbreaks=T,cex=1, cex.main=4, margins=c(5,5))
     legend("topright", paste("pred.",names(table(com.preN)),sep=""),
            pch=15,col=RColorBrewer::brewer.pal(n = 8, name = "Dark2")[2:1], cex=0.6, bty="n")
     dev.off()
