@@ -40,9 +40,12 @@ QC_Spatial <- function(
     if(!dir.exists(output.dir)){
         dir.create(output.dir)
     }
+
+    active.assay <- st_obj@active.assay
+
     ##### Plot nUMI #####
     p.nUMI.spatial <- mySpatialFeaturePlot(st_obj = st_obj,
-                                           features = 'nCount_Spatial',
+                                           features = paste0('nCount_', active.assay),
                                            legend.name = 'nUMI',
                                            legend.color = SpatialColors)
     saveImage(output.dir,
@@ -51,7 +54,7 @@ QC_Spatial <- function(
               height = 4,
               width = 4)
 
-    p.nUMI.violin <- VlnPlot(st_obj, features = 'nCount_Spatial') +
+    p.nUMI.violin <- VlnPlot(st_obj, features = paste0('nCount_', active.assay)) +
         xlab(NULL) +
         ggtitle('nUMI') +
         NoLegend() +
@@ -75,7 +78,7 @@ QC_Spatial <- function(
 
     ##### Plot nGene #####
     p.nGene.spatial <- mySpatialFeaturePlot(st_obj = st_obj,
-                                            features = 'nFeature_Spatial',
+                                            features = paste0('nFeature_', active.assay),
                                             legend.name = 'nGene',
                                             legend.color = SpatialColors)
     saveImage(output.dir,
@@ -84,7 +87,7 @@ QC_Spatial <- function(
               height = 4,
               width = 4)
 
-    p.nGene.violin <- VlnPlot(st_obj, features = 'nFeature_Spatial') +
+    p.nGene.violin <- VlnPlot(st_obj, features = paste0('nFeature_', active.assay)) +
         xlab(NULL) +
         ggtitle('nGene') +
         NoLegend() +
@@ -167,8 +170,9 @@ QC_Spatial <- function(
     saveRDS(st_obj, file.path(output.dir, 'raw_object.rds'))
 
     ##### Remove spots with low quality #####
-    st_obj <- st_obj %>% subset(nCount_Spatial < max.nUMI & nCount_Spatial > min.nUMI) %>%
-        subset(nFeature_Spatial < max.gene & nFeature_Spatial > min.gene)
+    # st_obj <- st_obj %>% subset(nCount_Spatial < max.nUMI & nCount_Spatial > min.nUMI) %>%
+    #     subset(nFeature_Spatial < max.gene & nFeature_Spatial > min.gene)
+    st_obj <- st_obj %>% subset(Quality == 'High')
 
     ##### Remove genes with fewer occurrences #####
     filtered_genes <- rownames(nSpot)[nSpot$nSpot > min.spot]
