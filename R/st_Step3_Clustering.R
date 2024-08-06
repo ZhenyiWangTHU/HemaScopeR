@@ -24,10 +24,12 @@
 st_Clustering <- function(
     st_obj,
     output.dir = '.',
+    assay = 'Spatial',
     normalization.method = 'SCTransform',
     npcs = 50,
     pcs.used = 1:10,
     resolution = 0.8,
+    max.n.cluster = 30,
     verbose = FALSE
 ){
     if(!dir.exists(output.dir)){
@@ -35,13 +37,13 @@ st_Clustering <- function(
     }
 
     if(normalization.method == 'SCTransform'){
-        st_obj <- st_obj %>% SCTransform(assay = 'Spatial', verbose = verbose) %>%
+        st_obj <- st_obj %>% SCTransform(assay = assay, verbose = verbose) %>%
             RunPCA(assay = 'SCT', npcs = npcs, verbose = verbose)
     }else{
         st_obj <- st_obj %>% NormalizeData(normalization.method = normalization.method, verbose = verbose) %>%
             FindVariableFeatures(verbose = verbose) %>%
             ScaleData(verbose = verbose) %>%
-            RunPCA(assay = 'Spatial', npcs = npcs, verbose = verbose)
+            RunPCA(assay = assay, npcs = npcs, verbose = verbose)
     }
 
     suppressMessages(suppressWarnings(
@@ -51,6 +53,17 @@ st_Clustering <- function(
             RunTSNE(reduction = "pca", dims = pcs.used, verbose = verbose)
     ))
     n.cluster <- length(unique(st_obj$seurat_clusters))
+
+    while (n.cluster > max.n.cluster) {
+        print(paste0('Now the number of clusters is ', n.cluster, ', which exceeds max.n.cluster. Trying less resolution...'))
+        resolution = resolution / 2
+        st_obj <- st_obj %>% FindClusters(resolution = resolution, verbose = verbose)
+        if(n.cluster == length(unique(st_obj$seurat_clusters))){
+            print('The number of clusters will not change.')
+            break
+        }
+        n.cluster <- length(unique(st_obj$seurat_clusters))
+    }
 
     ##### Visualization #####
     suppressMessages(suppressWarnings(

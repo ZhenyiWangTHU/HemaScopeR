@@ -39,10 +39,16 @@ st_CNV <- function(
     }
     setwd(save_path)
 
+    if(packageVersion('SeuratObject') >= '5.0.0'){
+        rawmat <- GetAssayData(st_obj, layer = 'counts',
+                               assay = assay)
+    }else{
+        rawmat <- GetAssayData(st_obj, slot = 'counts',
+                               assay = assay)
+    }
+
     copykat.test <- copykat::copykat(
-        rawmat = as.matrix(GetAssayData(st_obj,
-                                        slot = 'counts',
-                                        assay = assay)),
+        rawmat = as.matrix(rawmat),
         LOW.DR = LOW.DR,
         UP.DR = UP.DR,
         win.size = win.size,

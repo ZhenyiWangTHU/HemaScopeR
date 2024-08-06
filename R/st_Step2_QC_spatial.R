@@ -132,8 +132,14 @@ QC_Spatial <- function(
               width = 4)
 
     ##### Plot nSpot #####
-    # nSpot <- data.frame(nSpot = rowSums(st_obj@assays$Spatial@data > 0))
-    nSpot <- data.frame(nSpot = rowSums(as.matrix(GetAssayData(st_obj, slot = 'data') > 0)))
+    if(packageVersion('SeuratObject') >= '5.0.0'){
+        counts <- GetAssayData(st_obj, layer = 'data',
+                               assay = 'Spatial')
+    }else{
+        counts <- GetAssayData(st_obj, slot = 'data',
+                               assay = 'Spatial')
+    }
+    nSpot <- data.frame(nSpot = rowSums(as.matrix(counts > 0)))
     p.nSpot.hist <- ggplot(data = nSpot, aes(x=nSpot)) +
         geom_histogram(bins = 30, fill = '#5D69B1') +
         theme_classic()
