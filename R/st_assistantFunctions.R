@@ -36,6 +36,7 @@ plotSingle <- function(st_obj,
 #'
 #' @import Seurat
 #' @import patchwork
+#' @import RColorBrewer
 #'
 #' @export
 #'
@@ -63,6 +64,65 @@ mySpatialFeaturePlot <- function(st_obj,
                                             legend.name[i]),
                                      legend.color,
                                      ...)
+        }
+        return(wrap_plots(plots = plots,
+                          ncol = min(n.col, length(plots))))
+    }
+}
+
+plotSingle_merfish <- function(st_obj,
+                               feature,
+                               legend.name = NULL,
+                               legend.color = colorRampPalette(
+                                   colors = rev(x = brewer.pal(n = 11, name = 'RdYlBu'))
+                               ),
+                               ...){
+    suppressMessages(suppressWarnings(
+        p <- ImageFeaturePlot(st_obj,
+                              features = feature,
+                              ...) +
+            scale_fill_gradientn(
+                name = ifelse(is.null(legend.name),
+                              feature,
+                              legend.name),
+                colours = legend.color(n = 100)
+            )
+    ))
+    return(p)
+}
+
+#' Plot features on the image
+#'
+#' @import Seurat
+#' @import patchwork
+#' @import RColorBrewer
+#'
+#' @export
+#'
+myImageFeaturePlot <- function(st_obj,
+                               features,
+                               legend.name = NULL,
+                               legend.color = colorRampPalette(
+                                   colors = rev(x = brewer.pal(n = 11, name = 'RdYlBu'))
+                               ),
+                               n.col = 4,
+                               ...){
+    if(length(features) == 1){
+        return(plotSingle_merfish(st_obj,
+                                  features,
+                                  legend.name,
+                                  legend.color,
+                                  ...))
+    }else{
+        plots <- vector(mode = 'list', length = length(features))
+        for(i in 1:length(features)){
+            plots[[i]] <- plotSingle_merfish(st_obj,
+                                             features[i],
+                                             ifelse(is.null(legend.name),
+                                                    features[i],
+                                                    legend.name[i]),
+                                             legend.color,
+                                             ...)
         }
         return(wrap_plots(plots = plots,
                           ncol = min(n.col, length(plots))))
