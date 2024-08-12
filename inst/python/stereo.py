@@ -1,6 +1,6 @@
 import os
 import pandas as pd
-import scanpy as sp
+import scanpy as sc
 import stereo as st
 import warnings
 warnings.filterwarnings('ignore')
