@@ -94,6 +94,9 @@ def run_Commot(
                                          database + '-' + pathway_name]['communication_pvalue']
         communication_matrix = adata.uns['commot_cluster-' + label_key + '-' + 
                                          database + '-' + pathway_name]['communication_matrix']
+
+        communication_matrix.to_csv(save_path + r'/Pathway_matrix/' + pathway_name + '.csv')
+        communication_pvalue.to_csv(save_path + r'/Pathway_pvalue/' + pathway_name + '.csv')
                                      
         within_cluster_pathway_matrix = []
         within_cluster_pathway_pvalue = []
@@ -135,6 +138,9 @@ def run_Commot(
                                          database + '-' + LR_pair]['communication_pvalue']
         communication_matrix = adata.uns['commot_cluster-' + label_key + '-' + 
                                          database + '-' + LR_pair]['communication_matrix']
+        
+        communication_matrix.to_csv(save_path + r'/LR_matrix/' + LR_pair + '.csv')
+        communication_pvalue.to_csv(save_path + r'/LR_pvalue/' + LR_pair + '.csv')
                                          
         within_cluster_pathway_matrix = []
         within_cluster_pathway_pvalue = []
