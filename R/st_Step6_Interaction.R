@@ -61,7 +61,7 @@ st_Interaction <- function(
     run_Commot(
         st_data_path = st_data_path,
         metadata_path = metadata_path,
-        library_id = library_id,
+        # library_id = library_id,
         label_key = label_key,
         save_path = save_path,
         species = species,
