@@ -108,6 +108,7 @@ copykatPlot <- function(
 ){
 
     pred.test <- data.frame(copykat.test$prediction)
+    rownames(pred.test) <- make.names(rownames(pred.test))
     if(length(which(pred.test$copykat.pred=="not.defined")) > 0){
         pred.test <- pred.test[-which(pred.test$copykat.pred=="not.defined"),]
     }
