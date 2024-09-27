@@ -1,0 +1,2 @@
+test <- read.csv("C:/Users/zywan/Desktop/preprocessed.sample.csv", 
+                 header = T, sep=',')

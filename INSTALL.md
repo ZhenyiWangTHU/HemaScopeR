@@ -71,7 +71,6 @@ Matrix 1.6.1
 foreach 1.5.2
 doParallel 1.0.17
 clusterProfiler 4.8.3
-OpenXGR 1.0.0
 RColorBrewer 1.1.3
 Rfast2 0.1.5.1
 SeuratDisk 0.0.0.9020
