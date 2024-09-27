@@ -1,5 +1,5 @@
 # HemaScopeR (We are currently undergoing a major version update. During this process, this version may not work properly. Please stay tuned for further updates. Thank you.)
-![Fig. 1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/Figure1_latest.png)
+![Fig. 1](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/Figure1.png)
 *Authors: Zhenyi Wang and Yuxin Miao*
 
 Any suggestions and remarks might be addressed to Zhenyi Wang via wangzy17@tsinghua.org.cn, to Yuxin Miao via miaoyx21@mails.tsinghua.edu.cn, or 'Issues', and the authors will reply and address the issue within 12 hours.
@@ -9,8 +9,5 @@ Any suggestions and remarks might be addressed to Zhenyi Wang via wangzy17@tsing
 **HemaScopeR** is described in the manuscript entitled:  
 [HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells](under revision).
 
-# Installation  
-* To install, follow the instructions in [INSTALL.md](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/INSTALL.md)
-
-# Tutorial
-* For usage instructions, follow the commands in [TUTORIAL.md](https://github.com/ZhenyiWangTHU/HemaScopeR/blob/main/TUTORIAL.md)
+# Tutorials
+* For installation and usage instructions, please follow the tutorials in [TUTORIAL.md](https://zhenyiwangthu.github.io/HemaScope_Tutorial/)
