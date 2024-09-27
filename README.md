@@ -10,4 +10,4 @@ Any suggestions and remarks might be addressed to Zhenyi Wang via wangzy17@tsing
 [HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells](under revision).
 
 # Tutorials
-* For installation and usage instructions, please follow the tutorials in [TUTORIAL.md](https://zhenyiwangthu.github.io/HemaScope_Tutorial/)
+* For installation and usage instructions, please follow the tutorials in [HemaScope Tutorial](https://zhenyiwangthu.github.io/HemaScope_Tutorial/)
