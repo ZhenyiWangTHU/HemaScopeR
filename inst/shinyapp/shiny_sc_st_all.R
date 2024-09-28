@@ -35,6 +35,9 @@ library(foreach)
 library(doParallel)
 library(clusterProfiler)
 library(tools)
+library(doMC)
+library(doRNG)
+library(presto)
 #st libraries
 library(RColorBrewer)
 library(Rfast2) 
@@ -156,7 +159,7 @@ ui <- fluidPage(
   div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
       fluidRow(),
       fluidRow(
-        column(3, align = "center", imageOutput('logo'))
+        column(12, align = "center", imageOutput('logo'))
       ),
       fluidRow(
         column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
@@ -171,7 +174,7 @@ ui <- fluidPage(
       uiOutput("ui_styles")
   ),
   #ui2.1 ,zyt add this code
-  div(id = "ui2.1",style = "display: none;",#设置为隐藏不显示
+  div(id = "ui2.1",style = "display: none;",
       fluidRow(
         box(width = 4, status = "primary", solidHeader = TRUE,
             actionButton("new_analysize_btn", "Begin New Analysis", 
@@ -978,7 +981,7 @@ step_st_continue_fluidRow<-fluidRow(
 # server---------------------------------------------------------------------------------------------------------------------------------
 server = function(input, output, session){
   output$logo <- renderImage({
-    list(src = '../images/hemascoper_logo.png') #加载特定位置下的图片
+    list(src = '../images/HemaScope_logo.png',width = "80%") #加载特定位置下的图片
   }, deleteFile = FALSE) #加载后不删除
   
   output$ui_styles <- renderUI({
@@ -1541,7 +1544,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step2. Quality control:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -1549,38 +1552,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step2. Quality control")
         }
       } else {
         p("Folder does not exist.")
       }
     })
-    
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step2.Quality_control'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step2.Quality_control/', file))
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
+
     # Set the path to the folder containing the images
     img_dir <- file.path(output.dir,'Step2.Quality_control')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -1687,7 +1665,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step3. Clustering:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -1695,38 +1673,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step3. Clustering")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step3.Clustering'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step3.Clustering/', file))
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step3.Clustering')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -1894,7 +1847,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step4. Identify Cell Types:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -1902,38 +1855,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step4. Identify Cell Types")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step4.Identify_Cell_Types'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step4.Identify_Cell_Types/', file))
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step4.Identify_Cell_Types')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2056,7 +1984,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step5. Visualization:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2064,38 +1992,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step5. Visualization")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step5.Visualization'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step5.Visualization/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step5.Visualization')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2208,7 +2111,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step6. Find DEGs:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2216,38 +2119,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step6. Find DEGs")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step6.Find_DEGs'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step6.Find_DEGs/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step6.Find_DEGs')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2337,7 +2215,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step7. Assign Cell Cycles:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2345,38 +2223,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step7. Assign Cell Cycles")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step7.Assign_cell_cycles'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step7.Assign_cell_cycles/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step7.Assign_cell_cycles')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2470,7 +2323,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step8. Calculate Heterogeneity:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2478,38 +2331,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step8. Calculate Heterogeneity")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step8.Calculate_heterogeneity'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step8.Calculate_heterogeneity/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step8.Calculate_heterogeneity')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2643,7 +2471,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step9. Violin Plot for Marker Genes:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2651,38 +2479,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step9. Violin Plot for Marker Genes")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step9.Violin_plot_for_marker_genes'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step9.Violin_plot_for_marker_genes')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2819,7 +2622,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step10. Calculate Lineage Scores:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2827,38 +2630,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step10. Calculate Lineage Scores")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step10.Calculate_lineage_scores'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step10.Calculate_lineage_scores/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step10.Calculate_lineage_scores')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -2979,7 +2757,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step11. GSVA:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -2987,38 +2765,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step11. GSVA")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step11.GSVA'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step11.GSVA/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step11.GSVA')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -3219,7 +2972,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step12. Construct Trajectories:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -3227,38 +2980,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step12. Construct Trajectories")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step12.Construct_trajectories'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step12.Construct_trajectories/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step12.Construct_trajectories')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -3337,7 +3065,7 @@ server = function(input, output, session){
     output$step13_completed <- renderText({'Step13 completed'})
     #download files
     output$Step13.file_list <- renderUI({
-      folder_path <- paste0(output.dir, '/Step13.TF_analysis')  # 指定的文件夹路径  '/Step5.Visualization'
+      folder_path <- paste0(output.dir, '/int')  # 指定的文件夹路径  '/Step5.Visualization'
       
       if (dir.exists(folder_path)) {
         files <- list.files(folder_path)
@@ -3352,7 +3080,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step13. TF Analysis:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -3360,40 +3088,15 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step13. TF Analysis")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(paste0(output.dir, '/Step13.TF_analysis'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(paste0(output.dir, '/Step13.TF_analysis/', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
-    img_dir <- file.path(output.dir,'Step13.TF_analysis')
+    img_dir <- file.path(output.dir,'int')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
     
     if(length(images)!=0){
@@ -3435,6 +3138,8 @@ server = function(input, output, session){
     shinyjs::disable('sorting')
     shinyjs::disable('RunStep14')
     
+    #output.dir
+    output.dir <- gsub("/Step13.TF_analysis$", "", output.dir)
     if (!file.exists(paste0(output.dir, '/Step14.Cell_cell_interection'))) {
       dir.create(paste0(output.dir, '/Step14.Cell_cell_interection'))
     }
@@ -3466,13 +3171,13 @@ server = function(input, output, session){
     
     output$Step14.file_list <- renderUI({
       # dirs
-      if (dir.exists(paste0(output.dir, '/Step14.Cell_cell_interection'))) {
+      if (dir.exists(output.dir)) {
         # files
-        files <- list.files(paste0(output.dir, '/Step14.Cell_cell_interection'))
+        files <- list.files(output.dir)
         
         if (length(files) > 0) {
           file_links <- lapply(files, function(file) {
-            a(href = paste0(output.dir, '/Step14.Cell_cell_interection/', file), file) # create links
+            a(href = paste0(output.dir, '/', file), file) # create links
           })
           
           tagList(
@@ -3491,7 +3196,7 @@ server = function(input, output, session){
       }
     })
     #show figures
-    img_dir <- file.path(output.dir,'Step14.Cell_cell_interection')
+    img_dir <- file.path(output.dir)
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
     
     if(length(images)!=0){
@@ -3821,7 +3526,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step2. QC:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -3829,38 +3534,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step2. QC")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir, 'Step2_QC'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir, 'Step2_QC', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step2_QC/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -3956,7 +3636,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step3_Clustering:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -3964,38 +3644,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step3_Clustering")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  
-    observe({
-      for (file in list.files(file.path(output.dir,'Step3_Clustering'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step3_Clustering', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step3_Clustering/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4090,7 +3745,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step4_Find_DEGs:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4098,38 +3753,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step4_Find_DEGs")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  
-    observe({
-      for (file in list.files(file.path(output.dir,'Step4_Find_DEGs'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step4_Find_DEGs', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step4_Find_DEGs/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4220,7 +3850,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step5_SpatiallyVariableFeatures:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4228,38 +3858,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step5_SpatiallyVariableFeatures")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step5_SpatiallyVariableFeatures'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step5_SpatiallyVariableFeatures', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step5_SpatiallyVariableFeatures/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4369,7 +3974,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step6_Interaction:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4377,38 +3982,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step6_Interaction")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step6_Interaction'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step6_Interaction', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step6_Interaction/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4518,7 +4098,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step7_CNV_analysis:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4526,38 +4106,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step7_CNV_analysis")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step7_CNV_analysis'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step7_CNV_analysis', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step7_CNV_analysis/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4662,7 +4217,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step8_Deconvolution:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4670,38 +4225,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step8_Deconvolution")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step8_Deconvolution'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step8_Deconvolution', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step8_Deconvolution')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4793,7 +4323,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step9_Cellcycle:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4801,38 +4331,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step9_Cellcycle")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step9_Cellcycle'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step9_Cellcycle', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step9_Cellcycle')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
@@ -4937,7 +4442,7 @@ server = function(input, output, session){
           })
           
           tagList(
-            p("Files in the folder:"),
+            p("Files in Step10_NicheAnalysis:"),
             tags$ul(
               lapply(file_links, function(link) {
                 tags$li(link)
@@ -4945,38 +4450,13 @@ server = function(input, output, session){
             )
           )
         } else {
-          p("No files found in the folder")
+          p("No files found in Step10_NicheAnalysis")
         }
       } else {
         p("Folder does not exist.")
       }
     })
     
-    selected_file <- reactiveVal(NULL)
-    
-    # Listen to the click event on the file links  # '/Step5.Visualization'
-    observe({
-      for (file in list.files(file.path(output.dir,'Step10_NicheAnalysis'))) {
-        link_name <- paste0("download_", file)
-        observeEvent(input[[link_name]], {
-          selected_file(file.path(output.dir,'Step10_NicheAnalysis', file)) # '/Step5.Visualization/'
-        })
-      }
-    })
-    
-    output$download <- downloadHandler(
-      filename = function() {
-        if (!is.null(selected_file())) {
-          basename(selected_file())
-        }
-      },
-      content = function(file) {
-        if (!is.null(selected_file())) {
-          file_content <- readBin(selected_file(), "raw", n=file.size(selected_file()))
-          return(file_content)
-        }
-      }
-    )
     #show figures
     img_dir <- file.path(output.dir,'Step10_NicheAnalysis')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
