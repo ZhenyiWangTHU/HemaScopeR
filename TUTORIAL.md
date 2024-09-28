@@ -262,6 +262,8 @@ st_10x_visium_pipeline(
     input.data.dir = './testData/GSE230207_RAW/hot',
     output.dir = './testData/GSE230207_hot_result',
     sampleName = 'GSE230207_hot',
+    pythonPath = '/python/path',
+
     Step2_QC = TRUE,
     Step3_Clustering = TRUE,
     Step4_Find_DEGs = TRUE,
