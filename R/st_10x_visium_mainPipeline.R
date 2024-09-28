@@ -287,7 +287,7 @@ st_10x_visium_pipeline <- function(
         write.csv(st_obj@meta.data,
                   file.path(interaction_path, 'metadata.csv'),
                   row.names = TRUE)
-        st_interaction(
+        st_Interaction(
             st_data_path = input.data.dir,
             metadata_path = file.path(interaction_path, 'metadata.csv'),
             label_key = 'seurat_clusters',
