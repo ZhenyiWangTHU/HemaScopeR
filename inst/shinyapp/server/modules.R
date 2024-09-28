@@ -1,1 +1,0 @@
-callModule(server.home_daily_papers, "homepage_daily_papers")
