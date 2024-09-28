@@ -1,4 +1,4 @@
-<<<<<<< Updated upstream:R/st_assistantFunctions.R
+#<<<<<<< Updated upstream:R/st_assistantFunctions.R
 #### Functions ####
 getDefaultClusterColor <- function(n.cluster){
     brewer.set3 <- c('#8DD3C7','#FFFFB3','#BEBADA','#FB8072','#80B1D3','#FDB462',
