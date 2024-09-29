@@ -11,7 +11,7 @@
 #' @param is_sparse The matrix is sparse matrix if is_sparse is True else np.ndarray
 #' @param gene_list Restrict to this gene list
 #' @param region Restrict to this region, [minX, maxX, minY, maxY]
-#' 
+#'
 #' @param min.gene An integer representing the minimum number of genes detected in a spot
 #' @param max.gene An integer representing the maximum number of genes detected in a spot
 #' @param min.nUMI An integer representing the minimum number of nUMI detected in a spot
@@ -19,21 +19,21 @@
 #' @param min.spot An integer representing the minimum number of spots expressing each gene
 #' @param species A character representing the species of sample, `human` or `mouse`
 #' @param bool.remove.mito A bool value indicating whether removing mitochondrial gene
-#' 
+#'
 #' @param normalization.method 'SCTransform' or other choice of `normalization.method` in `NormalizaData`
 #' @param n.dim.used An integer representing the number of dimension used for finding neighbors
 #' @param resolution An float parameter of `FindClusters` of `Seurat`
-#' 
+#'
 #' @param only.pos A bool value to indicate whether only return positive markers.
 #' @param min.pct The parameter of `FindAllMarkers`.
 #' @param logfc.threshold The parameter of `FindAllMarkers`.
 #' @param test.use The test used in `FindAllMarkers`.
-#' 
+#'
 #' @param selection.method Method for selecting spatially variable features,
 #' `markvariogram` or `moransi`
 #' @param n.top.show The number of top genes shown in the figure
 #' @param n.col The number of columns in the output figure
-#' 
+#'
 #' @param h5ad_path The path of MERFISH data in h5ad format
 #' @param counts_path The path of counts data in csv format
 #' @param counts_transpose Whether to transpose the counts matrix. If rows stand for genes, it will be `FALSE`.
@@ -46,16 +46,16 @@
 #' @param commot.min_cell_pct The parameter of `Commot`. The minimum expression percentage required for LR pairs to be kept
 #' @param commot.dis_thr The parameter of `Commot`. The threshold of spatial distance of signaling
 #' @param commot.n_permutations The parameter of `Commot`. Number of label permutations for computing the p-value
-#' 
+#'
 #' @param @param Step2_QC A bool value indicating whether performing QC.
 #' @param Step3_Clustering A bool value indicating whether performing clustering.
 #' @param Step4_Find_DEGs A bool value indicating whether finding DEGs.
 #' @param Step5_SVFs A bool value indicating whether identifying spatially variable genes.
 #' @param Step6_Interaction A bool value indicating whether performing spatial interaction analysis.
-#' 
+#'
 #' @param verbose verbose as `Seurat`
 #' @param pythonPath The path to the Python environment to use for the analysis.
-#' 
+#'
 #' @details
 #' The st_MERFISH_pipeline function encapsulates the complete downstream analysis pipeline
 #' for MERFISH data within HemascopeR. It takes in various parameters to customize the analysis
@@ -74,8 +74,8 @@
 #' 5. Identifying spatially variable features.
 #'
 #' 6. Performing spatial interaction analysis using Commot.
-#' 
-#' 
+#'
+#'
 #' @author Zhenyi Wang wangzy17@tsinghua.org.cn and Yuxin Miao miaoyx21@mails.tsinghua.edu.cn
 #' @import Seurat
 #' @import stringr
@@ -92,7 +92,7 @@ st_stereo_pipeline <- function(
         input.data.dir,
         output.dir,
         sampleName = 'Hema_stereo',
-        
+
         # For Step1 Loading
         data_type = 'gem',
         sep = '\t',
@@ -100,10 +100,10 @@ st_stereo_pipeline <- function(
         bin_size = 100,
         spot_diameter = 80,
         is_sparse = TRUE,
-        gene_list = NULL, 
+        gene_list = NULL,
         region = NULL,
         assay = 'Spatial',
-        
+
         # For Step2 QC
         Step2_QC = TRUE,
         min.gene = 20,
@@ -113,7 +113,7 @@ st_stereo_pipeline <- function(
         min.spot = 0, # for genes
         bool.remove.mito = FALSE,
         species = 'mouse', # human or mosue
-        
+
         # For Step3 Clustering
         Step3_Clustering = TRUE,
         normalization.method = 'SCTransform',
@@ -121,20 +121,20 @@ st_stereo_pipeline <- function(
         pcs.used = 1:10,
         resolution = 0.1,
         max.n.cluster = 30,
-        
+
         # For Step4 Find DEGs
         Step4_Find_DEGs = TRUE,
         only.pos = TRUE,
         min.pct = 0.25,
         logfc.threshold = 0.25,
         test.use = 'wilcox',
-        
+
         # For Step5 SVF
         Step5_SVFs = TRUE,
         selection.method = 'moransi',
         n.top.show = 10,
         n.col.show = 5,
-        
+
         # For Step6 Interaction
         Step6_Interaction = TRUE,
         h5ad_path = NULL,
@@ -147,12 +147,12 @@ st_stereo_pipeline <- function(
         commot.min_cell_pct = 0.05,
         commot.dis_thr = 500,
         commot.n_permutations = 100,
-        
+
         # For Step7 Cellcycle
         Step7_Cellcycle = TRUE,
         s.features = NULL,
         g2m.features = NULL,
-        
+
         verbose = FALSE,
         pythonPath = NULL
 ){
@@ -160,7 +160,7 @@ st_stereo_pipeline <- function(
     SpatialColors <- colorRampPalette(colors = rev(x = brewer.pal(n = 11, name = "Spectral")))
     FeatureColors.bi <- colorRampPalette(colors = rev(x = brewer.pal(n = 11, name = 'RdYlBu')))
     FeatureColors.one <- colorRampPalette(colors = brewer.pal(n = 9, name = 'YlOrRd'))
-    
+
     if(!dir.exists(file.path(output.dir, sampleName))){
         dir.create(file.path(output.dir, sampleName))
     }else{
@@ -168,13 +168,13 @@ st_stereo_pipeline <- function(
                        file.path(output.dir, sampleName)))
     }
     output.dir <- file.path(output.dir, sampleName)
-    
+
     print(paste0('The results will be saved in ', output.dir))
-    
+
     #### Step1: Loading data ####
     print('Loading data...')
     st_obj <- stereo_Loading_Data(
-        input.data.dir = input.data.dir, 
+        input.data.dir = input.data.dir,
         output.dir = file.path(output.dir, 'Step1_Loading_Data'),
         sampleName = sampleName,
         data_type = data_type,
@@ -184,11 +184,11 @@ st_stereo_pipeline <- function(
         assay = assay,
         spot_diameter = spot_diameter,
         is_sparse = is_sparse,
-        gene_list = gene_list, 
+        gene_list = gene_list,
         region = region,
         pythonPath = pythonPath
     )
-    
+
     #### Step2: QC
     if(Step2_QC){
         print('Performing QC of genes and spots...')
@@ -205,7 +205,7 @@ st_stereo_pipeline <- function(
             SpatialColors = FeatureColors.bi
         )
     }
-    
+
     #### Step3: Normalization, PCA and Clustering ####
     if(Step3_Clustering){
         print('Performing normalization, PCA and clustering...')
@@ -221,7 +221,7 @@ st_stereo_pipeline <- function(
             verbose = verbose
         )
     }
-    
+
     #### Step4: Differential expressed genes ####
     if(Step4_Find_DEGs){
         print('Finding differential expressed genes in each cluster...')
@@ -236,7 +236,7 @@ st_stereo_pipeline <- function(
             verbose = verbose
         )
     }
-    
+
     #### Step5: Spatially variable features ####
     if(Step5_SVFs){
         print('Identifying spatially variable features... This step may be memory-consuming.')
@@ -250,7 +250,7 @@ st_stereo_pipeline <- function(
             verbose = verbose
         )
     }
-    
+
     #### Step6: Spatial interaction ####
     if(Step6_Interaction){
         print('Performing spatial interaction analysis using Commot...')
@@ -261,7 +261,7 @@ st_stereo_pipeline <- function(
         write.csv(st_obj@meta.data,
                   file.path(interaction_path, 'metadata.csv'),
                   row.names = TRUE)
-        st_interaction(
+        st_Interaction(
             st_data_path = input.data.dir,
             metadata_path = file.path(interaction_path, 'metadata.csv'),
             label_key = 'seurat_clusters',
@@ -276,7 +276,7 @@ st_stereo_pipeline <- function(
             #condaenv = condaenv
         )
     }
-    
+
     #### Step7: Cell cycle analysis ####
     if(Step7_Cellcycle){
         print('Performing cell cycle analysis...')
@@ -289,7 +289,7 @@ st_stereo_pipeline <- function(
             FeatureColors.bi = FeatureColors.bi
         )
     }
-    
+
     #### Save data ####
     output.dir.final <- file.path(output.dir, 'Data_and_report')
     if(!dir.exists(output.dir.final)){
