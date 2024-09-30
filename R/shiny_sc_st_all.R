@@ -3031,8 +3031,8 @@ server = function(input, output, session){
     shinyjs::disable('Step13_TF_Analysis.groups_colors')
     shinyjs::disable('RunStep13')
     
-    if (!file.exists(paste0(output.dir, '/Step13.TF_analysis'))) {
-      dir.create(paste0(output.dir, '/Step13.TF_analysis'))
+    if (!file.exists(file.path(output.dir, 'Step13.TF_analysis'))) {
+      dir.create(file.path(output.dir, 'Step13.TF_analysis'))
     }
     
     run_SCENIC(countMatrix = countsSlot,
@@ -3043,7 +3043,7 @@ server = function(input, output, session){
                groups_colors = Step13_TF_Analysis.groups_colors,
                groups_orders = unique(sc_object@meta.data$datasetID),
                Org = Org,
-               output.dir = paste0(output.dir, '/Step13.TF_analysis'),
+               output.dir = file.path(output.dir, 'Step13.TF_analysis'),
                pythonPath = pythonPath,
                databasePath = databasePath)
     
@@ -3140,8 +3140,8 @@ server = function(input, output, session){
     
     #output.dir
     output.dir <- gsub("/Step13.TF_analysis$", "", output.dir)
-    if (!file.exists(paste0(output.dir, '/Step14.Cell_cell_interection'))) {
-      dir.create(paste0(output.dir, '/Step14.Cell_cell_interection'))
+    if (!file.exists(file.path(output.dir, 'Step14.Cell_cell_interection'))) {
+      dir.create(file.path(output.dir, 'Step14.Cell_cell_interection'))
     }
     tempwd <- getwd()
     run_CellChat(data.input=countsSlot,
@@ -3151,7 +3151,7 @@ server = function(input, output, session){
                  sample.names = rownames(sc_object@meta.data),
                  Org = Org,
                  sorting = sorting,
-                 output.dir = paste0(output.dir, '/Step14.Cell_cell_interection'))
+                 output.dir = file.path(output.dir, 'Step14.Cell_cell_interection'))
     setwd(tempwd)
     
     # Get the names of all variables in the current environment
