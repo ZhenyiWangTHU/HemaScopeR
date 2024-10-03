@@ -157,16 +157,16 @@ ui <- shiny::fluidPage(
   shinyjs::useShinyjs(),  
   # ui1
   shiny::div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
-      fluidRow(),
-      fluidRow(
+      shiny::fluidRow(),
+      shiny::fluidRow(
         column(12, align = "center", imageOutput('logo'))
       ),
-      fluidRow(
+      shiny::fluidRow(
         column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
                                         class = "h1-font",style = "font-family: 'arial'; font-size: 28pt;font-weight: bold;"))
       ),
-      fluidRow(shiny::div(class = "spacer")),  # empty line
-      fluidRow(shiny::div(class = "spacer")),  # empty line
+      shiny::fluidRow(shiny::div(class = "spacer")),  # empty line
+      shiny::fluidRow(shiny::div(class = "spacer")),  # empty line
       shiny::div(style = "display: flex; justify-content: center; width: 100%;",
           actionButton("start_button", "Start scRNA-seq pipeline",style = "font-family: 'arial'; font-size: 18pt;background-color: #dae3f5;padding: 20px 20px; margin-right: 20px;"),
           actionButton("start_button_st", "Start ST-seq pipeline",style = "font-family: 'arial'; font-size: 18pt;background-color: #dae3f5;padding: 20px 20px; margin-right: 20px;")
@@ -175,7 +175,7 @@ ui <- shiny::fluidPage(
   ),
   #ui2.1 ,zyt add this code
   shiny::div(id = "ui2.1",style = "display: none;",
-      fluidRow(
+      shiny::fluidRow(
         box(width = 4, status = "primary", solidHeader = TRUE,
             actionButton("new_analysize_btn", "Begin New Analysis", 
                          style = "width:100%; height:100px; font-size:20px;background-color: white; color: black;")),
@@ -257,7 +257,7 @@ ui <- shiny::fluidPage(
       )
   ),
   shiny::div(id = "ui3.1",style = "display: none;",
-      fluidRow(
+      shiny::fluidRow(
         box(width = 4, status = "primary", solidHeader = TRUE,
             actionButton("st_new_analysize_btn", "Begin New Analysis", 
                          style = "width:100%; height:100px; font-size:20px;background-color: white; color: black;")),
@@ -276,7 +276,7 @@ ui <- shiny::fluidPage(
   )
 )
 #scRNA UI step1-15
-step1_fluidRow<-fluidRow(
+step1_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     6, align = "left", h3("Step 1. Input Data"),
@@ -306,7 +306,7 @@ step1_fluidRow<-fluidRow(
   )
 )
 
-step2_fluidRow <- fluidRow(
+step2_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 2. Quality Control"),
@@ -344,7 +344,7 @@ step2_fluidRow <- fluidRow(
 )
 
 
-step3_fluidRow <- fluidRow(
+step3_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 3. Clustering"),
@@ -368,7 +368,7 @@ step3_fluidRow <- fluidRow(
          textOutput("step3_text"))
 )
 
-step4_fluidRow <- fluidRow(
+step4_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 4. Identify Cell Types"),
@@ -398,7 +398,7 @@ step4_fluidRow <- fluidRow(
          textOutput("step4_text"))
 )
 
-step5_fluidRow <- fluidRow(
+step5_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 5. Visualization"),
@@ -423,7 +423,7 @@ step5_fluidRow <- fluidRow(
          textOutput("step5_text"))
 )
 
-step6_fluidRow <- fluidRow(
+step6_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 6. Find Differential Genes"),
@@ -447,7 +447,7 @@ step6_fluidRow <- fluidRow(
          textOutput("step6_text"))
 )
 
-step7_fluidRow <- fluidRow(
+step7_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 7. Assign Cell Cycles"),
@@ -469,7 +469,7 @@ step7_fluidRow <- fluidRow(
          textOutput("step7_text"))
 )
 
-step8_fluidRow <- fluidRow(
+step8_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 8. Calculate Heterogeneity"),
@@ -491,7 +491,7 @@ step8_fluidRow <- fluidRow(
          textOutput("step8_text"))
 )
 
-step9_fluidRow <- fluidRow(
+step9_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 9. Violin Plot for Marker Genes"),
@@ -514,7 +514,7 @@ step9_fluidRow <- fluidRow(
          textOutput("step9_text"))
 )
 
-step10_fluidRow <- fluidRow(
+step10_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 10. Calculate Lineage Scores"),
@@ -538,7 +538,7 @@ step10_fluidRow <- fluidRow(
          textOutput("step10_text"))
 )
 
-step11_fluidRow <- fluidRow(
+step11_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 11. GSVA"),
@@ -571,7 +571,7 @@ step11_fluidRow <- fluidRow(
          textOutput("step11_text"))
 )
 
-step12_fluidRow <- fluidRow(
+step12_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 12. Construct Trajectories"),
@@ -610,7 +610,7 @@ step12_fluidRow <- fluidRow(
          textOutput("step12_text"))
 )
 
-step13_fluidRow <- fluidRow(
+step13_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 13. Transcription Factors Analysis"),
@@ -633,7 +633,7 @@ step13_fluidRow <- fluidRow(
          textOutput("step13_text"))
 )
 
-step14_fluidRow <- fluidRow(
+step14_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 14. Cell-Cell Interaction"),
@@ -655,7 +655,7 @@ step14_fluidRow <- fluidRow(
          textOutput("step14_text"))
 )
 
-step15_fluidRow <- fluidRow(
+step15_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     6, align = "left", h3("Step 15. Generate the Report"),
@@ -668,7 +668,7 @@ step15_fluidRow <- fluidRow(
     uiOutput("step15_completed"))
 )
 
-step_sc_continue_fluidRow<-fluidRow(
+step_sc_continue_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
   column(8,align = "left",
          h3("Continue Previous Analysis"),
@@ -696,7 +696,7 @@ step_sc_continue_fluidRow<-fluidRow(
   ))
 
 #ST UI step1-11
-step1_fluidRow_st <- fluidRow(
+step1_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     6, align = "left", h3("Step 1. Input Data"),
@@ -716,7 +716,7 @@ step1_fluidRow_st <- fluidRow(
          textOutput("st_jobid_1"))
 )
 
-step2_fluidRow_st <- fluidRow(
+step2_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 2. Quality Control"),
@@ -745,7 +745,7 @@ step2_fluidRow_st <- fluidRow(
 )
 
 
-step3_fluidRow_st <- fluidRow(
+step3_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 3. Clustering"),
@@ -771,7 +771,7 @@ step3_fluidRow_st <- fluidRow(
 )
 
 
-step4_fluidRow_st <- fluidRow(
+step4_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 4. Find Differential Genes"),
@@ -796,7 +796,7 @@ step4_fluidRow_st <- fluidRow(
          textOutput("st_step4_text"))
 )
 
-step5_fluidRow_st <- fluidRow(
+step5_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 5. Spatially variable features"),
@@ -820,7 +820,7 @@ step5_fluidRow_st <- fluidRow(
          textOutput("st_step5_text"))
 )
 
-step6_fluidRow_st <- fluidRow(
+step6_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 6. Spatial interaction"),
@@ -846,7 +846,7 @@ step6_fluidRow_st <- fluidRow(
          textOutput("st_step6_text"))
 )
 
-step7_fluidRow_st <- fluidRow(
+step7_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 7. CNV analysis"),
@@ -873,7 +873,7 @@ step7_fluidRow_st <- fluidRow(
          textOutput("st_step7_text"))
 )
 
-step8_fluidRow_st <- fluidRow(
+step8_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 8. Deconvolution"),
@@ -898,7 +898,7 @@ step8_fluidRow_st <- fluidRow(
          textOutput("st_step8_text"))
 )
 
-step9_fluidRow_st <- fluidRow(
+step9_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 9. Cell cycle analysis"),
@@ -921,7 +921,7 @@ step9_fluidRow_st <- fluidRow(
          textOutput("st_step9_text"))
 )
 
-step10_fluidRow_st <- fluidRow(
+step10_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     4, align = "left", h3("Step 10. Niche analysis"),
@@ -943,7 +943,7 @@ step10_fluidRow_st <- fluidRow(
          textOutput("st_step10_text"))
 )
 
-step11_fluidRow_st <- fluidRow(
+step11_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
   column(
     6, align = "left", h3("Step 11. Generate the Report"),
@@ -955,7 +955,7 @@ step11_fluidRow_st <- fluidRow(
     uiOutput("step11_completed"))
 )
 
-step_st_continue_fluidRow<-fluidRow(
+step_st_continue_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
   column(8,align = "left",
          h3("Continue Previous Analysis"),
