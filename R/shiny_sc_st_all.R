@@ -156,7 +156,7 @@ Load_previous_results = function(previous_results_path=NULL){
 ui <- shiny::fluidPage(
   shinyjs::useShinyjs(),  
   # ui1
-  div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
+  shiny::div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
       fluidRow(),
       fluidRow(
         column(12, align = "center", imageOutput('logo'))
@@ -165,16 +165,16 @@ ui <- shiny::fluidPage(
         column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
                                         class = "h1-font",style = "font-family: 'arial'; font-size: 28pt;font-weight: bold;"))
       ),
-      fluidRow(div(class = "spacer")),  # empty line
-      fluidRow(div(class = "spacer")),  # empty line
-      div(style = "display: flex; justify-content: center; width: 100%;",
+      fluidRow(shiny::div(class = "spacer")),  # empty line
+      fluidRow(shiny::div(class = "spacer")),  # empty line
+      shiny::div(style = "display: flex; justify-content: center; width: 100%;",
           actionButton("start_button", "Start scRNA-seq pipeline",style = "font-family: 'arial'; font-size: 18pt;background-color: #dae3f5;padding: 20px 20px; margin-right: 20px;"),
           actionButton("start_button_st", "Start ST-seq pipeline",style = "font-family: 'arial'; font-size: 18pt;background-color: #dae3f5;padding: 20px 20px; margin-right: 20px;")
       ),
       uiOutput("ui_styles")
   ),
   #ui2.1 ,zyt add this code
-  div(id = "ui2.1",style = "display: none;",
+  shiny::div(id = "ui2.1",style = "display: none;",
       fluidRow(
         box(width = 4, status = "primary", solidHeader = TRUE,
             actionButton("new_analysize_btn", "Begin New Analysis", 
@@ -189,13 +189,13 @@ ui <- shiny::fluidPage(
   ),
   
   
-  div(id = "ui2.2",style = "display: none;",
+  shiny::div(id = "ui2.2",style = "display: none;",
       uiOutput("dynamic_ui"),
       uiOutput("continue_stepContent")
   ),
   
   # ui2
-  div(id = "ui2", style = "display: none;",
+  shiny::div(id = "ui2", style = "display: none;",
       dashboardPage(
         skin = c("blue"),
         dashboardHeader(title = "scRNA-seq pipeline"),
@@ -229,7 +229,7 @@ ui <- shiny::fluidPage(
   ),
   
   # ui3
-  div(id = "ui3", style = "display: none;",
+  shiny::div(id = "ui3", style = "display: none;",
       dashboardPage(
         skin = c("blue"),
         dashboardHeader(title = "ST-seq pipeline"),
@@ -256,7 +256,7 @@ ui <- shiny::fluidPage(
         )
       )
   ),
-  div(id = "ui3.1",style = "display: none;",
+  shiny::div(id = "ui3.1",style = "display: none;",
       fluidRow(
         box(width = 4, status = "primary", solidHeader = TRUE,
             actionButton("st_new_analysize_btn", "Begin New Analysis", 
@@ -270,7 +270,7 @@ ui <- shiny::fluidPage(
       )
   ),
   
-  div(id = "ui3.2",style = "display: none;",
+  shiny::div(id = "ui3.2",style = "display: none;",
       uiOutput("dynamic_st_ui"),
       uiOutput("st_continue_step")
   )
@@ -294,9 +294,9 @@ step1_fluidRow<-fluidRow(
     numericInput("min.feature", "Minimum Features (default: 200):", value = 200),
     textInput("mt.pattern", "Mt Pattern (default: '^MT-'):", value = '^MT-'),
     actionBttn("load_data_button", "Load Data", style = "unite", color = "primary"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("loadingData"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("data_dim_output")
   ),
   column(3,align="middle",
@@ -329,9 +329,9 @@ step2_fluidRow <- fluidRow(
     selectInput("Step2_Quality_Control.RemoveDoublets", "Step2_Quality_Control.RemoveDoublets:", choices = c("FALSE" = FALSE, "TRUE" = TRUE)),
     actionBttn("RunStep2", "Run Step2",style = "unite",color = "primary"),
     #actionButton("RunStep2", "Run Step2"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep2"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step2_completed")),
   column(
     4, align = "left",
@@ -354,9 +354,9 @@ step3_fluidRow <- fluidRow(
     numericInput("resolution", "resolution for clustering (default: 0.4):", value = 0.4),
     actionBttn("RunStep3", "Run Step3",style = "unite",color = "primary"),
     #actionButton("RunStep3", "Run Step3"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("runningStep3"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("step3_completed")),
   column(
     4, align = "left",
@@ -384,9 +384,9 @@ step4_fluidRow <- fluidRow(
     numericInput("ncores", "CPU cores for parallel processing (default: 1):", value = 1),
     actionBttn("RunStep4", "Run Step4",style = "unite",color = "primary"),
     #actionButton("RunStep4", "Run Step4"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("runningStep4"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("step4_completed")),
   column(
     4, align = "left",
@@ -409,9 +409,9 @@ step5_fluidRow <- fluidRow(
     numericInput("phate.ndim", "Dimensions for PhateR (default: 2):", value = 2),  
     actionBttn("RunStep5", "Run Step5",style = "unite",color = "primary"),
     #actionButton("RunStep5", "Run Step5"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep5"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step5_completed")),
   column(
     4, align = "left",
@@ -433,9 +433,9 @@ step6_fluidRow <- fluidRow(
     numericInput("logfc.threshold", "Log-fold threshold for gene analysis(Default: 0.25):", value = 0.25),  
     actionBttn("RunStep6", "Run Step6",style = "unite",color = "primary"),
     #actionButton("RunStep6", "Run Step6"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep6"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step6_completed")),
   column(
     4, align = "left",
@@ -455,9 +455,9 @@ step7_fluidRow <- fluidRow(
     textInput("cellcycleCutoff", "Define cell cycle cutoff (default: NULL):", value = "NULL"),
     actionBttn("RunStep7", "Run Step7",style = "unite",color = "primary"),
     #actionButton("RunStep7", "Run Step7"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep7"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step7_completed")),
   column(
     4, align = "left",
@@ -477,9 +477,9 @@ step8_fluidRow <- fluidRow(
     textInput("ViolinPlot.cellTypeOrders", "Order cell types (seperate by ','):", value = "NULL"),
     actionBttn("RunStep8", "Run Step8",style = "unite",color = "primary"),
     #actionButton("RunStep8", "Run Step8"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep8"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step8_completed")),
   column(
     4, align = "left",
@@ -500,9 +500,9 @@ step9_fluidRow <- fluidRow(
     textInput("ViolinPlot.cellTypeColors", "Set the hexadecimal codes of colors for cell types (seperate by ','):", value = "NULL"),
     actionBttn("RunStep9", "Run Step9",style = "unite",color = "primary"),
     #actionButton("RunStep9", "Run Step9"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep9"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step9_completed")),
   column(
     4, align = "left",
@@ -524,9 +524,9 @@ step10_fluidRow <- fluidRow(
     textInput("groups_colors", HTML('The hexadecimal codes of colors for groups. Please use "," to seperate them.<br>(e.g. #FF0000,#0000FF):'), value = "NULL"),
     actionBttn("RunStep10", "Run Step10",style = "unite",color = "primary"),
     #actionButton("RunStep10", "Run Step10"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep10"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step10_completed")),
   column(
     4, align = "left",
@@ -557,9 +557,9 @@ step11_fluidRow <- fluidRow(
               value = "NULL"),
     actionBttn("RunStep11", "Run Step11",style = "unite",color = "primary"),
     #actionButton("RunStep11", "Run Step11"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep11"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step11_completed")),
   column(
     4, align = "left",
@@ -596,9 +596,9 @@ step12_fluidRow <- fluidRow(
     textInput("loom.files.path", "Enter the paths of loom files (seperate by ';'):", value = "NULL"),
     actionBttn("RunStep12", "Run Step12",style = "unite",color = "primary"),
     #actionButton("RunStep12", "Run Step12"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("runningStep12"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("Step12_completed")),
   column(
     4, align = "left",
@@ -619,9 +619,9 @@ step13_fluidRow <- fluidRow(
     textInput("Step13_TF_Analysis.groups_colors", "Set the hexadecimal codes of colors for groups (seperate by ','):", value = "NULL"),
     actionBttn("RunStep13", "Run Step13",style = "unite",color = "primary"),
     #actionButton("RunStep13", "Run Step13"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep13"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step13_completed")),
   column(
     4, align = "left",
@@ -641,9 +641,9 @@ step14_fluidRow <- fluidRow(
     selectInput("sorting", "The cell groups were sorted?:", choices = c("TRUE" = TRUE, "FALSE" = FALSE)),
     actionBttn("RunStep14", "Run Step14",style = "unite",color = "primary"),
     #actionButton("RunStep14", "Run Step14"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep14"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step14_completed")),
   column(
     4, align = "left",
@@ -662,9 +662,9 @@ step15_fluidRow <- fluidRow(
     #p("Please input the parameters for generating the report."),
     actionBttn("RunStep15", "Run Step15",style = "unite",color = "primary"),
     #actionButton("RunStep15", "Run Step15"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep15"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step15_completed"))
 )
 
@@ -707,7 +707,7 @@ step1_fluidRow_st <- fluidRow(
     textInput("pythonPath", "Enter the path of Python:", value = "NULL"),
     actionBttn("RunStep1_st", "Load Data",style = "unite",color = "primary"),
     #actionButton("load_data_button", "Load Data"),
-    div(class = "spacer"),
+    shiny::div(class = "spacer"),
     uiOutput("loadingData"),
     uiOutput("step1_completed")),
   column(3,align="middle",
@@ -730,9 +730,9 @@ step2_fluidRow_st <- fluidRow(
     selectInput("species", "species:", choices = c("mouse" = "mouse", "human" = "human")),
     actionBttn("RunStep2_st", "Run Step2",style = "unite",color = "primary"),
     #actionButton("RunStep2", "Run Step2"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep2"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step2_completed")),
   column(
     4, align = "left",
@@ -756,9 +756,9 @@ step3_fluidRow_st <- fluidRow(
     numericInput("resolution", "resolution (default: 0.8):", value = 0.8),
     actionBttn("RunStep3_st", "Run Step3",style = "unite",color = "primary"),
     #actionButton("RunStep3", "Run Step3"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep3"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step3_completed")),
   column(
     4, align = "left",
@@ -782,9 +782,9 @@ step4_fluidRow_st <- fluidRow(
     textInput("test.use", "test.use (default: 'wilcox'):", value = 'wilcox'),
     actionBttn("RunStep4_st", "Run Step4",style = "unite",color = "primary"),
     #actionButton("RunStep4", "Run Step4"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep4"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step4_completed")),
   column(
     4, align = "left",
@@ -806,9 +806,9 @@ step5_fluidRow_st <- fluidRow(
     numericInput("n.col.show", "n.col.show (default: 5):", value = 5),
     actionBttn("RunStep5_st", "Run Step5",style = "unite",color = "primary"),
     #actionButton("RunStep5", "Run Step5"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep5"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step5_completed")),
   column(
     4, align = "left",
@@ -832,9 +832,9 @@ step6_fluidRow_st <- fluidRow(
     numericInput("commot.n_permutations", "commot.n_permutations (default: 100):", value = 100),
     actionBttn("RunStep6_st", "Run Step6",style = "unite",color = "primary"),
     #actionButton("RunStep6", "Run Step6"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep6"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step6_completed")),
   column(
     4, align = "left",
@@ -859,9 +859,9 @@ step7_fluidRow_st <- fluidRow(
     numericInput("copykat.n.cores", "copykat.n.cores (default: 1):", value = 1),
     actionBttn("RunStep7_st", "Run Step7",style = "unite",color = "primary"),
     #actionButton("RunStep7", "Run Step7"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep7"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step7_completed")),
   column(
     4, align = "left",
@@ -884,9 +884,9 @@ step8_fluidRow_st <- fluidRow(
     selectInput("cell2loc.use.gpu", "cell2loc.use.gpu (default: FALSE):", choices = c("FALSE" = FALSE, "TRUE" = TRUE)),
     actionBttn("RunStep8_st", "Run Step8",style = "unite",color = "primary"),
     #actionButton("RunStep8", "Run Step8"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep8"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step8_completed")),
   column(
     4, align = "left",
@@ -907,9 +907,9 @@ step9_fluidRow_st <- fluidRow(
     textInput("g2m.features", HTML('The gene sets for calculating G2M phase scores(e.g. "gene1,gene2,gene3"):'), value = "NULL"),
     actionBttn("RunStep9_st", "Run Step9",style = "unite",color = "primary"),
     #actionButton("RunStep9", "Run Step9"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep9"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step9_completed")),
   column(
     4, align = "left",
@@ -929,9 +929,9 @@ step10_fluidRow_st <- fluidRow(
     numericInput("Nich.cluster.n", "Nich.cluster.n (default: 4):", value = 4),
     actionBttn("RunStep10_st", "Run Step10",style = "unite",color = "primary"),
     #actionButton("RunStep10", "Run Step10"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep10"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step10_completed")),
   column(
     4, align = "left",
@@ -949,9 +949,9 @@ step11_fluidRow_st <- fluidRow(
     6, align = "left", h3("Step 11. Generate the Report"),
     actionBttn("RunStep11_st", "Run Step11",style = "unite",color = "primary"),
     #actionButton("RunStep11", "Run Step11"),
-    div(class = "spacer"), 
+    shiny::div(class = "spacer"), 
     uiOutput("runningStep11"),
-    div(class = "spacer"),  
+    shiny::div(class = "spacer"),  
     uiOutput("step11_completed"))
 )
 
