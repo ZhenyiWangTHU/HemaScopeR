@@ -153,7 +153,7 @@ Load_previous_results = function(previous_results_path=NULL){
   }
 }
 # ui--------------------------------------------------------------------------------------------------------------------------------------------
-ui <- fluidPage(
+ui <- shiny::fluidPage(
   shinyjs::useShinyjs(),  
   # ui1
   div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
