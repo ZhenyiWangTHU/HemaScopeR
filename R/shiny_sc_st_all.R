@@ -159,7 +159,7 @@ ui <- shiny::fluidPage(
   shiny::div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
       shiny::fluidRow(),
       shiny::fluidRow(
-        shiny::column(12, align = "center", imageOutput('logo'))
+        shiny::column(12, align = "center", shiny::imageOutput('logo'))
       ),
       shiny::fluidRow(
         shiny::column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
