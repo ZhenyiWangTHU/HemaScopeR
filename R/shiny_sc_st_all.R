@@ -159,10 +159,10 @@ ui <- shiny::fluidPage(
   shiny::div(id = "ui1", style = "display: flex; flex-direction: column; align-items: center; justify-content: center; height: 70vh;",
       shiny::fluidRow(),
       shiny::fluidRow(
-        column(12, align = "center", imageOutput('logo'))
+        shiny::column(12, align = "center", imageOutput('logo'))
       ),
       shiny::fluidRow(
-        column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
+        shiny::column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
                                         class = "h1-font",style = "font-family: 'arial'; font-size: 28pt;font-weight: bold;"))
       ),
       shiny::fluidRow(shiny::div(class = "spacer")),  # empty line
@@ -278,7 +278,7 @@ ui <- shiny::fluidPage(
 #scRNA UI step1-15
 step1_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     6, align = "left", h3("Step 1. Input Data"),
     #p("Please select the input data."),
     textInput("input.data.dirs", 
@@ -299,7 +299,7 @@ step1_fluidRow<-shiny::fluidRow(
     shiny::div(class = "spacer"),
     uiOutput("data_dim_output")
   ),
-  column(3,align="middle",
+  shiny::column(3,align="middle",
          h3("Please record your job ID for use in future analyses"),
          #h5("Please copy your jobid and you will use it in subsequent analysis"),
          textOutput("jobid")
@@ -308,7 +308,7 @@ step1_fluidRow<-shiny::fluidRow(
 
 step2_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 2. Quality Control"),
     #p("Please input the parameters for quality control and preprocessing."),
     #textInput("jobid","Please Paste the token generated in step 1"), #zyt add this code
@@ -333,11 +333,11 @@ step2_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep2"),
     shiny::div(class = "spacer"),  
     uiOutput("step2_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 2. Quality Control:"),
     uiOutput("Step2.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step2_plot", width='auto',height = "500px"),
          textOutput("step2_text"))
@@ -346,7 +346,7 @@ step2_fluidRow <- shiny::fluidRow(
 
 step3_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 3. Clustering"),
     #p("Please input the parameters for clustering."),
     textInput("PCs.clustering", "PCs for clustering (default: 1:20):", value = "1:20"),
@@ -358,11 +358,11 @@ step3_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep3"),
     shiny::div(class = "spacer"),
     uiOutput("step3_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 3. Clustering:"),
     uiOutput("Step3.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step3_plot", width='auto',height = "500px"),
          textOutput("step3_text"))
@@ -370,7 +370,7 @@ step3_fluidRow <- shiny::fluidRow(
 
 step4_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 4. Identify Cell Types"),
     #p("Please input the parameters for identifying cell types automatically."),
     selectInput("Org", "Choose organism (e.g., 'mmu' for mouse, 'hsa' for human):", choices = c("mmu" = "mmu", "hsa" = "hsa")),
@@ -388,11 +388,11 @@ step4_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep4"),
     shiny::div(class = "spacer"),
     uiOutput("step4_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 4. Identify Cell Types:"),
     uiOutput("Step4.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step4_plot", width='auto',height = "500px"),
          textOutput("step4_text"))
@@ -400,7 +400,7 @@ step4_fluidRow <- shiny::fluidRow(
 
 step5_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 5. Visualization"),
     #p("Please input the parameters for visualization."),
     numericInput("phate.knn", "Nearest neighbors for PhateR analysis (default: 50):", value = 50),
@@ -413,11 +413,11 @@ step5_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep5"),
     shiny::div(class = "spacer"),  
     uiOutput("step5_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 5. Visualization:"),
     uiOutput("Step5.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step5_plot", width='auto',height = "500px"),
          textOutput("step5_text"))
@@ -425,7 +425,7 @@ step5_fluidRow <- shiny::fluidRow(
 
 step6_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 6. Find Differential Genes"),
     #p("Please input the parameters for finding DEGs."),
     
@@ -437,11 +437,11 @@ step6_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep6"),
     shiny::div(class = "spacer"),  
     uiOutput("step6_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 6. Find Differential Genes:"),
     uiOutput("Step6.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step6_plot", width='auto',height = "500px"),
          textOutput("step6_text"))
@@ -449,7 +449,7 @@ step6_fluidRow <- shiny::fluidRow(
 
 step7_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 7. Assign Cell Cycles"),
     #p("Please input the parameters for assigning cell cycles."),
     textInput("cellcycleCutoff", "Define cell cycle cutoff (default: NULL):", value = "NULL"),
@@ -459,11 +459,11 @@ step7_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep7"),
     shiny::div(class = "spacer"),  
     uiOutput("step7_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 7. Assign Cell Cycles:"),
     uiOutput("Step7.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step7_plot", width='auto',height = "500px"),
          textOutput("step7_text"))
@@ -471,7 +471,7 @@ step7_fluidRow <- shiny::fluidRow(
 
 step8_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 8. Calculate Heterogeneity"),
     #p("Please set the parameter needs for calculating heterogeneity."),
     textInput("ViolinPlot.cellTypeOrders", "Order cell types (seperate by ','):", value = "NULL"),
@@ -481,11 +481,11 @@ step8_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep8"),
     shiny::div(class = "spacer"),  
     uiOutput("step8_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 8. Calculate Heterogeneity:"),
     uiOutput("Step8.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step8_plot", width='auto',height = "500px"),
          textOutput("step8_text"))
@@ -493,7 +493,7 @@ step8_fluidRow <- shiny::fluidRow(
 
 step9_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 9. Violin Plot for Marker Genes"),
     #p("Set parameters for violin plot of marker genes."),
     textInput("marker.genes", "Enter marker genes for violin plot (seperate by ','):", value = "NULL"),
@@ -504,11 +504,11 @@ step9_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep9"),
     shiny::div(class = "spacer"),  
     uiOutput("step9_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 9. Violin Plot for Marker Genes:"),
     uiOutput("Step9.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step9_plot", width='auto',height = "500px"),
          textOutput("step9_text"))
@@ -516,7 +516,7 @@ step9_fluidRow <- shiny::fluidRow(
 
 step10_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 10. Calculate Lineage Scores"),
     #p("Please input the parameters for calculating lineage scores."),
     textInput("lineage.genelist", HTML('The gene sets for calculating lineage scores.<br>Please enclose the gene sets with double quotation marks and seperate them by ";". <br>(e.g. "gene1,gene2,gene3";"gene4,gene5,gene6"):'), value = "NULL"),
@@ -528,11 +528,11 @@ step10_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep10"),
     shiny::div(class = "spacer"),  
     uiOutput("step10_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 10. Calculate Lineage Scores:"),
     uiOutput("Step10.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step10_plot", width='auto',height = "500px"),
          textOutput("step10_text"))
@@ -540,7 +540,7 @@ step10_fluidRow <- shiny::fluidRow(
 
 step11_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 11. GSVA"),
     #p("Please input the parameters for GSVA."),
     selectInput("Step11_GSVA.identify.cellType.features", "Option to identify cell type-specific GSVA terms:", choices = c("TRUE" = TRUE, "FALSE" = FALSE)),
@@ -561,11 +561,11 @@ step11_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep11"),
     shiny::div(class = "spacer"),  
     uiOutput("step11_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 11. GSVA:"),
     uiOutput("Step11.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step11_plot", width='auto',height = "500px"),
          textOutput("step11_text"))
@@ -573,7 +573,7 @@ step11_fluidRow <- shiny::fluidRow(
 
 step12_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 12. Construct Trajectories"),
     textInput("Step12_Construct_Trajectories.clusters",
               "Set the cell types for constructing trajectories(seperate by ',' default is 'all'):", value = "all"),
@@ -600,11 +600,11 @@ step12_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep12"),
     shiny::div(class = "spacer"),
     uiOutput("Step12_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 12. Construct Trajectories:"),
     uiOutput("Step12.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step12_plot", width='auto',height = "500px"),
          textOutput("step12_text"))
@@ -612,7 +612,7 @@ step12_fluidRow <- shiny::fluidRow(
 
 step13_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 13. Transcription Factors Analysis"),
     #p("Please input the parameters for TF analysis."),
     textInput("Step13_TF_Analysis.cellTypes_colors", "Set the hexadecimal codes of colors for cell types (seperate by ','):", value = "NULL"),
@@ -623,11 +623,11 @@ step13_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep13"),
     shiny::div(class = "spacer"),  
     uiOutput("step13_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 13. Transcription Factors Analysis:"),
     uiOutput("Step13.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step13_plot", width='auto',height = "500px"),
          textOutput("step13_text"))
@@ -635,7 +635,7 @@ step13_fluidRow <- shiny::fluidRow(
 
 step14_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 14. Cell-Cell Interaction"),
     #p("Please input the parameters for cell-cell interaction analysis."),
     selectInput("sorting", "The cell groups were sorted?:", choices = c("TRUE" = TRUE, "FALSE" = FALSE)),
@@ -645,11 +645,11 @@ step14_fluidRow <- shiny::fluidRow(
     uiOutput("runningStep14"),
     shiny::div(class = "spacer"),  
     uiOutput("step14_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 14. Cell-Cell Interection:"),
     uiOutput("Step14.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("step14_plot", width='auto',height = "500px"),
          textOutput("step14_text"))
@@ -657,7 +657,7 @@ step14_fluidRow <- shiny::fluidRow(
 
 step15_fluidRow <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     6, align = "left", h3("Step 15. Generate the Report"),
     #p("Please input the parameters for generating the report."),
     actionBttn("RunStep15", "Run Step15",style = "unite",color = "primary"),
@@ -670,7 +670,7 @@ step15_fluidRow <- shiny::fluidRow(
 
 step_sc_continue_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(8,align = "left",
+  shiny::column(8,align = "left",
          h3("Continue Previous Analysis"),
          actionButton("sc_continue_back_btn","Back to Prior Page",style = "width: 25%;",
                       class = "btn-primary btn-lg"),
@@ -698,7 +698,7 @@ step_sc_continue_fluidRow<-shiny::fluidRow(
 #ST UI step1-11
 step1_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     6, align = "left", h3("Step 1. Input Data"),
     #p("Please select the input data."),
     textInput("input.data.dir", HTML("Enter data path:"), value = "NULL"),
@@ -710,7 +710,7 @@ step1_fluidRow_st <- shiny::fluidRow(
     shiny::div(class = "spacer"),
     uiOutput("loadingData"),
     uiOutput("step1_completed")),
-  column(3,align="middle",
+  shiny::column(3,align="middle",
          h3("Please record your job ID for use in future analyses"),
          #p("Please copy your jobid and you will use it in subsequent analysis"),
          textOutput("st_jobid_1"))
@@ -718,7 +718,7 @@ step1_fluidRow_st <- shiny::fluidRow(
 
 step2_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 2. Quality Control"),
     #p("Please input the parameters for quality control and preprocessing."),
     numericInput("min.gene", "min.gene (default: 200):", value = 200),
@@ -734,11 +734,11 @@ step2_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep2"),
     shiny::div(class = "spacer"),  
     uiOutput("step2_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 2. Quality Control:"),
     uiOutput("Step2.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step2_plot", width='auto',height = "500px"),
          textOutput("st_step2_text"))
@@ -747,7 +747,7 @@ step2_fluidRow_st <- shiny::fluidRow(
 
 step3_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 3. Clustering"),
     #p("Please input the parameters for normalization, PCA and clustering."),
     textInput("normalization.method", "normalization.method (default: 'SCTransform'):", value = "SCTransform"),
@@ -760,11 +760,11 @@ step3_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep3"),
     shiny::div(class = "spacer"),  
     uiOutput("step3_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 3. Clustering:"),
     uiOutput("Step3.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step3_plot", width='auto',height = "500px"),
          textOutput("st_step3_text"))
@@ -773,7 +773,7 @@ step3_fluidRow_st <- shiny::fluidRow(
 
 step4_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 4. Find Differential Genes"),
     #p("Please input the parameters for finding differentially expressed genes in each cluster."),
     selectInput("only.pos", "only.pos:", choices = c("FALSE" = FALSE, "TRUE" = TRUE)),
@@ -786,11 +786,11 @@ step4_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep4"),
     shiny::div(class = "spacer"),  
     uiOutput("step4_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 4. Find Differential Genes:"),
     uiOutput("Step4.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step4_plot", width='auto',height = "500px"),
          textOutput("st_step4_text"))
@@ -798,7 +798,7 @@ step4_fluidRow_st <- shiny::fluidRow(
 
 step5_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 5. Spatially variable features"),
     #p("Please input the parameters for finding spatially variable features."),
     textInput("selection.method", "selection.method (default: 'moransi'):", value = 'moransi'),
@@ -810,11 +810,11 @@ step5_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep5"),
     shiny::div(class = "spacer"),  
     uiOutput("step5_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 5. Spatially variable features:"),
     uiOutput("Step5.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step5_plot", width='auto',height = "500px"),
          textOutput("st_step5_text"))
@@ -822,7 +822,7 @@ step5_fluidRow_st <- shiny::fluidRow(
 
 step6_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 6. Spatial interaction"),
     #p("Please input the parameters for analyzing spatial interaction."),
     textInput("commot.signaling_type", "commot.signaling_type (default: 'Secreted Signaling'):", value = 'Secreted Signaling'),
@@ -836,11 +836,11 @@ step6_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep6"),
     shiny::div(class = "spacer"),  
     uiOutput("step6_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 6. Spatial interaction:"),
     uiOutput("Step6.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step6_plot", width='auto',height = "500px"),
          textOutput("st_step6_text"))
@@ -848,7 +848,7 @@ step6_fluidRow_st <- shiny::fluidRow(
 
 step7_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 7. CNV analysis"),
     #p("Please input the parameters for CNV analysis."),
     textInput("copykat.genome", "copykat.genome (default: 'hg20'):", value = 'hg20'),
@@ -863,11 +863,11 @@ step7_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep7"),
     shiny::div(class = "spacer"),  
     uiOutput("step7_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 7. CNV analysis:"),
     uiOutput("Step7.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step7_plot", width='auto',height = "500px"),
          textOutput("st_step7_text"))
@@ -875,7 +875,7 @@ step7_fluidRow_st <- shiny::fluidRow(
 
 step8_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 8. Deconvolution"),
     #p("Please input the parameters for deconvolution."),
     textInput("cell2loc.sc.h5ad.dir", "cell2loc.sc.h5ad.dir (default: 'NULL'):", value = 'NULL'),
@@ -888,11 +888,11 @@ step8_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep8"),
     shiny::div(class = "spacer"),  
     uiOutput("step8_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 8. Deconvolution:"),
     uiOutput("Step8.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step8_plot", width='auto',height = "500px"),
          textOutput("st_step8_text"))
@@ -900,7 +900,7 @@ step8_fluidRow_st <- shiny::fluidRow(
 
 step9_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 9. Cell cycle analysis"),
     #p("Please input the parameters for cell cycle analysis."),
     textInput("s.features", HTML('The gene sets for calculating S phase scores(e.g. "gene1,gene2,gene3"):'), value = "NULL"),
@@ -911,11 +911,11 @@ step9_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep9"),
     shiny::div(class = "spacer"),  
     uiOutput("step9_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 9. Cell cycle analysis:"),
     uiOutput("Step9.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step9_plot", width='auto',height = "500px"),
          textOutput("st_step9_text"))
@@ -923,7 +923,7 @@ step9_fluidRow_st <- shiny::fluidRow(
 
 step10_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     4, align = "left", h3("Step 10. Niche analysis"),
     #p("Please input the parameters for niche analysis (Please run step 8  deconvolution first)."),
     numericInput("Nich.cluster.n", "Nich.cluster.n (default: 4):", value = 4),
@@ -933,11 +933,11 @@ step10_fluidRow_st <- shiny::fluidRow(
     uiOutput("runningStep10"),
     shiny::div(class = "spacer"),  
     uiOutput("step10_completed")),
-  column(
+  shiny::column(
     4, align = "left",
     h3("Browse files in Step 10. Niche analysis:"),
     uiOutput("Step10.st.file_list")),
-  column(4, align = "left",
+  shiny::column(4, align = "left",
          h3("Figure display"),
          slickROutput("st_step10_plot", width='auto',height = "500px"),
          textOutput("st_step10_text"))
@@ -945,7 +945,7 @@ step10_fluidRow_st <- shiny::fluidRow(
 
 step11_fluidRow_st <- shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(
+  shiny::column(
     6, align = "left", h3("Step 11. Generate the Report"),
     actionBttn("RunStep11_st", "Run Step11",style = "unite",color = "primary"),
     #actionButton("RunStep11", "Run Step11"),
@@ -957,7 +957,7 @@ step11_fluidRow_st <- shiny::fluidRow(
 
 step_st_continue_fluidRow<-shiny::fluidRow(
   style = "margin-left: 10px;",
-  column(8,align = "left",
+  shiny::column(8,align = "left",
          h3("Continue Previous Analysis"),
          actionButton("st_continue_back_btn","Back to Prior Page",style = "width: 25%;",
                       class = "btn-primary btn-lg"),
