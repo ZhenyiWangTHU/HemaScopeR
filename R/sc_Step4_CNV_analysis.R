@@ -52,8 +52,8 @@ sc_CNV = function(
         distance = distance,
         genome = genome,
         n.cores = n.cores)
-
-    saveRDS(copykat.test, file.path(save_path, 'copykat_result.rds'))
+    
+    saveRDS(copykat.test, file='copykat_result.rds')
     pred.test <- data.frame(copykat.test$prediction)
     sc_object@meta.data$CNV_state <- mapvalues(rownames(sc_object@meta.data),
                                                from=pred.test$cell.names,

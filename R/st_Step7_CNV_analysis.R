@@ -69,9 +69,9 @@ st_CNV <- function(
                 save_path = save_path)
 
     pred.test <- data.frame(copykat.test$prediction)
-    rownames(pred.test) <- make.names(pred.test)
-    pred.test <- pred.test[make.names(colnames(st_obj)), 'copykat.pred']
-    st_obj <- AddMetaData(st_obj, pred.test, col.name = 'CNV_state')
+    st_obj@meta.data$cell.names <- row.names(st_obj@meta.data)
+    st_obj@meta.data$CNV_state <- pred.test$copykat.pred[match(st_obj@meta.data$cell.names, pred.test$cell.names)]#return x in y
+
     st_obj$CNV_state[st_obj$CNV_state == 'aneuploid'] <- 'Aneuploid'
     st_obj$CNV_state[st_obj$CNV_state == 'diploid'] <- 'Diploid'
     suppressMessages(suppressWarnings(
