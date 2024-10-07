@@ -157,7 +157,7 @@ ui <- shiny::fluidPage(
         shiny::column(12, align = "center", shiny::imageOutput('logo'))
       ),
       shiny::fluidRow(
-        shiny::column(12, align = "center", h1("HemaScopeR: A Specialized Bioinformatics Toolkit Designed for Analyzing both Single-cell and Spatial Transcriptome Sequencing Data from Hematopoietic Cells", 
+        shiny::column(12, align = "center", h1("HemaScope: a user-friendly and modular design toolkit tailored for analyzing single-cell and spatial transcriptome sequencing data of hematopoietic cells", 
                                         class = "h1-font",style = "font-family: 'arial'; font-size: 28pt;font-weight: bold;"))
       ),
       shiny::fluidRow(shiny::div(class = "spacer")),  # empty line
