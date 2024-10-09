@@ -1,6 +1,7 @@
 # numpy version == 1.23.5
 # pandas version == 1.3.5
 import scvelo as scv
+import scanpy as sc
 import anndata as ad
 import pandas as pd
 import os
@@ -25,7 +26,10 @@ scv.pp.filter_and_normalize(sdata, min_counts=10, min_counts_u=10,
                             min_shared_counts=None, min_shared_cells=None, 
                             n_top_genes=None, flavor='seurat', log=True, copy=False)
 
-scv.pp.moments(sdata,n_pcs=20, n_neighbors=50)
+sc.pp.pca(sdata)
+sc.pp.neighbors(sdata, n_pcs=30, n_neighbors=50)
+
+scv.pp.moments(sdata,n_pcs=None, n_neighbors=None)
 
 scv.tl.recover_dynamics(sdata, n_jobs=10)
 
