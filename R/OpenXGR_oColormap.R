@@ -24,7 +24,7 @@
 #' }
 #' @export
 #' @seealso \code{\link{oColormap}}
-#' @include oColormap.r
+#' @include OpenXGR_oColormap.R
 #' @examples
 #' # 1) define "blue-white-red" colormap
 #' palette.name <- oColormap(colormap="bwr")

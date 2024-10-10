@@ -9,7 +9,7 @@
 #' @note none
 #' @export
 #' @seealso \code{\link{oIG2TB}}
-#' @include oIG2TB.r
+#' @include OpenXGR_oIG2TB.R
 #' @examples
 #' set.seed(825)
 #' ig <- sample_pa(20)

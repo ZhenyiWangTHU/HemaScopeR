@@ -34,7 +34,7 @@
 #' @importFrom curl curl_download
 #' @importFrom ggraph ggraph geom_conn_bundle get_con scale_edge_colour_distiller geom_node_point geom_node_text geom_edge_diagonal geom_edge_link geom_edge_arc geom_edge_fan geom_edge_elbow theme_graph
 #' @seealso \code{\link{oRDS}}
-#' @include oRDS.r
+#' @include OpenXGR_oRDS.R
 #' @examples
 #' placeholder <- 'http://www.comptransmed.pro/bigdata_fdb'
 #' placeholder <- 'http://www.comptransmed.pro/bigdata_ctm'

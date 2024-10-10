@@ -11,7 +11,8 @@ combinedViolinPlot(
   cellTypeOrders = NULL,
   cellTypeColors = NULL,
   Org = NULL,
-  output.dir = NULL
+  output.dir = NULL,
+  databasePath = NULL
 )
 }
 \arguments{
@@ -28,6 +29,8 @@ combinedViolinPlot(
 \item{Org}{A character specifying the organism ('mmu' for mouse, 'hsa' for human).}
 
 \item{output.dir}{The path to the directory where the resulting violin plots will be saved.}
+
+\item{databasePath}{The path to the database required for the analysis.}
 }
 \value{
 None. This function generates and saves violin plots as PDF files.

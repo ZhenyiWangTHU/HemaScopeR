@@ -12,7 +12,7 @@
 #' @note none
 #' @export
 #' @seealso \code{\link{oTB2IG}}
-#' @include oTB2IG.r
+#' @include OpenXGR_oTB2IG.R
 #' @examples
 #' set.seed(825)
 #' ig <- sample_pa(20)

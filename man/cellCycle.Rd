@@ -11,6 +11,7 @@ cellCycle(
   cellcycleCutoff = NULL,
   cellTypeOrders = NULL,
   output.dir = NULL,
+  databasePath = NULL,
   Org = NULL
 )
 }
@@ -26,6 +27,8 @@ cellCycle(
 \item{cellTypeOrders}{The order of cell types for visualization. If not provided, the function will use the unique cell types in the input Seurat object.}
 
 \item{output.dir}{The path to the directory where the resulting plots will be stored.}
+
+\item{databasePath}{The path to the database required for the analysis.}
 
 \item{Org}{A character vector specifying the species of cell cycle genes, can be 'mmu' (mouse) or 'hsa' (human).}
 }

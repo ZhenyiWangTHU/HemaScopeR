@@ -2,7 +2,7 @@
 # And would not be exported to users.
 
 # visualization theme-----------------------------------------------------------
-mytheme <- theme(panel.grid.major =element_blank(),
+mytheme <- ggplot2::theme(panel.grid.major =element_blank(),
                  panel.grid.minor = element_blank(),
                  panel.background = element_blank(),
                  axis.line = element_line(size = 1,

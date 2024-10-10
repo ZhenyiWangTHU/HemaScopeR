@@ -14,7 +14,8 @@ run_SCENIC(
   groups_orders = NULL,
   Org = NULL,
   output.dir = NULL,
-  pythonPath = NULL
+  pythonPath = NULL,
+  databasePath = NULL
 )
 }
 \arguments{

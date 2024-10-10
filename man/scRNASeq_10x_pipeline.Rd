@@ -9,10 +9,11 @@ scRNASeq_10x_pipeline(
   project.names = NULL,
   output.dir = NULL,
   pythonPath = NULL,
+  databasePath = NULL,
   gene.column = 2,
   min.cells = 10,
   min.feature = 200,
-  mt.pattern = "^MT-",
+  mt.pattern = "^mt-",
   nFeature_RNA.limit = 200,
   percent.mt.limit = 20,
   scale.factor = 10000,
@@ -39,6 +40,9 @@ scRNASeq_10x_pipeline(
   lineage.genelist = NULL,
   lineage.names = NULL,
   groups_colors = NULL,
+  your_openai_API_key = "",
+  tissuename = "",
+  gptmodel = "gpt-3.5",
   slingshot.start.clus = NULL,
   slingshot.end.clus = NULL,
   slingshot.colors = NULL,
@@ -50,8 +54,8 @@ scRNASeq_10x_pipeline(
   Step1_Input_Data = TRUE,
   Step1_Input_Data.type = NULL,
   Step2_Quality_Control = TRUE,
-  Step2_Quality_Control.RemoveBatches = FALSE,
-  Step2_Quality_Control.RemoveDoublets = FALSE,
+  Step2_Quality_Control.RemoveBatches = TRUE,
+  Step2_Quality_Control.RemoveDoublets = TRUE,
   Step3_Clustering = TRUE,
   Step4_Identify_Cell_Types = TRUE,
   Step4_Use_Which_Labels = NULL,
@@ -89,7 +93,9 @@ scRNASeq_10x_pipeline(
 
 \item{pythonPath}{The path to the Python environment to use for the analysis.}
 
-\item{gene.column}{The column number in the data where gene information is stored. (Default: 2)}
+\item{databasePath}{The path to the database required for the analysis.}
+
+\item{gene.column}{The column number in the 10x data where gene information is stored. (Default: 2)}
 
 \item{min.cells}{The minimum number of cells for a gene to be considered. (Default: 10)}
 
@@ -97,23 +103,23 @@ scRNASeq_10x_pipeline(
 
 \item{mt.pattern}{The regular expression pattern to identify mitochondrial genes. (Default: '^mt-')}
 
-\item{nFeature_RNA.limit}{The limit for the number of features (genes) in the RNA. (Default: 200)}
+\item{nFeature_RNA.limit}{The minimum number of features (genes) in the cell. (Default: 200)}
 
 \item{percent.mt.limit}{The maximum percentage of mitochondrial genes allowed. (Default: 20)}
 
 \item{scale.factor}{The factor for data scaling. (Default: 10000)}
 
-\item{nfeatures}{The number of features (genes) to consider. (Default: 3000)}
+\item{nfeatures}{The number of highly variable features (genes) to consider. (Default: 3000)}
 
-\item{ndims}{The number of dimensions for analysis. (Default: 50)}
+\item{ndims}{The number of dimensions for downstream analysis. (Default: 50)}
 
 \item{vars.to.regress}{Variables to regress during data normalization. (Default: NULL)}
 
-\item{PCs}{The principal components (PCs) to use for analysis. (Default: 1:35)}
+\item{PCs}{The principal components (PCs) to use for downstream analysis. (Default: 1:35)}
 
-\item{resolution}{The resolution parameter for clustering. (Default: 0.4)}
+\item{resolution}{The resolution parameter for Louvain clustering. (Default: 0.4)}
 
-\item{n.neighbors}{The number of neighbors for analysis. (Default: 50)}
+\item{n.neighbors}{The number of neighbors for downstream analysis. (Default: 50)}
 
 \item{doublet.percentage}{The percentage used for doublet removal. (Default: 0.04)}
 
@@ -135,31 +141,37 @@ scRNASeq_10x_pipeline(
 
 \item{logfc.threshold}{The log-fold change threshold for differential gene detection. (Default: 0.25)}
 
-\item{marker.genes}{A character vector specifying marker genes for cell type identification.}
+\item{marker.genes}{A character vector specifying marker genes for violin plot visualization. (Default: NULL)}
 
 \item{ViolinPlot.cellTypeOrders}{The order of cell types for violin plot visualization. (Default: NULL)}
 
-\item{ViolinPlot.cellTypeColors}{The colors for different cell types in violin plot visualization. (Default: NULL)}
+\item{ViolinPlot.cellTypeColors}{The colors for cell types in violin plot visualization. (Default: NULL)}
 
 \item{Org}{The organism for analysis (e.g., 'mmu' for mouse, 'hsa' for human). (Default: NULL)}
 
-\item{lineage.genelist}{A list of gene names for defining cell lineages.}
+\item{lineage.genelist}{A list of gene names for defining cell lineages. (Default: NULL)}
 
-\item{lineage.names}{A character vector specifying names for each lineage in lineage.genelist.}
+\item{lineage.names}{A character vector specifying names for each lineage in lineage.genelist. (Default: NULL)}
 
-\item{groups_colors}{A named list specifying colors for different groups.}
+\item{groups_colors}{A named list specifying colors for groups. (Default: NULL)}
+
+\item{your_openai_API_key}{The openai_key parameter for gptcelltype. The OpenAI key obtained from https://platform.openai.com/account/api-keys The default is NA, which will resulting outputing the prompt itself. If an actual key is provided, then the output will be the celltype annotations from the GPT model specified by the user.}
+
+\item{tissuename}{The tissuename parameter for gptcelltype. Optional input of tissue name. Default = ''.}
+
+\item{gptmodel}{The model parameter for gptcelltype. A valid GPT-4 or GPT-3.5 model name list on https://platform.openai.com/docs/models. Default is 'gpt-3.5'.}
 
 \item{slingshot.start.clus}{The starting cluster for slingshot analysis. (Default: NULL)}
 
 \item{slingshot.end.clus}{The ending cluster for slingshot analysis. (Default: NULL)}
 
-\item{slingshot.colors}{A vector specifying colors for slingshot analysis. (Default: NULL)}
+\item{slingshot.colors}{The colors for data points in slingshot visualization. (Default: NULL)}
 
-\item{loom.files.path}{The path to loom files for scVelo analysis. (Default: NULL)}
+\item{loom.files.path}{The path of loom files for scVelo analysis. (Default: NULL)}
 
-\item{cellcycleCutoff}{The cell cycle cutoff for cell cycle assignment.}
+\item{cellcycleCutoff}{The cell cycle cutoff for cell cycle assignment (Default: NULL).}
 
-\item{sorting}{Boolean indicating whether to perform cell sorting in CellChat analysis. (Default: FALSE)}
+\item{sorting}{Boolean indicating whether the cells were sorted. (Default: FALSE)}
 
 \item{ncores}{The number of CPU cores to use for parallel processing. (Default: 1)}
 
@@ -167,23 +179,23 @@ scRNASeq_10x_pipeline(
 
 \item{Step1_Input_Data}{Boolean indicating whether to perform Step 1: Input Data. (Default: TRUE)}
 
-\item{Step1_Input_Data.type}{The type of input data for Step 1 (e.g., '10x', 'CEL', 'H5AD'). (Default: NULL)}
+\item{Step1_Input_Data.type}{The type of the input data, e.g. '10x' for cellranger-count software output, 'Seurat' for Seurat object in Rds format, and 'Matrix' for gene expression matrix in Rds format. (Default: NULL)}
 
 \item{Step2_Quality_Control}{Boolean indicating whether to perform Step 2: Quality Control. (Default: TRUE)}
 
-\item{Step2_Quality_Control.RemoveBatches}{Boolean indicating whether to remove batches during quality control. (Default: FALSE)}
+\item{Step2_Quality_Control.RemoveBatches}{Boolean indicating whether to remove batches during quality control. (Default: TRUE)}
 
-\item{Step2_Quality_Control.RemoveDoublets}{Boolean indicating whether to remove doublets during quality control. (Default: FALSE)}
+\item{Step2_Quality_Control.RemoveDoublets}{Boolean indicating whether to remove doublets during quality control. (Default: TRUE)}
 
 \item{Step3_Clustering}{Boolean indicating whether to perform Step 3: Clustering. (Default: TRUE)}
 
 \item{Step4_Identify_Cell_Types}{Boolean indicating whether to perform Step 4: Identify Cell Types. (Default: TRUE)}
 
-\item{Step4_Use_Which_Labels}{Character vector specifying which labels to use for cell type identification in Step 4. (Default: NULL)}
+\item{Step4_Use_Which_Labels}{The character specifies which labels to use for cell type identification in Step 4, including 'clustering', 'abcCellmap.1', 'abcCellmap.2', 'abcCellmap.3', 'abcCellmap.4', 'HematoMap', and 'changeLabels'. (Default: 'clustering')}
 
-\item{Step4_Cluster_Labels}{Boolean indicating whether to cluster labels during cell type identification in Step 4. (Default: FALSE)}
+\item{Step4_Cluster_Labels}{Characters. If Step4_Use_Which_Labels parameter was set to 'changeLabels', please set Step4_Cluster_Labels parameter as the characters indicating the clustering labels. (Default: NULL)}
 
-\item{Step4_Changed_Labels}{Boolean indicating whether to consider changed labels during cell type identification in Step 4. (Default: FALSE)}
+\item{Step4_Changed_Labels}{Characters. If Step4_Use_Which_Labels parameter was set to 'changeLabels', please set Step4_Changed_Labels parameter as the characters indicating the changed labels. Note that the length of the character vectors of Step4_Cluster_Labels should be equal to that of Step4_Changed_Labels. (Default: NULL)}
 
 \item{Step4_run_sc_CNV}{Boolean indicating whether to run single-cell copy number variation analysis in Step 4. (Default: FALSE)}
 
@@ -205,11 +217,11 @@ scRNASeq_10x_pipeline(
 
 \item{Step11_GSVA.identify.diff.features}{Boolean indicating whether to identify differentially expressed features in GSVA. (Default: TRUE)}
 
-\item{Step11_GSVA.comparison.design}{Character vector specifying the comparison design for GSVA. (Default: NULL)}
+\item{Step11_GSVA.comparison.design}{A list specifying the comparison design for GSVA. (Default: NULL)}
 
 \item{Step12_Construct_Trajectories}{Boolean indicating whether to perform Step 12: Construct Trajectories. (Default: TRUE)}
 
-\item{Step12_Construct_Trajectories.clusters}{Boolean indicating whether to use clusters for trajectory construction in Step 12. (Default: FALSE)}
+\item{Step12_Construct_Trajectories.clusters}{A vector indicating the clusters used for trajectory construction in Step 12. (Default: NULL)}
 
 \item{Step12_Construct_Trajectories.monocle}{Boolean indicating whether to use Monocle for trajectory construction in Step 12. (Default: FALSE)}
 
@@ -219,9 +231,9 @@ scRNASeq_10x_pipeline(
 
 \item{Step13_TF_Analysis}{Boolean indicating whether to perform Step 13: Transcription Factor (TF) Analysis. (Default: TRUE)}
 
-\item{Step13_TF_Analysis.cellTypes_colors}{Boolean indicating whether to use cell type-specific colors in TF analysis in Step 13. (Default: TRUE)}
+\item{Step13_TF_Analysis.cellTypes_colors}{A character vector indicating cell type-specific colors in TF analysis in Step 13. (Default: NULL)}
 
-\item{Step13_TF_Analysis.groups_colors}{Boolean indicating whether to use group-specific colors in TF analysis in Step 13. (Default: TRUE)}
+\item{Step13_TF_Analysis.groups_colors}{A character vector indicating group-specific colors in TF analysis in Step 13. (Default: NULL)}
 
 \item{Step14_Cell_Cell_Interaction}{Boolean indicating whether to perform Step 14: Cell-Cell Interaction. (Default: TRUE)}
 
