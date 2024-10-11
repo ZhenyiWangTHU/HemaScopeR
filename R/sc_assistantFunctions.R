@@ -142,6 +142,7 @@ HemaScopeREnrichment = function(DEGs = NULL,
 }
 
 # XGR enrichment-------------------------------------------------------------------------------------------------------------------
+#' @export
 OpenXGR_SAG = function(sc_object.markers = NULL,
                        output.dir = NULL,
                        subnet.size = 10){
@@ -187,6 +188,7 @@ OpenXGR_SAG = function(sc_object.markers = NULL,
 }
 
 # GPT annotate cell types-----------------------------------------------------------------------------------------------------------
+#' @export
 GPT_annotation = function(
     marker.genes = NULL,
     your_openai_API_key = '',
@@ -219,7 +221,7 @@ GPT_annotation = function(
 #   return(result)
 # }
 
-# Rename the genes in Seurat object
+# Rename the genes in Seurat object-------------------------------------------------------------------------------------------------
 # This function is referenced from the forum https://www.jianshu.com/p/6495706bac53.
 RenameGenesSeurat <- function(obj = NULL,
                               newnames = NULL,
@@ -306,6 +308,7 @@ RenameGenesSeurat <- function(obj = NULL,
 }
 
 # load the previous results----------------------------------------------------------------------------
+#' @export
 Load_previous_results = function(previous_results_path=NULL){
        # Get a list of all .RDS files in the specified path
        rds_files_list <- list.files(previous_results_path, pattern = "\\.rds$", full.names = TRUE)
