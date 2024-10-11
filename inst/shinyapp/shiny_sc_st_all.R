@@ -386,7 +386,7 @@ step2_fluidRow <- shiny::fluidRow(
     uiOutput("step2_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 2. Quality Control:"),
+    h3("Browse files in Step 2. Quality Control"),
     uiOutput("Step2.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -409,7 +409,7 @@ step3_fluidRow <- shiny::fluidRow(
     uiOutput("step3_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 3. Clustering:"),
+    h3("Browse files in Step 3. Clustering"),
     uiOutput("Step3.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -438,7 +438,7 @@ step4_fluidRow <- shiny::fluidRow(
     uiOutput("step4_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 4. Identify Cell Types:"),
+    h3("Browse files in Step 4. Identify Cell Types"),
     uiOutput("Step4.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -462,7 +462,7 @@ step5_fluidRow <- shiny::fluidRow(
     uiOutput("step5_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 5. Visualization:"),
+    h3("Browse files in Step 5. Visualization"),
     uiOutput("Step5.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -485,7 +485,7 @@ step6_fluidRow <- shiny::fluidRow(
     uiOutput("step6_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 6. Find Differential Genes:"),
+    h3("Browse files in Step 6. Find Differential Genes"),
     uiOutput("Step6.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -507,7 +507,7 @@ step7_fluidRow <- shiny::fluidRow(
     uiOutput("step7_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 7. Assign Cell Cycles:"),
+    h3("Browse files in Step 7. Assign Cell Cycles"),
     uiOutput("Step7.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -529,7 +529,7 @@ step8_fluidRow <- shiny::fluidRow(
     uiOutput("step8_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 8. Calculate Heterogeneity:"),
+    h3("Browse files in Step 8. Calculate Heterogeneity"),
     uiOutput("Step8.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -552,7 +552,7 @@ step9_fluidRow <- shiny::fluidRow(
     uiOutput("step9_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 9. Violin Plot for Marker Genes:"),
+    h3("Browse files in Step 9. Violin Plot for Marker Genes"),
     uiOutput("Step9.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -576,7 +576,7 @@ step10_fluidRow <- shiny::fluidRow(
     uiOutput("step10_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 10. Calculate Lineage Scores:"),
+    h3("Browse files in Step 10. Calculate Lineage Scores"),
     uiOutput("Step10.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -609,7 +609,7 @@ step11_fluidRow <- shiny::fluidRow(
     uiOutput("step11_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 11. GSVA:"),
+    h3("Browse files in Step 11. GSVA"),
     uiOutput("Step11.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -648,7 +648,7 @@ step12_fluidRow <- shiny::fluidRow(
     uiOutput("Step12_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 12. Construct Trajectories:"),
+    h3("Browse files in Step 12. Construct Trajectories"),
     uiOutput("Step12.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -671,7 +671,7 @@ step13_fluidRow <- shiny::fluidRow(
     uiOutput("step13_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 13. Transcription Factors Analysis:"),
+    h3("Browse files in Step 13. Transcription Factors Analysis"),
     uiOutput("Step13.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -693,7 +693,7 @@ step14_fluidRow <- shiny::fluidRow(
     uiOutput("step14_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 14. Cell-Cell Interection:"),
+    h3("Browse files in Step 14. Cell-Cell Interection"),
     uiOutput("Step14.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -753,7 +753,7 @@ step2_fluidRow_st <- shiny::fluidRow(
     uiOutput("step2_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 2. Quality Control:"),
+    h3("Browse files in Step 2. Quality Control"),
     uiOutput("Step2.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -777,7 +777,7 @@ step3_fluidRow_st <- shiny::fluidRow(
     uiOutput("step3_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 3. Clustering:"),
+    h3("Browse files in Step 3. Clustering"),
     uiOutput("Step3.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -801,7 +801,7 @@ step4_fluidRow_st <- shiny::fluidRow(
     uiOutput("step4_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 4. Find Differential Genes:"),
+    h3("Browse files in Step 4. Find Differential Genes"),
     uiOutput("Step4.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -824,7 +824,7 @@ step5_fluidRow_st <- shiny::fluidRow(
     uiOutput("step5_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 5. Spatially variable features:"),
+    h3("Browse files in Step 5. Spatially variable features"),
     uiOutput("Step5.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -849,7 +849,7 @@ step6_fluidRow_st <- shiny::fluidRow(
     uiOutput("step6_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 6. Spatial interaction:"),
+    h3("Browse files in Step 6. Spatial interaction"),
     uiOutput("Step6.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -876,7 +876,7 @@ step7_fluidRow_st <- shiny::fluidRow(
     uiOutput("step7_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 7. CNV analysis:"),
+    h3("Browse files in Step 7. CNV analysis"),
     uiOutput("Step7.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -901,7 +901,7 @@ step8_fluidRow_st <- shiny::fluidRow(
     uiOutput("step8_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 8. Deconvolution:"),
+    h3("Browse files in Step 8. Deconvolution"),
     uiOutput("Step8.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -924,7 +924,7 @@ step9_fluidRow_st <- shiny::fluidRow(
     uiOutput("step9_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 9. Cell cycle analysis:"),
+    h3("Browse files in Step 9. Cell cycle analysis"),
     uiOutput("Step9.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -946,7 +946,7 @@ step10_fluidRow_st <- shiny::fluidRow(
     uiOutput("step10_completed")),
   shiny::column(
     4, align = "left",
-    h3("Browse files in Step 10. Niche analysis:"),
+    h3("Browse files in Step 10. Niche analysis"),
     uiOutput("Step10.st.file_list")),
   shiny::column(4, align = "left",
          h3("Figure Display"),
@@ -1334,9 +1334,6 @@ server = function(input, output, session){
       output$data_dim_output <- renderText({
         paste0("OK! Data dimensions: ", paste0(dim(sc_object)[2], ' cells, ', dim(sc_object)[1], ' genes.'))
       })
-      
-      
-      
       shinyjs::enable("input.data.dirs") #重新启用先前禁用的输入控件
       shinyjs::enable("project.names")
       shinyjs::enable("output.dir")
