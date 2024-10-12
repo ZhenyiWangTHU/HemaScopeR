@@ -3,6 +3,7 @@ import pandas as pd
 from arboreto.algo import grnboost2, genie3
 from arboreto.utils import load_tf_names
 #from dask.distributed import Client, LocalCluster
+os.environ["OMP_NUM_THREADS"] = "4"
 
 if __name__ == '__main__':
     # local_cluster = LocalCluster(n_workers=31, 
