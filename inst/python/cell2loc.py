@@ -142,13 +142,13 @@ def run_cell2loc(
 
     ## save results
     adata_vis.obs[adata_vis.uns['mod']['factor_names']] = adata_vis.obsm['q05_cell_abundance_w_sf']
-    # adata_file = f"{save_path}/st.h5ad"
-    # 
-    # del adata_vis.obsm
-    # del adata_vis.uns
-    # del adata_vis.var
-    # 
-    # adata_vis.write(adata_file)
+    adata_file = f"{save_path}/st.h5ad"
+    
+    del adata_vis.obsm
+    del adata_vis.uns
+    del adata_vis.var
+    
+    adata_vis.write(adata_file)
     
     res = adata_vis.obs.iloc[:, 6:]
     res.to_csv(f"{save_path}/cell2loc_res.csv")
