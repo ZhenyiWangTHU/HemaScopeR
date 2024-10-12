@@ -13,7 +13,7 @@ st_NicheAnalysis(
   st_data_path = NULL,
   slice = "slice1",
   species = "mouse",
-  condaenv = "r-reticulate"
+  pythonPath = NULL
 )
 }
 \arguments{
@@ -31,7 +31,7 @@ st_NicheAnalysis(
 
 \item{species}{The species this sample belongs to}
 
-\item{condaenv}{The name of conda environment which downloaded `Commot`}
+\item{pythonPath}{The path to the Python environment to use for the analysis.}
 }
 \description{
 Niche analysis

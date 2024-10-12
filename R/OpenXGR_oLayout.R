@@ -9,7 +9,7 @@
 #' @return It returns an igraph object, appended by node attributes including "xcoord" for x-coordinates, "ycoord" for y-coordiates.
 #' @export
 #' @seealso \code{\link{oGGnetwork}}
-#' @include OpenXGR_oLayout.r
+#' @include OpenXGR_oLayout.R
 #' @examples
 #' \dontrun{
 #' # load REACTOME

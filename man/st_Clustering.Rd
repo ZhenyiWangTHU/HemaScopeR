@@ -7,10 +7,12 @@
 st_Clustering(
   st_obj,
   output.dir = ".",
+  assay = "Spatial",
   normalization.method = "SCTransform",
   npcs = 50,
   pcs.used = 1:10,
   resolution = 0.8,
+  max.n.cluster = 30,
   verbose = FALSE
 )
 }

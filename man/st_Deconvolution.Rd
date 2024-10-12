@@ -15,7 +15,7 @@ st_Deconvolution(
   sc.max.epoch = 1000,
   st.max.epoch = 10000,
   use.gpu = TRUE,
-  condaenv = "r-reticulate",
+  pythonPath = NULL,
   use.Dataset = "LymphNode"
 )
 }
@@ -36,7 +36,7 @@ used during running cell2location}
 
 \item{use.gpu}{A bool value indicating whether to use GPU}
 
-\item{condaenv}{A character of the name of conda environment used here}
+\item{pythonPath}{The path to the Python environment to use for the analysis.}
 
 \item{use.Dataset}{'HematoMap' or 'LymphNode'}
 

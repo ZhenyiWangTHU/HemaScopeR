@@ -41,7 +41,7 @@ run_SCENIC = function(countMatrix = NULL,
           "mm10__refseq-r80__500bp_up_and_100bp_down_tss.mc9nr.feather")
     data("motifAnnotations_mgi_v9", package="RcisTarget")
     #rename the motif annnotion by attributing it to the variable that is in the error
-    motifAnnotations_mgi <- motifAnnotations_mgi_v9
+    motifAnnotations_mgi <<- motifAnnotations_mgi_v9
   }else if(Org == 'hsa'){
     org="hgnc"
     dbDir=databasePath
@@ -49,7 +49,7 @@ run_SCENIC = function(countMatrix = NULL,
           "hg19-500bp-upstream-7species.mc9nr.feather")
     data("motifAnnotations_hgnc_v9", package="RcisTarget")
     #rename the motif annnotion by attributing it to the variable that is in the error
-    motifAnnotations_hgnc <- motifAnnotations_hgnc_v9
+    motifAnnotations_hgnc <<- motifAnnotations_hgnc_v9
   }else{
     stop("Org should be 'mmu' or 'hsa'.")
   }

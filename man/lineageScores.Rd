@@ -15,7 +15,8 @@ lineageScores(
   lineage.genelist = NULL,
   lineage.names = NULL,
   Org = NULL,
-  output.dir = NULL
+  output.dir = NULL,
+  databasePath = NULL
 )
 }
 \arguments{
@@ -40,6 +41,8 @@ lineageScores(
 \item{Org}{A character specifying the organism ('mmu' for mouse, 'hsa' for human).}
 
 \item{output.dir}{The path to the directory where the resulting visualizations and scores will be saved.}
+
+\item{databasePath}{The path to the database required for the analysis.}
 }
 \value{
 None. This function generates and saves visualizations and lineage scores as PDF and CSV files.

@@ -16,7 +16,7 @@ st_Interaction(
   min_cell_pct = 0.05,
   dis_thr = 500,
   n_permutations = 100,
-  condaenv = "r-reticulate"
+  pythonPath = NULL
 )
 }
 \arguments{
@@ -42,7 +42,7 @@ Choose from 'Secreted Signaling', 'Cell-Cell Contact', and 'ECM-Receptor' for Ce
 
 \item{n_permutations}{The parameter of `Commot`. Number of label permutations for computing the p-value}
 
-\item{condaenv}{The name of virtual environment used in `conda`}
+\item{pythonPath}{The path to the Python environment to use for the analysis.}
 }
 \description{
 Run spatial interaction

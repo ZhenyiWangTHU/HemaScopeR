@@ -15,7 +15,7 @@
 #' This function loads stereo-seq data in different formats
 #'
 #' @import Seurat
-#' @import SeuratDist
+#' @import SeuratDisk
 #'
 #' @export
 #'
