@@ -50,6 +50,8 @@ library(parallelDist)
 library(patchwork)
 library(markdown)
 library(tools)
+#HemaScopeR
+library(HemaScopeR) 
 
 Load_previous_results = function(previous_results_path=NULL){
   # Get a list of all .RDS files in the specified path
