@@ -4208,7 +4208,7 @@ server = function(input, output, session){
     })
     
     #show figures
-    img_dir <- file.path(output.dir,'Step8_Deconvolution')
+    img_dir <- file.path(output.dir,'Step8_Deconvolution/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
     if(length(images)!=0){
       output$st_step8_plot<-renderSlickR({
