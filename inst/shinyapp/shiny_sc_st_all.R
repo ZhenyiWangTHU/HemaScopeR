@@ -4314,7 +4314,7 @@ server = function(input, output, session){
     })
     
     #show figures
-    img_dir <- file.path(output.dir,'Step9_Cellcycle')
+    img_dir <- file.path(output.dir,'Step9_Cellcycle/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
     if(length(images)!=0){
       output$st_step9_plot<-renderSlickR({
@@ -4329,7 +4329,9 @@ server = function(input, output, session){
     }
     
   })
-  
+
+  Nich.cluster.n.temp<-reactiveVal(NULL)
+
   # Step10. Niche analysis---------------------------------------------------------------------------------
   observeEvent(input$RunStep10_st, {
     
@@ -4380,10 +4382,10 @@ server = function(input, output, session){
       features = features,
       save_path = file.path(output.dir, 'Step10_NicheAnalysis'),
       kmeans.n = Nich.cluster.n,
-      st_data_path = file.path(output.dir, 'Step1_Loading_Data'),
+      st_data_path = input.data.dir,
       slice = slice,
       species = species,
-      condaenv = condaenv
+      pythonPath = pythonPath
     )
     
     # Get the names of all variables in the current environment
@@ -4433,7 +4435,7 @@ server = function(input, output, session){
     })
     
     #show figures
-    img_dir <- file.path(output.dir,'Step10_NicheAnalysis')
+    img_dir <- file.path(output.dir,'Step10_NicheAnalysis/png')
     images <- list.files(img_dir, pattern = "\\.png$", full.names = TRUE)
     if(length(images)!=0){
       output$st_step10_plot<-renderSlickR({
@@ -4487,9 +4489,9 @@ server = function(input, output, session){
     
     #### Generate the report ####
     print('Generating the report...')
+    genReport<-TRUE
     if(genReport){
-      knitr::knit(file.path(system.file(package = "HemaScopeR"), "rmd/st_base.Rmd"),
-                  file.path(output.dir.final, 'st_pipeline.md'))
+      #knitr::knit(file.path(system.file(package = "HemaScopeR"), "rmd/st_base.Rmd"),file.path(output.dir.final, 'st_pipeline.md'))
       markdown::markdownToHTML(file.path(output.dir.final, 'st_pipeline.md'),
                                file.path(output.dir.final, 'st_pipeline.html'))
     }
@@ -4504,7 +4506,7 @@ server = function(input, output, session){
     # update parameters
     
     shinyjs::enable('RunStep11')
-    output$step10_completed <- renderText({'Step11 completed'})
+    output$step11_completed <- renderText({'Step11 completed'})
   })
   observeEvent(input$back_button_st, {
     shinyjs::hide("ui3")
@@ -4512,26 +4514,4 @@ server = function(input, output, session){
   })
   
 }
-
-  
-  
-  
-  
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+shinyApp(ui = ui,server = server)
