@@ -7,7 +7,7 @@ Maintainer: Zhenyi Wang <wangzy17@tsinghua.org.cn> and Yuxin Miao <miaoyx21@mail
 Description: HemaScopeR, a specialized bioinformatics toolkit designed for comprehensive analysis of 
              scRNA-seq and st-seq data derived from hematopoietic cells, including those from myeloid and lymphoid lineages.
 Depends: R (>= 4.3)
-imports: devtools, Seurat, Rfast2, hdf5r, ggpubr, SeuratWrappers, monocle, slingshot, GSVA, org.Mm.eg.db,
+Imports: devtools, Seurat, Rfast2, hdf5r, ggpubr, SeuratWrappers, monocle, slingshot, GSVA, org.Mm.eg.db,
          org.Hs.eg.db, scran, AUCell, RcisTarget, GENIE3, biomaRt, velocyto.R, limma, ComplexHeatmap, scmap, clusterProfiler,
          doMC, doRNG, shinyjs, shiny, shinyWidgets, shinydashboard, slickR, phateR, gelnet, parallelDist, kableExtra,
          transport, feather, markdown, ggalluvial, forcats, mcmc, MCMCpack, fields, CellChat, presto, SCENIC,
