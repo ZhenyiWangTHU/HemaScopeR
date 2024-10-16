@@ -185,7 +185,7 @@ st_10x_visium_pipeline <- function(
         #condaenv = 'r-reticulate',
         verbose = FALSE,
         genReport = TRUE,
-        pythonPath = NULL
+        pythonPath = python.path.ST()
 ){
     ### Param ###
     SpatialColors <- colorRampPalette(colors = rev(x = brewer.pal(n = 11, name = "Spectral")))

@@ -29,13 +29,12 @@ st_Deconvolution <- function(
     st_obj = NULL,
     save_path = NULL,
     sc.labels.key = 'seurat_clusters',
+    use.Dataset = 'LymphNode',
     species = 'mouse',
     sc.max.epoch = 1000,
     st.max.epoch = 10000,
-    use.gpu = TRUE,
-    # condaenv = 'r-reticulate',
-    pythonPath = NULL,
-    use.Dataset = 'LymphNode'
+    # use.gpu = TRUE,
+    pythonPath = python.path.ST()
 ){
   if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{stop('Please set the path of Python.')}
     # use_condaenv(condaenv)
@@ -70,6 +69,8 @@ st_Deconvolution <- function(
             stop(paste0('No dataset called ', use.Dataset))
         }
     }
+
+    use.gpu = FALSE
 
     run_cell2loc(st_data_path = st.data.dir,
                  sc_h5ad_path = sc.h5ad.dir,

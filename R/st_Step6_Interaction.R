@@ -33,8 +33,7 @@ st_Interaction <- function(
         min_cell_pct = 0.05,
         dis_thr = 500,
         n_permutations = 100,
-        pythonPath = NULL
-        # condaenv = 'r-reticulate'
+        pythonPath = python.path.ST()
 ){
     if(!dir.exists(save_path)){
         dir.create(save_path)

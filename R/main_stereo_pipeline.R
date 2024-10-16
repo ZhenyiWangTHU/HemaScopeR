@@ -154,7 +154,7 @@ st_stereo_pipeline <- function(
         g2m.features = NULL,
 
         verbose = FALSE,
-        pythonPath = NULL
+        pythonPath = python.path.ST()
 ){
     ### Param ###
     SpatialColors <- colorRampPalette(colors = rev(x = brewer.pal(n = 11, name = "Spectral")))
@@ -186,7 +186,7 @@ st_stereo_pipeline <- function(
         is_sparse = is_sparse,
         gene_list = gene_list,
         region = region,
-        pythonPath = pythonPath
+        pythonPath = python.path.stereo()
     )
 
     #### Step2: QC

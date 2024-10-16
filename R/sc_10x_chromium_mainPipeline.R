@@ -84,20 +84,20 @@
 #' @details
 #' This pipeline offers a comprehensive workflow for the analysis of 10x single-cell
 #' RNA-Seq data. It includes the following steps:
-#' 
+#'
 #' 1. Input Data: Loading and preprocessing of single-cell RNA-Seq data from specified
 #' directories.
-#' 
+#'
 #' 2. Quality Control: Performing data quality control, filtering low-quality cells
 #' and features, and calculating metrics like the percentage of mitochondrial genes.
-#' 
+#'
 #' 3. Clustering: Identifying cell clusters and visualizing them using t-SNE and UMAP
 #' dimensionality reduction.
-#' 
+#'
 #' 4. Automated Cell Type Identification: Automatically assigning cell types to clusters
 #' based on marker genes and mapping single-cell data to an internal reference atlas of
 #' hematopoietic cells.
-#' 
+#'
 #' 5. Visualization: Run phateR for additional dimensionality reduction and visualization.
 #'
 #' 6. Differential Gene Detection: Identifying differentially expressed genes (DEGs) between
@@ -108,7 +108,7 @@
 #' 8. Assessment of Heterogeneity: Assessing heterogeneity within cell populations.
 #'
 #' 9. Creating violin plots to explore marker genes and cluster characteristics.
-#' 
+#'
 #' 10. Prediction of Lineage Scores: Predicting lineage scores for individual cells.
 #'
 #' 11. Gene Set Variation Analysis (GSVA): Calculating gene set variation scores for cell types.
@@ -135,9 +135,9 @@
 scRNASeq_10x_pipeline = function(
                                  # input and output
                                  input.data.dirs = NULL,
-                                 project.names = NULL, 
+                                 project.names = NULL,
                                  output.dir = NULL,
-                                 pythonPath = NULL,
+                                 pythonPath = python.path.sc(),
                                  databasePath = NULL,
                                  # quality control and preprocessing
                                  gene.column = 2,
@@ -212,7 +212,7 @@ scRNASeq_10x_pipeline = function(
                                  Step11_GSVA.identify.diff.features=FALSE,
                                  Step11_GSVA.comparison.design = NULL,
                                  Step12_Construct_Trajectories = TRUE,
-                                 Step12_Construct_Trajectories.clusters = NULL, 
+                                 Step12_Construct_Trajectories.clusters = NULL,
                                  Step12_Construct_Trajectories.monocle = TRUE,
                                  Step12_Construct_Trajectories.slingshot = TRUE,
                                  Step12_Construct_Trajectories.scVelo = TRUE,
@@ -223,39 +223,39 @@ scRNASeq_10x_pipeline = function(
                                  Step15_Generate_the_Report = TRUE
                                  ){
   wdir <- getwd()
-    
+
   if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{print('Please set the path of Python.')}
-   
+
   if (!file.exists(paste0(output.dir, '/HemaScopeR_results/'))) {
     dir.create(paste0(output.dir, '/HemaScopeR_results/'))
   }
 
   output.dir <- paste0(output.dir,'/HemaScopeR_results/')
-    
+
   if (!file.exists(paste0(output.dir, '/RDSfiles/'))) {
     dir.create(paste0(output.dir, '/RDSfiles/'))
   }
 
-  previous_results_path <- paste0(output.dir, '/RDSfiles/')  
+  previous_results_path <- paste0(output.dir, '/RDSfiles/')
   if (Whether_load_previous_results) {
-       print('Loading the previous results...') 
+       print('Loading the previous results...')
        Load_previous_results(previous_results_path = previous_results_path)
   }
-  
+
   # Step1. Input data-----------------------------------------------------------------------------
   if(Step1_Input_Data == TRUE){
       print('Step1. Input data.')
       if (!file.exists(paste0(output.dir, '/Step1.Input_data/'))) {
           dir.create(paste0(output.dir, '/Step1.Input_data/'))
-        }  
-      
+        }
+
       file.copy(from = input.data.dirs, to = paste0(output.dir,'/Step1.Input_data/'), recursive = TRUE)
-      
+
       if(Step1_Input_Data.type == 'cellranger-count'){
           if(length(input.data.dirs) > 1){
             input.data.list <- c()
             for (i in 1:length(input.data.dirs)) {
-                
+
                   sc_data.temp <- Read10X(data.dir = input.data.dirs[i],
                                           gene.column = gene.column)
                   sc_object.temp <- CreateSeuratObject(counts = sc_data.temp,
@@ -264,17 +264,17 @@ scRNASeq_10x_pipeline = function(
                                                        min.feature = min.feature)
                   sc_object.temp[["percent.mt"]] <- PercentageFeatureSet(sc_object.temp, pattern = mt.pattern)
                   input.data.list <- c(input.data.list, sc_object.temp)}
-              
+
           }else{
-              
+
                   sc_data <- Read10X(data.dir = input.data.dirs,
                                      gene.column = gene.column)
                   sc_object <- CreateSeuratObject(counts = sc_data,
                                                   project = project.names,
                                                   min.cells = min.cells,
                                                   min.feature = min.feature)
-                  sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern) 
-              
+                  sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern)
+
           }
       }else if(Step1_Input_Data.type == 'Seurat'){
           if(length(input.data.dirs) > 1){
@@ -286,7 +286,7 @@ scRNASeq_10x_pipeline = function(
             }
           }else{
               sc_object <- readRDS(input.data.dirs)
-              sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern) 
+              sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern)
           }
       }else if(Step1_Input_Data.type == 'Matrix'){
             if(length(input.data.dirs) > 1){
@@ -299,16 +299,16 @@ scRNASeq_10x_pipeline = function(
                                                        min.feature = min.feature)
                   sc_object.temp[["percent.mt"]] <- PercentageFeatureSet(sc_object.temp, pattern = mt.pattern)
                   input.data.list <- c(input.data.list, sc_object.temp)}
-              
+
           }else{
-              
+
                   sc_data <- readRDS(input.data.dirs)
                   sc_object <- CreateSeuratObject(counts = sc_data,
                                                   project = project.names,
                                                   min.cells = min.cells,
                                                   min.feature = min.feature)
-                  sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern) 
-              
+                  sc_object[["percent.mt"]] <- PercentageFeatureSet(sc_object, pattern = mt.pattern)
+
           }
       }else{
           stop('Please input data generated by the cellranger-count software, or a Seurat object, or a gene expression matrix. HemaScopeR does not support other formats of input data.')
@@ -321,14 +321,14 @@ scRNASeq_10x_pipeline = function(
               saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
             }
   }else{print('Skip Step1. Input data.')}
-    
-  # Step2. Quality Control----------------------------------------------------------------------   
+
+  # Step2. Quality Control----------------------------------------------------------------------
   if(Step2_Quality_Control == TRUE){
        print('Step2. Quality control.')
        if (!file.exists(paste0(output.dir, '/Step2.Quality_control/'))) {
           dir.create(paste0(output.dir, '/Step2.Quality_control/'))
        }
-      
+
        if(length(input.data.dirs) > 1){
         # preprocess and quality control for multiple scRNA-Seq data sets
         sc_object <- QC_multiple_scRNASeq(seuratObjects = input.data.list,
@@ -371,7 +371,7 @@ scRNASeq_10x_pipeline = function(
                                         doublerFinderwraper.pN = doublerFinderwraper.pN,
                                         doublerFinderwraper.pK = doublerFinderwraper.pK)
    }
-   
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
@@ -380,13 +380,13 @@ scRNASeq_10x_pipeline = function(
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
       }
   }else{print('Skip Step2. Quality control.')}
-    
+
   # Step3. Clustering----------------------------------------------------------------------------------------
   if(Step3_Clustering == TRUE){
       print('Step3. Clustering.')
       if (!file.exists(paste0(output.dir, '/Step3.Clustering/'))) {
         dir.create(paste0(output.dir, '/Step3.Clustering/'))
-      }    
+      }
 
       if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){graph.name <- 'integrated_snn'}else{graph.name <- 'RNA_snn'}
       sc_object <- FindNeighbors(sc_object, dims = PCs, k.param = n.neighbors, force.recalc = TRUE)
@@ -408,26 +408,26 @@ scRNASeq_10x_pipeline = function(
 
       png(paste0(paste0(output.dir,'/Step3.Clustering/'), '/sc_object ','umap_cluster.png'), width = 600, height = 600)
        print(DimPlot(sc_object, reduction = "umap", group.by = "seurat_clusters", label = FALSE, pt.size = 0.1, raster = FALSE))
-      dev.off()    
-      
+      dev.off()
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step3. Clustering.')}  
-    
+      }
+  }else{print('Skip Step3. Clustering.')}
+
   # Step4. Identify cell types automatically---------------------------------------------------------------------------
   if(Step4_Identify_Cell_Types == TRUE){
       print('Step4. Identify cell types automatically.')
       if (!file.exists(paste0(output.dir, '/Step4.Identify_Cell_Types/'))) {
         dir.create(paste0(output.dir, '/Step4.Identify_Cell_Types/'))
-      } 
-      
-      sc_object <- run_cell_annotation(object = sc_object, 
-                                       assay = 'RNA', 
+      }
+
+      sc_object <- run_cell_annotation(object = sc_object,
+                                       assay = 'RNA',
                                        species = Org,
                                        output.dir = paste0(output.dir,'/Step4.Identify_Cell_Types/'))
 
@@ -436,11 +436,11 @@ scRNASeq_10x_pipeline = function(
         if(length(intersect(rownames(HematoMap.reference), rownames(sc_object))) < 1000){
               HematoMap.reference <- RenameGenesSeurat(obj = HematoMap.reference,
                                                        newnames = toupper(rownames(HematoMap.reference)),
-                                                       gene.use = rownames(HematoMap.reference), 
+                                                       gene.use = rownames(HematoMap.reference),
                                                        de.assay = "RNA",
                                                        lassays = "RNA")
           }
-          
+
         if(sc_object@active.assay == 'integrated'){
             DefaultAssay(sc_object) <- 'RNA'
             sc_object <- mapDataToRef(ref_object = HematoMap.reference,
@@ -471,15 +471,15 @@ scRNASeq_10x_pipeline = function(
           Idents(sc_object) <- sc_object@meta.data$selectLabels
       }else if(Step4_Use_Which_Labels == 'abcCellmap.3'){
           sc_object@meta.data$selectLabels <- sc_object@meta.data$Seurat.Immunophenotype
-          Idents(sc_object) <- sc_object@meta.data$selectLabels          
+          Idents(sc_object) <- sc_object@meta.data$selectLabels
       }else if(Step4_Use_Which_Labels == 'abcCellmap.4'){
           sc_object@meta.data$selectLabels <- sc_object@meta.data$scmap.Immunophenotype
-          Idents(sc_object) <- sc_object@meta.data$selectLabels          
+          Idents(sc_object) <- sc_object@meta.data$selectLabels
       }else if(Step4_Use_Which_Labels == 'HematoMap'){
           if(Org == 'hsa'){
             sc_object@meta.data$selectLabels <- sc_object@meta.data$predicted.id
             Idents(sc_object) <- sc_object@meta.data$selectLabels
-          }else{print("'HematoMap' is only applicable to human data ('Org' = 'hsa').")}    
+          }else{print("'HematoMap' is only applicable to human data ('Org' = 'hsa').")}
       }else if(Step4_Use_Which_Labels == 'changeLabels'){
           if (!is.null(Step4_Cluster_Labels) && !is.null(Step4_Changed_Labels) && length(Step4_Cluster_Labels) == length(Step4_Changed_Labels)){
            sc_object@meta.data$selectLabels <- plyr::mapvalues(sc_object@meta.data$seurat_clusters,
@@ -500,8 +500,8 @@ scRNASeq_10x_pipeline = function(
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step4. Identify cell types automatically.')}   
+      }
+  }else{print('Skip Step4. Identify cell types automatically.')}
 
   if(Step4_run_sc_CNV==TRUE){
           sc_CNV(sc_object=sc_object,
@@ -542,8 +542,8 @@ scRNASeq_10x_pipeline = function(
 
       cluster_counts <- rbind(cluster_counts, c('Total', sum(cluster_counts$count), '100%', 'all cells'))
 
-      sc_object@meta.data$cluster_id_count_percentages <- mapvalues(sc_object@meta.data$selectLabels, 
-                                                                    from=cluster_counts$cluster_id, 
+      sc_object@meta.data$cluster_id_count_percentages <- mapvalues(sc_object@meta.data$selectLabels,
+                                                                    from=cluster_counts$cluster_id,
                                                                     to=cluster_counts$cluster_id_count_percentages,
                                                                     warn_missing=FALSE)
 
@@ -553,19 +553,19 @@ scRNASeq_10x_pipeline = function(
 
       colnames(cluster_counts) <- c('Cell types', 'Cell counts', 'Percentages')
 
-      # names(colorvector) <- mapvalues(names(colorvector), 
-      #                                 from=cluster_counts$cluster_id, 
+      # names(colorvector) <- mapvalues(names(colorvector),
+      #                                 from=cluster_counts$cluster_id,
       #                                 to=cluster_counts$cluster_id_count_percentages,
       #                                 warn_missing=FALSE)
 
       write.csv(cluster_counts, file=paste(paste0(output.dir, '/Step5.Visualization/'), '/cell types_cell counts_percentages.csv', sep=''), quote=FALSE, row.names=FALSE)
 
       pdf(paste(paste0(output.dir, '/Step5.Visualization/'), '/cell types_cell counts_percentages_umap.pdf', sep=''), width = 14, height = 6)
-        print(DimPlot(sc_object, 
-                      reduction = "umap", 
-                      group.by = paste('Total ', nrow(sc_object@meta.data), ' cells', sep=''), 
-                      label = FALSE, 
-                      pt.size = 0.1, 
+        print(DimPlot(sc_object,
+                      reduction = "umap",
+                      group.by = paste('Total ', nrow(sc_object@meta.data), ' cells', sep=''),
+                      label = FALSE,
+                      pt.size = 0.1,
                       raster = FALSE))
       dev.off()
 
@@ -574,7 +574,7 @@ scRNASeq_10x_pipeline = function(
           DefaultAssay(sc_object) <- 'integrated'
       }else{
           DefaultAssay(sc_object) <- 'RNA'}
-      
+
       if(!is.null(pythonPath)){
         run_phateR(sc_object = sc_object,
                    output.dir = paste0(output.dir,'/Step5.Visualization/'),
@@ -582,9 +582,9 @@ scRNASeq_10x_pipeline = function(
                    phate.knn = phate.knn,
                    phate.npca = phate.npca,
                    phate.t = phate.t,
-                   phate.ndim = phate.ndim)     
+                   phate.ndim = phate.ndim)
       }
-        
+
       # plot cell types
       pdf(paste0(paste0(output.dir,'/Step5.Visualization/'), '/sc_object ','tsne cell types.pdf'), width = 6, height = 6)
        print(DimPlot(sc_object, reduction = "tsne", group.by = "ident", label = FALSE, pt.size = 0.1, raster = FALSE))
@@ -600,28 +600,28 @@ scRNASeq_10x_pipeline = function(
 
       png(paste0(paste0(output.dir,'/Step5.Visualization/'), '/sc_object ','umap cell types.png'), width = 600, height = 600)
        print(DimPlot(sc_object, reduction = "umap", group.by = "ident", label = FALSE, pt.size = 0.1, raster = FALSE))
-      dev.off()    
-      
+      dev.off()
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step5. Visualization.')}     
-    
+      }
+  }else{print('Skip Step5. Visualization.')}
+
   # Step6. Find DEGs----------------------------------------------------------------------------------------------------
   if(Step6_Find_DEGs == TRUE){
       print('Step6. Find DEGs.')
       if (!file.exists(paste0(output.dir, '/Step6.Find_DEGs/'))) {
         dir.create(paste0(output.dir, '/Step6.Find_DEGs/'))
-      }   
+      }
 
      if (!file.exists(paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'))) {
         dir.create(paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'))
-      } 
-      
+      }
+
       sc_object.markers <- FindAllMarkers(sc_object, only.pos = TRUE, min.pct = min.pct, logfc.threshold = logfc.threshold)
       write.csv(sc_object.markers,
                 file = paste0(paste0(output.dir, '/Step6.Find_DEGs/'),'sc_object.markerGenes.csv'),
@@ -645,24 +645,24 @@ scRNASeq_10x_pipeline = function(
       HemaScopeREnrichment(DEGs=sc_object.markers,
                            OrgDb=OrgDb,
                            output.dir=paste0(output.dir, '/Step6.Find_DEGs/'))
-      
+
       sc_object.markers.top5 <- sc_object.markers %>% group_by(cluster) %>% top_n(n = 5, wt = avg_log2FC)
 
-      pdf(paste0(paste0(output.dir, '/Step6.Find_DEGs/'), 'sc_object_markerGenesTop5.pdf'), 
-          width = 0.5*length(unique(sc_object.markers.top5$gene)), 
+      pdf(paste0(paste0(output.dir, '/Step6.Find_DEGs/'), 'sc_object_markerGenesTop5.pdf'),
+          width = 0.5*length(unique(sc_object.markers.top5$gene)),
           height = 0.5*length(unique(Idents(sc_object))))
           print(DotPlot(sc_object,
                   features = unique(sc_object.markers.top5$gene),
                   cols=c("lightgrey",'red'))+theme(axis.text.x =element_text(angle = 45, vjust = 1, hjust = 1)))
       dev.off()
 
-      png(paste0(paste0(output.dir, '/Step6.Find_DEGs/'), 'sc_object_markerGenesTop5.png'), 
-          width = 20*length(unique(sc_object.markers.top5$gene)), 
+      png(paste0(paste0(output.dir, '/Step6.Find_DEGs/'), 'sc_object_markerGenesTop5.png'),
+          width = 20*length(unique(sc_object.markers.top5$gene)),
           height = 30*length(unique(Idents(sc_object))))
           print(DotPlot(sc_object,
                   features = unique(sc_object.markers.top5$gene),
                   cols=c("lightgrey",'red'))+theme(axis.text.x =element_text(angle = 45, vjust = 1, hjust = 1)))
-      dev.off()  
+      dev.off()
 
       OpenXGR_SAG(sc_object.markers = sc_object.markers,
                   output.dir = paste0(output.dir, '/Step6.Find_DEGs/OpenXGR/'),
@@ -673,9 +673,9 @@ scRNASeq_10x_pipeline = function(
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step6. Find DEGs.')} 
-    
+      }
+  }else{print('Skip Step6. Find DEGs.')}
+
   # Step7. Assign Cell Cycles---------------------------------------------------------------------------------------------------------
   if(Step7_Assign_Cell_Cycle == TRUE){
       print('Step7. Assign cell cycles.')
@@ -683,7 +683,7 @@ scRNASeq_10x_pipeline = function(
         dir.create(paste0(output.dir, '/Step7.Assign_cell_cycles/'))
       }
 
-      datasets.before.batch.removal <- readRDS(paste0(paste0(output.dir, '/RDSfiles/'),'datasets.before.batch.removal.rds'))  
+      datasets.before.batch.removal <- readRDS(paste0(paste0(output.dir, '/RDSfiles/'),'datasets.before.batch.removal.rds'))
       sc_object <- cellCycle(sc_object=sc_object,
                              counts_matrix = GetAssayData(object = datasets.before.batch.removal, slot = "counts")%>%as.matrix(),
                              data_matrix = GetAssayData(object = datasets.before.batch.removal, slot = "data")%>%as.matrix(),
@@ -692,22 +692,22 @@ scRNASeq_10x_pipeline = function(
                              output.dir=paste0(output.dir, '/Step7.Assign_cell_cycles/'),
                              databasePath = databasePath,
                              Org = Org)
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step7. Assign cell cycles.')} 
-    
+      }
+  }else{print('Skip Step7. Assign cell cycles.')}
+
   # Step8. Calculate Heterogeneity--------------------------------------------------------------------------------------------------
   if(Step8_Calculate_Heterogeneity == TRUE){
       print('Step8. Calculate heterogeneity.')
       if (!file.exists(paste0(output.dir, '/Step8.Calculate_heterogeneity/'))) {
         dir.create(paste0(output.dir, '/Step8.Calculate_heterogeneity/'))
-      }  
+      }
       expression_matrix <- GetAssayData(object = datasets.before.batch.removal, slot = "data")%>%as.matrix()
       expression_matrix <- expression_matrix[,rownames(sc_object@meta.data)]
       cell_types_groups <- as.data.frame(cbind(sc_object@meta.data$selectLabels,
@@ -717,37 +717,37 @@ scRNASeq_10x_pipeline = function(
       if(is.null(ViolinPlot.cellTypeOrders)){
         cellTypes_orders <- unique(sc_object@meta.data$selectLabels)
       }else{
-        cellTypes_orders <- ViolinPlot.cellTypeOrders  
-      } 
-      
+        cellTypes_orders <- ViolinPlot.cellTypeOrders
+      }
+
       heterogeneity(expression_matrix = expression_matrix,
                     cell_types_groups = cell_types_groups,
                     cellTypeOrders = cellTypes_orders,
                     output.dir = paste0(output.dir, '/Step8.Calculate_heterogeneity/'))
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step8. Calculate heterogeneity.')} 
-    
+      }
+  }else{print('Skip Step8. Calculate heterogeneity.')}
+
   # Step9. Violin Plot for Marker Genes------------------------------------------------------------------------------------------------------------------
   if(Step9_Violin_Plot_for_Marker_Genes == TRUE){
       print('Step9. Violin plot for marker genes.')
       if (!file.exists(paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'))) {
         dir.create(paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'))
       }
-      
+
       if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){
           DefaultAssay(sc_object) <- 'integrated'
       }else{
           DefaultAssay(sc_object) <- 'RNA'}
-      
+
       dataMatrix <- GetAssayData(object = sc_object, slot = "scale.data")
-      
+
       if(is.null(marker.genes)&(Org == 'mmu')){
           # mpp genes are from 'The bone marrow microenvironment at single cell resolution'
           # the other genes are from 'single cell characterization of haematopoietic progenitors and their trajectories in homeostasis and perturbed haematopoiesis'
@@ -786,16 +786,16 @@ scRNASeq_10x_pipeline = function(
                          Org = Org,
                          output.dir = paste0(output.dir, '/Step9.Violin_plot_for_marker_genes/'),
                          databasePath = databasePath)
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step9. Violin plot for marker genes.')} 
-    
+      }
+  }else{print('Skip Step9. Violin plot for marker genes.')}
+
   # Step10. Calculate Lineage Scores-----------------------------------------------------------
   if( Step10_Calculate_Lineage_Scores == TRUE){
       print('Step10. Calculate lineage scores.')
@@ -823,15 +823,15 @@ scRNASeq_10x_pipeline = function(
           lineage.names <- c('HSPCs_lineage_signatures',
                              'Myeloids_lineage_signatures',
                              'B_cells_lineage_signatures',
-                             'T_NK_cells_lineage_signatures') 
+                             'T_NK_cells_lineage_signatures')
       }
 
       if(is.null(ViolinPlot.cellTypeOrders)){
         cellTypes_orders <- unique(sc_object@meta.data$selectLabels)
       }else{
-        cellTypes_orders <- ViolinPlot.cellTypeOrders  
+        cellTypes_orders <- ViolinPlot.cellTypeOrders
       }
-          
+
       lineageScores(expression_matrix = expression_matrix,
                     cellTypes = sc_object@meta.data$selectLabels,
                     cellTypes_orders = cellTypes_orders,
@@ -844,22 +844,22 @@ scRNASeq_10x_pipeline = function(
                     Org = Org,
                     output.dir = paste0(output.dir, '/Step10.Calculate_lineage_scores/'),
                     databasePath = databasePath)
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step10. Calculate lineage scores.')} 
+      }
+  }else{print('Skip Step10. Calculate lineage scores.')}
 
   # Step11. GSVA-------------------------------------------------------------------------------------------
   if(Step11_GSVA == TRUE){
       print('Step11. GSVA.')
       if (!file.exists(paste0(output.dir, '/Step11.GSVA/'))) {
         dir.create(paste0(output.dir, '/Step11.GSVA/'))
-      }  
+      }
 
       setwd(wdir)
 
@@ -878,8 +878,8 @@ scRNASeq_10x_pipeline = function(
       if(is.null(ViolinPlot.cellTypeOrders)){
         cellTypes_orders <- unique(sc_object@meta.data$selectLabels)
       }else{
-        cellTypes_orders <- ViolinPlot.cellTypeOrders  
-      }    
+        cellTypes_orders <- ViolinPlot.cellTypeOrders
+      }
       run_GSVA(sc_object = sc_object,
                GSVA.genelist = GSVA.genelist,
                GSVA.cellTypes = sc_object@meta.data$selectLabels,
@@ -890,23 +890,23 @@ scRNASeq_10x_pipeline = function(
                GSVA.comparison.design = Step11_GSVA.comparison.design,
                OrgDB = OrgDB,
                output.dir = paste0(output.dir, '/Step11.GSVA/'))
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step11. GSVA.')} 
-          
+      }
+  }else{print('Skip Step11. GSVA.')}
+
   # Step12. Construct Trajectories-------------------------------------------------------------
   #data("genecode_geneSymbolandEnsembleID")
 
   DefaultAssay(sc_object) <- 'RNA'
   countsSlot <- GetAssayData(object = sc_object, slot = "counts")
   gene_metadata <- as.data.frame(rownames(countsSlot))
-  rownames(gene_metadata) <- gene_metadata[,1]        
+  rownames(gene_metadata) <- gene_metadata[,1]
   if(Org == 'mmu'){
      load(paste0(databasePath,"/mouseGeneSymbolandEnsembleID.rdata"))
      gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
@@ -918,9 +918,9 @@ scRNASeq_10x_pipeline = function(
      gene_metadata $ ensembleID <- mapvalues(x = gene_metadata[,1],
                                              from = humanGeneSymbolandEnsembleID$geneName,
                                              to = humanGeneSymbolandEnsembleID$ensemblIDNoDot,
-                                             warn_missing = FALSE) 
+                                             warn_missing = FALSE)
   }
-   
+
   colnames(gene_metadata) <- c('gene_short_name','ensembleID')
 
   if(Step12_Construct_Trajectories == TRUE){
@@ -936,13 +936,13 @@ scRNASeq_10x_pipeline = function(
           sc_object.subset <- subset(sc_object, subset = selectLabels %in% Step12_Construct_Trajectories.clusters)
           countsSlot.subset <- GetAssayData(object = sc_object.subset, slot = "counts")
       }
-      
+
       if(Step12_Construct_Trajectories.monocle == TRUE){
           # monocle2
           if (!file.exists(paste0(output.dir, '/Step12.Construct_trajectories/monocle2/'))) {
             dir.create(paste0(output.dir, '/Step12.Construct_trajectories/monocle2/'))
-          }   
-          
+          }
+
           phenoData <- sc_object.subset@meta.data
           featureData <- gene_metadata
           run_monocle(cellData = countsSlot.subset,
@@ -955,13 +955,13 @@ scRNASeq_10x_pipeline = function(
                       monocle.colors = ViolinPlot.cellTypeColors,
                       output.dir = paste0(output.dir, '/Step12.Construct_trajectories/monocle2/'))
       }
-      
+
       if(Step12_Construct_Trajectories.slingshot == TRUE){
           # slingshot
           if (!file.exists(paste0(output.dir, '/Step12.Construct_trajectories/slingshot/'))) {
             dir.create(paste0(output.dir, '/Step12.Construct_trajectories/slingshot/'))
-          }  
-          
+          }
+
           if( (length(input.data.dirs) > 1) & Step2_Quality_Control.RemoveBatches ){
               DefaultAssay(sc_object.subset) <- 'integrated'
           }else{
@@ -979,14 +979,14 @@ scRNASeq_10x_pipeline = function(
           if((!is.null(loom.files.path))&(!is.null(pythonPath))){
               if (!file.exists(paste0(output.dir, '/Step12.Construct_trajectories/scVelo/'))) {
                 dir.create(paste0(output.dir, '/Step12.Construct_trajectories/scVelo/'))
-              } 
-              
+              }
+
               prepareDataForScvelo(sc_object = sc_object.subset,
                                    loom.files.path = loom.files.path,
                                    scvelo.reduction = 'pca',
                                    scvelo.column = 'selectLabels',
                                    output.dir = paste0(output.dir, '/Step12.Construct_trajectories/scVelo/'))
-        
+
               reticulate::py_run_string(paste0("import os\noutputDir = '", output.dir, "'"))
               reticulate::py_run_file(file.path(system.file(package = "HemaScopeR"), "python/sc_run_scvelo.py"), convert = FALSE)
           }
@@ -1005,16 +1005,16 @@ scRNASeq_10x_pipeline = function(
       #         root.cellTypes=NULL,
       #         tips.cellTypes=NULL,
       #         output.dir = output.dir)
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
+      }
   }else{print('Skip Step12. Construct trajectories.')}
-    
+
   # Step13. TF Analysis------------------------------------------------------------------------------------
   if(Step13_TF_Analysis == TRUE){
       print('Step13. TF analysis.')
@@ -1033,16 +1033,16 @@ scRNASeq_10x_pipeline = function(
                  output.dir = paste0(output.dir, '/Step13.TF_analysis/'),
                  pythonPath = pythonPath,
                  databasePath = databasePath)
-      
+
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step13. TF analysis.')} 
-    
+      }
+  }else{print('Skip Step13. TF analysis.')}
+
   # Step14. Cell-Cell Interaction----------------------------------------------------------------------------
   if( Step14_Cell_Cell_Interaction == TRUE){
       print('Step14. Cell-cell interaction.')
@@ -1065,12 +1065,12 @@ scRNASeq_10x_pipeline = function(
       for (var_name in variable_names) {
         var <- get(var_name)  # Get the variable by its name
         saveRDS(var, file = paste0(output.dir, '/RDSfiles/', var_name, ".rds"))  # Save as RDS with the variable's name
-      }  
-  }else{print('Skip Step14. Cell-cell interaction.')} 
-  
-  # Step15. Generate the Report-----------------------------------------------------------------------------  
+      }
+  }else{print('Skip Step14. Cell-cell interaction.')}
+
+  # Step15. Generate the Report-----------------------------------------------------------------------------
   if(Step15_Generate_the_Report == TRUE){
       print('Step15. Generate the report.')
   # generate the report
-  }else{print('Skip Step15. Generate the report.')}   
+  }else{print('Skip Step15. Generate the report.')}
 }
