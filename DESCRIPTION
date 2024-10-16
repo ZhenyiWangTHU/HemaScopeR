@@ -32,6 +32,7 @@ Collate:
     'OpenXGR_oRDS.R'
     'OpenXGR_oSubneterGenes.R'
     'OpenXGR_oTB2IG.R'
+    'install_python.R'
     'main_MERFISH_pipeline.R'
     'main_st_10x_visium_pipeline.R'
     'main_stereo_pipeline.R'
