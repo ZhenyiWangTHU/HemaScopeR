@@ -7,6 +7,9 @@
 #' The path to the miniconda environment of scRNA-seq pipeline
 #' @export
 python.path.sc <- function(){
+    if(is.null(.HemaScope_env$pythonPath.sc)){
+        return(NULL)
+    }
     if(!file.exists(.HemaScope_env$pythonPath.sc)){
         .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_sc/python.exe')
@@ -17,8 +20,11 @@ python.path.sc <- function(){
 #' The path to the miniconda environment of ST pipeline
 #' @export
 python.path.ST <- function(){
+    if(is.null(.HemaScope_env$pythonPath.ST)){
+        return(NULL)
+    }
     if(!file.exists(.HemaScope_env$pythonPath.ST)){
-        .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(), 
+        .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_ST/python.exe')
     }
     .HemaScope_env$pythonPath.ST
@@ -27,19 +33,22 @@ python.path.ST <- function(){
 #' The path to the miniconda environment of stereo-seq pipeline
 #' @export
 python.path.stereo <- function(){
+    if(is.null(.HemaScope_env$pythonPath.stereo)){
+        return(NULL)
+    }
     if(!file.exists(.HemaScope_env$pythonPath.stereo)){
-        .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(), 
+        .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
                                                       'envs/HemaScope_stereo/python.exe')
     }
     .HemaScope_env$pythonPath.stereo
 }
 
 #' Init miniconda for scRNA-seq pipeline and basic ST pipline
-#' 
+#'
 #' @import reticulate
-#' 
+#'
 #' @export
-#' 
+#'
 init_miniconda <- function(){
     conda_path <- reticulate::miniconda_path()
     if(file.exists(conda_path)){
@@ -48,7 +57,7 @@ init_miniconda <- function(){
         cat("Miniconda is not installed. We will first install miniconda.\n")
         reticulate::install_miniconda()
     }
-    
+
     ## For scRNA-seq
     cat('Creating the environment for scRNA-seq pipeline...')
     reticulate::conda_create(envname='HemaScope_sc', python_version='3.9.12')
@@ -69,10 +78,10 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_sc', packages='scvelo==0.2.5', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='numpy==1.23.5', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='pandas==1.5.3', pip=TRUE)
-    
-    .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(), 
+
+    .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                               'envs/HemaScope_sc/bin/python')
-    
+
     ## For ST
     cat('Creating the environment for ST pipeline...')
     reticulate::conda_create(envname='HemaScope_ST', python_version='3.11')
@@ -87,17 +96,17 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_ST', packages='flax==0.7.4', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_ST', packages='scipy==1.11.3', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_ST', packages='commot', pip=TRUE)
-    
-    .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(), 
+
+    .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
                                               'envs/HemaScope_ST/bin/python')
 }
 
 #' Init miniconda for stereoseq data
-#' 
+#'
 #' @import reticulate
-#' 
+#'
 #' @export
-#' 
+#'
 init_miniconda_stereo <- function(){
     conda_path <- reticulate::miniconda_path()
     if(file.exists(conda_path)){
@@ -106,13 +115,13 @@ init_miniconda_stereo <- function(){
         cat("Miniconda is not installed. We will first install miniconda.\n")
         reticulate::install_miniconda()
     }
-    
+
     cat('Creating the environment for stereo-seq data.')
-    
+
     reticulate::conda_create(envname='HemaScope_stereo', python_version='3.8')
     reticulate::conda_install(envname='HemaScope_stereo', packages='stereopy', pip=TRUE)
-    
-    .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(), 
+
+    .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_stereo/bin/python')
 }
 
