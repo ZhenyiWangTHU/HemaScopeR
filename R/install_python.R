@@ -5,6 +5,7 @@
 .HemaScope_env$pythonPath.stereo <- NULL
 
 #' The path to the miniconda environment of scRNA-seq pipeline
+#'
 #' @export
 python.path.sc <- function(){
     if(is.null(.HemaScope_env$pythonPath.sc)){
@@ -18,6 +19,7 @@ python.path.sc <- function(){
 }
 
 #' The path to the miniconda environment of ST pipeline
+#'
 #' @export
 python.path.ST <- function(){
     if(is.null(.HemaScope_env$pythonPath.ST)){
@@ -31,6 +33,7 @@ python.path.ST <- function(){
 }
 
 #' The path to the miniconda environment of stereo-seq pipeline
+#'
 #' @export
 python.path.stereo <- function(){
     if(is.null(.HemaScope_env$pythonPath.stereo)){

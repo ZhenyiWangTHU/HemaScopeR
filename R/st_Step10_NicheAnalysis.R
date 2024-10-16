@@ -127,9 +127,9 @@ Co_occurenceScore <- function(
 
 #' Calculate the wasserstein distance
 #'
-#' @param a
-#' @param b
-#' @param p
+#' @param a A wpp object
+#' @param b A wpp object
+#' @param p The power
 #'
 #' @import transport
 #'

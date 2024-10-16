@@ -152,24 +152,24 @@ saveImage <- function(output.dir,
 }
 
 
-#' @param envname The name of the conda environment
-#' @param python_version The version of python, 3.9 by default
-#' @import reticulate
-#' @export
-init_condaenv <- function(
-        envname = 'r-reticulate',
-        python_version = 3.9
-){
-    reticulate::conda_create(envname = envname,
-                             python_version = python_version)
-    reticulate::use_condaenv(condaenv = envname)
-    reticulate::py_install('commot[tradeSeq]',
-                           pip = TRUE)
-    reticulate::py_install('cell2location[tutorials]',
-                           pip = TRUE)
-    # print(paste0('The conda environment named ', envname,
-    #              ' is now already available for running cell2location and COMMOT'))
-}
+#' #' @param envname The name of the conda environment
+#' #' @param python_version The version of python, 3.9 by default
+#' #' @import reticulate
+#' #' @export
+#' init_condaenv <- function(
+#'         envname = 'r-reticulate',
+#'         python_version = 3.9
+#' ){
+#'     reticulate::conda_create(envname = envname,
+#'                              python_version = python_version)
+#'     reticulate::use_condaenv(condaenv = envname)
+#'     reticulate::py_install('commot[tradeSeq]',
+#'                            pip = TRUE)
+#'     reticulate::py_install('cell2location[tutorials]',
+#'                            pip = TRUE)
+#'     # print(paste0('The conda environment named ', envname,
+#'     #              ' is now already available for running cell2location and COMMOT'))
+#' }
 
 #' Convert mouse genes to human genes
 #'
@@ -304,10 +304,10 @@ convertMatrixHumanGene <- function(
 
 #' Save object to h5 file and spatial file
 #'
-#' @param object
-#' @param file.dir
-#' @param assay
-#' @param slice
+#' @param object A Seuratobject
+#' @param file.dir A path to store outputs
+#' @param assay The assay to store
+#' @param slice The slice to store
 #'
 #' @import rjson
 #' @import png
