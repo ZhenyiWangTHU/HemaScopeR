@@ -33,7 +33,7 @@ st_Deconvolution <- function(
     species = 'mouse',
     sc.max.epoch = 1000,
     st.max.epoch = 10000,
-    # use.gpu = TRUE,
+    # use.gpu = FALSE,
     pythonPath = python.path.ST()
 ){
   if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{stop('Please set the path of Python.')}

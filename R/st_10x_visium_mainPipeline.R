@@ -40,7 +40,6 @@
 #' @param cell2loc.sc.h5ad.dir A character of path of h5ad file of scRNA-seq reference data, default NULL and used default dataset.
 #' @param cell2loc.sc.max.epoch A integer representing the maximum epochs of training scRNA-seq data.
 #' @param cell2loc.st.max.epoch A integer representing the maximum epochs of training ST data.
-#' @param cell2loc.use.gpu A bool value indicating whether to use GPU.
 #' @param cell2loc.use.Dataset 'HematoMap' or 'LymphNode'.
 #'
 #' @param coexistence.method The method to analyze the coexistence of cell types. 'correlation' or 'Wasserstein'.
@@ -168,7 +167,7 @@ st_10x_visium_pipeline <- function(
         cell2loc.sc.h5ad.dir = NULL,
         cell2loc.sc.max.epoch = 1000,
         cell2loc.st.max.epoch = 10000,
-        cell2loc.use.gpu = FALSE,
+        # cell2loc.use.gpu = FALSE,
         cell2loc.use.Dataset = 'LymphNode',
 
         # For Step9 Cellcycle
@@ -332,7 +331,7 @@ st_10x_visium_pipeline <- function(
             species = species,
             sc.max.epoch = cell2loc.sc.max.epoch,
             st.max.epoch = cell2loc.st.max.epoch,
-            use.gpu = cell2loc.use.gpu,
+            # use.gpu = cell2loc.use.gpu,
             use.Dataset = cell2loc.use.Dataset,
             pythonPath = pythonPath
             # condaenv = condaenv
