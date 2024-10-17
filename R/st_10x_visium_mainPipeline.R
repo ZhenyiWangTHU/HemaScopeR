@@ -115,6 +115,14 @@ st_10x_visium_pipeline <- function(
         output.dir,
         sampleName = 'Hema_ST',
 
+        # For Step1 Loading
+        rds.file = FALSE,
+        filename = "filtered_feature_bc_matrix.h5",
+        assay = "Spatial",
+        slice = "slice1",
+        filter.matrix = TRUE,
+        to.upper = FALSE,
+
         # For Step2 QC
         Step2_QC = TRUE,
         min.gene = 200,
@@ -204,16 +212,27 @@ st_10x_visium_pipeline <- function(
 
     #### Step1: Loading data ####
     print('Loading data...')
-    st_obj <- Load10X_Spatial(input.data.dir,
-                              filename = "filtered_feature_bc_matrix.h5",
-                              assay = "Spatial",
-                              slice = "slice1",
-                              filter.matrix = TRUE,
-                              to.upper = FALSE,
-                              image = NULL)
-    st_obj@project.name <- sampleName
-    st_obj$orig.ident <- factor(sampleName)
-    st_obj@active.ident <- st_obj$orig.ident
+    st_obj <- st_Loading_Data(
+        input.data.dir = input.data.dir,
+        output.dir = file.path(output.dir, 'Step1_Loading_Data'),
+        sampleName = sampleName,
+        rds.file = rds.file,
+        filename = filename,
+        assay = assay,
+        slice = slice,
+        filter.matrix = filter.matrix,
+        to.upper = to.upper
+    )
+    # st_obj <- Load10X_Spatial(input.data.dir,
+    #                           filename = "filtered_feature_bc_matrix.h5",
+    #                           assay = "Spatial",
+    #                           slice = "slice1",
+    #                           filter.matrix = TRUE,
+    #                           to.upper = FALSE,
+    #                           image = NULL)
+    # st_obj@project.name <- sampleName
+    # st_obj$orig.ident <- factor(sampleName)
+    # st_obj@active.ident <- st_obj$orig.ident
 
     #### Step2: QC ####
     if(Step2_QC){

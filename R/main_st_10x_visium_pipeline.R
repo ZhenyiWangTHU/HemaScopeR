@@ -41,7 +41,7 @@
 #' #' @import dplyr
 #' #' @import knitr
 #' #' @import kableExtra
-#' #' @export
+#' #'
 #' #'
 #'
 #' st_10x_visium_pipeline_old <- function(

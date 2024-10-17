@@ -1,19 +1,22 @@
 #### Global variables ####
 .HemaScope_env <- new.env()
-.HemaScope_env$pythonPath.sc <- NULL
-.HemaScope_env$pythonPath.ST <- NULL
-.HemaScope_env$pythonPath.stereo <- NULL
+.HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
+                                          'envs/HemaScope_sc/bin/python')
+.HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
+                                          'envs/HemaScope_ST/bin/python')
+.HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
+                                              'envs/HemaScope_stereo/bin/python')
 
 #' The path to the miniconda environment of scRNA-seq pipeline
 #'
 #' @export
 python.path.sc <- function(){
-    if(is.null(.HemaScope_env$pythonPath.sc)){
-        return(NULL)
-    }
     if(!file.exists(.HemaScope_env$pythonPath.sc)){
         .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_sc/python.exe')
+    }
+    if(!file.exists(.HemaScope_env$pythonPath.sc)){
+        stop('Please run init_miniconda function first.')
     }
     .HemaScope_env$pythonPath.sc
 }
@@ -22,12 +25,12 @@ python.path.sc <- function(){
 #'
 #' @export
 python.path.ST <- function(){
-    if(is.null(.HemaScope_env$pythonPath.ST)){
-        return(NULL)
-    }
     if(!file.exists(.HemaScope_env$pythonPath.ST)){
         .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_ST/python.exe')
+    }
+    if(!file.exists(.HemaScope_env$pythonPath.ST)){
+        stop('Please run init_miniconda function first.')
     }
     .HemaScope_env$pythonPath.ST
 }
@@ -36,12 +39,12 @@ python.path.ST <- function(){
 #'
 #' @export
 python.path.stereo <- function(){
-    if(is.null(.HemaScope_env$pythonPath.stereo)){
-        return(NULL)
-    }
     if(!file.exists(.HemaScope_env$pythonPath.stereo)){
         .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
                                                       'envs/HemaScope_stereo/python.exe')
+    }
+    if(!file.exists(.HemaScope_env$pythonPath.stereo)){
+        stop('Please run init_miniconda_stereo function first.')
     }
     .HemaScope_env$pythonPath.stereo
 }
