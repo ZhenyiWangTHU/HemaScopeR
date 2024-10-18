@@ -1,4 +1,5 @@
 #### Global variables ####
+options(future.globals.maxSize=4000000000)
 .HemaScope_env <- new.env()
 .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                           'envs/HemaScope_sc/bin/python')
