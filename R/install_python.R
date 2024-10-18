@@ -1,5 +1,4 @@
 #### Global variables ####
-options(future.globals.maxSize=4000000000)
 .HemaScope_env <- new.env()
 .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                           'envs/HemaScope_sc/bin/python')
@@ -12,6 +11,7 @@ options(future.globals.maxSize=4000000000)
 #'
 #' @export
 python.path.sc <- function(){
+    options(future.globals.maxSize=4000000000)
     if(!file.exists(.HemaScope_env$pythonPath.sc)){
         .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_sc/python.exe')
@@ -26,6 +26,7 @@ python.path.sc <- function(){
 #'
 #' @export
 python.path.ST <- function(){
+    options(future.globals.maxSize=4000000000)
     if(!file.exists(.HemaScope_env$pythonPath.ST)){
         .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_ST/python.exe')
@@ -40,6 +41,7 @@ python.path.ST <- function(){
 #'
 #' @export
 python.path.stereo <- function(){
+    options(future.globals.maxSize=4000000000)
     if(!file.exists(.HemaScope_env$pythonPath.stereo)){
         .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
                                                       'envs/HemaScope_stereo/python.exe')
