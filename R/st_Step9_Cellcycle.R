@@ -28,15 +28,15 @@ st_Cell_cycle <- function(
     s.features = unlist(
         ifelse(is.null(s.features),
                ifelse(species == 'human',
-                      yes = list(cc.genes.updated.2019$s.genes),
-                      no = list(convertHumanGene(cc.genes.updated.2019$s.genes))),
+                      yes = list(Seurat::cc.genes.updated.2019$s.genes),
+                      no = list(convertHumanGene(Seurat::cc.genes.updated.2019$s.genes))),
                list(s.features))
     )
     g2m.features = unlist(
         ifelse(is.null(g2m.features),
                ifelse(species == 'human',
-                      yes = list(cc.genes.updated.2019$g2m.genes),
-                      no = list(convertHumanGene(cc.genes.updated.2019$g2m.genes))),
+                      yes = list(Seurat::cc.genes.updated.2019$g2m.genes),
+                      no = list(convertHumanGene(Seurat::cc.genes.updated.2019$g2m.genes))),
                list(g2m.features))
     )
 
