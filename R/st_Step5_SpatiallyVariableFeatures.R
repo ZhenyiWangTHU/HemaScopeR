@@ -38,6 +38,7 @@ st_SpatiallyVariableFeatures <- function(
     suppressWarnings(
         st_obj <- FindSpatiallyVariableFeatures(object = st_obj,
                                                 assay = assay,
+                                                features = VariableFeatures(st_obj),
                                                 selection.method = selection.method,
                                                 verbose = verbose)
     )
