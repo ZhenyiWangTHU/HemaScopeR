@@ -175,7 +175,7 @@ st_10x_visium_pipeline <- function(
         cell2loc.sc.h5ad.dir = NULL,
         cell2loc.sc.max.epoch = 1000,
         cell2loc.st.max.epoch = 10000,
-        # cell2loc.use.gpu = FALSE,
+        cell2loc.use.gpu = FALSE,
         cell2loc.use.Dataset = 'LymphNode',
 
         # For Step9 Cellcycle
@@ -350,7 +350,7 @@ st_10x_visium_pipeline <- function(
             species = species,
             sc.max.epoch = cell2loc.sc.max.epoch,
             st.max.epoch = cell2loc.st.max.epoch,
-            # use.gpu = cell2loc.use.gpu,
+            use.gpu = cell2loc.use.gpu,
             use.Dataset = cell2loc.use.Dataset,
             pythonPath = pythonPath
             # condaenv = condaenv
