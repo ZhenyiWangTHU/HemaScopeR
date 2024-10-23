@@ -313,60 +313,77 @@ convertMatrixHumanGene <- function(
 #' @import png
 #'
 Rds2H5 <- function(
-        object,
-        file.dir = '.',
-        assay = 'Spatial',
-        slice = 'slice1'
+    object,
+    file.dir = '.',
+    assay = 'Spatial',
+    slice = 'slice1'
 ){
-    # H5 file
-    outfile <- hdf5r::H5File$new(file.path(file.dir,
-                                           'filtered_feature_bc_matrix.h5'),
-                                 mode = 'w')
-    matrix.grp <- outfile$create_group('matrix')
-    matrix.grp[['data']] <- as.integer(object@assays[[assay]]@counts@x)
-    matrix.grp[['indices']] <- object@assays[[assay]]@counts@i
-    matrix.grp[['indptr']] <- object@assays[[assay]]@counts@p
-    matrix.grp[['shape']] <- object@assays[[assay]]@counts@Dim
-    matrix.grp[['barcodes']] <- colnames(object)
-    features.grp <- outfile$create_group('matrix/features')
-    features.grp[['name']] <- rownames(object)
-    features.grp[['feature_type']] <- rep("Gene Expression", nrow(object))
-    features.grp[['id']] <- rep("Unknown", nrow(object))
-    features.grp[['genome']] <- rep("Unknown", nrow(object))
-    outfile$close_all()
+  # H5 file
+  outfile <- hdf5r::H5File$new(file.path(file.dir,
+                                         'filtered_feature_bc_matrix.h5'),
+                               mode = 'w')
+  matrix.grp <- outfile$create_group('matrix')
+  if(packageVersion('SeuratObject') >= '5.0.0'){
+    counts <- GetAssayData(object, layer = 'counts',
+                           assay = 'Spatial')
+  }else{
+    counts <- GetAssayData(object, slot = 'counts',
+                           assay = 'Spatial')
+  }
+  matrix.grp[['data']] <- as.integer(counts@x)
+  matrix.grp[['indices']] <- counts@i
+  matrix.grp[['indptr']] <- counts@p
+  matrix.grp[['shape']] <- counts@Dim
+  matrix.grp[['barcodes']] <- colnames(object)
+  features.grp <- outfile$create_group('matrix/features')
+  features.grp[['name']] <- rownames(object)
+  features.grp[['feature_type']] <- rep("Gene Expression", nrow(object))
+  features.grp[['id']] <- rep("Unknown", nrow(object))
+  features.grp[['genome']] <- rep("Unknown", nrow(object))
+  outfile$close_all()
 
-    # spatial file
-    if(!dir.exists(file.path(file.dir, 'spatial'))){
-        dir.create(file.path(file.dir, 'spatial'))
-    }
+  # spatial file
+  if(!dir.exists(file.path(file.dir, 'spatial'))){
+    dir.create(file.path(file.dir, 'spatial'))
+  }
 
-    # scalefactors_json.json
-    scale.factors <- object@images[[slice]]@scale.factors
-    scalefactors <- vector()
-    scalefactors[['tissue_hires_scalef']] <- scale.factors$hires
-    scalefactors[['tissue_lowres_scalef']] <- scale.factors$lowres
-    scalefactors[['fiducial_diameter_fullres']] <- scale.factors$fiducial
-    scalefactors[['spot_diameter_fullres']] <- scale.factors$spot
-    jsonData <- rjson::toJSON(scalefactors)
-    write(jsonData, file.path(file.dir, 'spatial', 'scalefactors_json.json'))
+  # scalefactors_json.json
+  scale.factors <- object@images[[slice]]@scale.factors
+  scalefactors <- vector()
+  scalefactors[['tissue_hires_scalef']] <- scale.factors$hires
+  scalefactors[['tissue_lowres_scalef']] <- scale.factors$lowres
+  scalefactors[['fiducial_diameter_fullres']] <- scale.factors$fiducial
+  scalefactors[['spot_diameter_fullres']] <- scale.factors$spot
+  jsonData <- rjson::toJSON(scalefactors)
+  write(jsonData, file.path(file.dir, 'spatial', 'scalefactors_json.json'))
 
-    # tissue_positions_list.csv
+  # tissue_positions_list.csv
+  if(packageVersion('SeuratObject') >= '5.0.0'){
+    coordinates <- as.data.frame(object@images[[slice]]@boundaries$centroids@coords)
+    coordinates$barcode <- object@images[[slice]]@boundaries$centroids@cells
+    coordinates$tissue <- rep(1, nrow(coordinates))
+    coordinates$row <- rep(1, nrow(coordinates))
+    coordinates$col <- rep(1, nrow(coordinates))
+    coordinates <- coordinates[c('barcode','tissue','row','col',
+                                 'x','y')]
+  }else{
     coordinates <- object@images[[slice]]@coordinates
     coordinates$barcode <- rownames(coordinates)
     coordinates <- coordinates[c("barcode","tissue","row","col",
                                  "imagerow","imagecol")]
-    write.table(coordinates,
-                file.path(file.dir, 'spatial', 'tissue_positions_list.csv'),
-                quote = FALSE,
-                col.names = FALSE,
-                row.names = FALSE,
-                sep = ',')
+  }
+  write.table(coordinates,
+              file.path(file.dir, 'spatial', 'tissue_positions_list.csv'),
+              quote = FALSE,
+              col.names = FALSE,
+              row.names = FALSE,
+              sep = ',')
 
-    # tissue_lowres_image.png
-    png::writePNG(image = object@images[[slice]]@image,
-                  target = file.path(file.dir, 'spatial',
-                                     'tissue_lowres_image.png'))
-    png::writePNG(image = object@images[[slice]]@image,
-                  target = file.path(file.dir, 'spatial',
-                                     'tissue_hires_image.png'))
+  # tissue_lowres_image.png
+  png::writePNG(image = object@images[[slice]]@image,
+                target = file.path(file.dir, 'spatial',
+                                   'tissue_lowres_image.png'))
+  png::writePNG(image = object@images[[slice]]@image,
+                target = file.path(file.dir, 'spatial',
+                                   'tissue_hires_image.png'))
 }
