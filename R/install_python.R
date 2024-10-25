@@ -1,17 +1,21 @@
 #### Global variables ####
 .HemaScope_env <- new.env()
 .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
-                                          'envs/HemaScope_sc/bin/python3')
+                                          'envs/HemaScope_sc/bin/python3.9')
 .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
-                                          'envs/HemaScope_ST/bin/python3')
+                                          'envs/HemaScope_ST/bin/python3.11')
 .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
-                                              'envs/HemaScope_stereo/bin/python3')
+                                              'envs/HemaScope_stereo/bin/python3.8')
 
 #' The path to the miniconda environment of scRNA-seq pipeline
 #'
 #' @export
 python.path.sc <- function(){
     options(future.globals.maxSize=4000000000)
+    if(!file.exists(.HemaScope_env$pythonPath.sc)){
+        .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
+                                                  'envs/HemaScope_sc/bin/python3')
+    }
     if(!file.exists(.HemaScope_env$pythonPath.sc)){
         .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_sc/python.exe')
@@ -29,6 +33,10 @@ python.path.ST <- function(){
     options(future.globals.maxSize=4000000000)
     if(!file.exists(.HemaScope_env$pythonPath.ST)){
         .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
+                                                  'envs/HemaScope_ST/bin/python3')
+    }
+    if(!file.exists(.HemaScope_env$pythonPath.ST)){
+        .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
                                                   'envs/HemaScope_ST/python.exe')
     }
     if(!file.exists(.HemaScope_env$pythonPath.ST)){
@@ -42,6 +50,10 @@ python.path.ST <- function(){
 #' @export
 python.path.stereo <- function(){
     options(future.globals.maxSize=4000000000)
+    if(!file.exists(.HemaScope_env$pythonPath.stereo)){
+        .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
+                                                      'envs/HemaScope_stereo/bin/python3')
+    }
     if(!file.exists(.HemaScope_env$pythonPath.stereo)){
         .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
                                                       'envs/HemaScope_stereo/python.exe')
@@ -107,7 +119,7 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_ST', packages='commot', pip=TRUE)
 
     .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
-                                              'envs/HemaScope_ST/bin/python')
+                                              'envs/HemaScope_ST/bin/python3.11')
 }
 
 #' Init miniconda for stereoseq data
@@ -131,7 +143,7 @@ init_miniconda_stereo <- function(){
     reticulate::conda_install(envname='HemaScope_stereo', packages='stereopy', pip=TRUE)
 
     .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
-                                                  'envs/HemaScope_stereo/bin/python')
+                                                  'envs/HemaScope_stereo/bin/python3.8')
 }
 
 
