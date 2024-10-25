@@ -67,7 +67,6 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_sc', packages='anndata', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='arboreto', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='karateclub', pip=TRUE)
-    reticulate::conda_install(envname='HemaScope_sc', packages='matplotlib', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='networkx', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='phate', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='pot', pip=TRUE)
@@ -76,6 +75,7 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_sc', packages='seaborn', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='distributed', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='radian', pip=TRUE)
+    reticulate::conda_install(envname='HemaScope_sc', packages='matplotlib==3.6.2', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='dask==2022.2.1', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='distributed==2022.2.1', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='scvelo==0.2.5', pip=TRUE)
@@ -83,7 +83,7 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_sc', packages='pandas==1.5.3', pip=TRUE)
 
     .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
-                                              'envs/HemaScope_sc/bin/python')
+                                              'envs/HemaScope_sc/bin/python3.9')
 
     ## For ST
     cat('Creating the environment for ST pipeline...')

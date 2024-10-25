@@ -1,0 +1,212 @@
+---
+editor_options: 
+  markdown: 
+    wrap: 72
+---
+
+# Operation Manual for the HemaScopeCloud Single-Cell Cloud Analysis Platform
+
+## User Login
+
+### Enter the URL in a web browser:
+
+[*https://hemascope.hiplot.cn/?home=hemascope*](https://hemascope.hiplot.cn/?home=hemascope)
+and click to access the login page.
+
+```{r echo=FALSE,fig.cap="Login Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/loginpage.png") 
+```
+
+### To obtain free computational resources:
+
+Enter your login email, click "Get Code," input the verification code
+received in your email, and then click "Login" to complete the login and
+access the system homepage.
+
+### To browse HemaScopeCloud without needing computational resources:
+
+Click the "View without Login" button to access the system homepage. You
+can view demo analysis projects. If you click the button to initiate an
+analysis, the platform will prompt: "Please log in for analysis!"
+
+## Homepage
+```{r echo=FALSE,fig.cap="Homepage", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/homepage.png")
+```
+
+The left side features a menu bar containing Home, Data, Analysis,
+Project, and Help. And the upper right section includes statistics on
+analysis project status, usage of analysis projects, a quick entry for
+creating new analysis projects, and statistics on allocated storage
+capacity usage.
+
+**Statistics on Analysis Project Status**
+
+**Pending Analysis：**Waiting for analysis, not yet submitted for
+analysis.
+
+**Pending Resources：**Waiting for resources, analysis submitted and
+awaiting resource allocation.
+
+**Analyzing：**Currently analyzing.
+
+**Completed：**Analysis completed.
+
+**Error：**An error occurred during analysis.
+
+**Total：**Total of all analysis statuses.
+
+**Usage Statistics for Analysis Projects:** Number of used analysis
+projects / Total number of allocated analysis projects. The current
+allocation for the system is 50 projects. For additional free
+computational resources, please contact the developer.
+
+**Quick Entry for Creating New Analysis Projects:** Supports quick
+access to the new analysis project pages corresponding to two pipelines.
+
+**Storage Capacity Usage:** Used Storage Resources / Allocated Storage
+Resources.
+
+The lower section displays the most recently run analysis projects. By
+default, it shows demo projects upon initial entry. Clicking the "View"
+option on an entry in the Projects section allows you to access and
+analyze that specific analysis project.
+
+## Data Page
+
+The Data page includes storage for Demo sample project data as well as
+Personal project data. Data under the Demo tab can be downloaded, while
+the Personal tab allows users to create new folders and upload files.
+
+## Analysis Page
+
+It lists two analysis pipelines: sc_HemaScopeCloud and
+st_HemaScopeCloud, serving as entries for creating new analysis
+projects. Click the Analysis button to access the new project and
+execution page for that pipeline.
+
+```{r echo=FALSE,fig.cap="Select Analysis Pipeline Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/SelectAnalysisPipelinePage.png")
+```
+
+```{r echo=FALSE,fig.cap="Enter the Analysis Pipeline Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/EntertheAnalysisPipelinePage.png")
+```
+
+**Create New Analysis Project**
+
+Click the Analysis button under the sc_HemaScopeCloud to enter the new
+project page for that pipeline.
+
+**Project Name：**Enter the name of the analysis project for
+identification purposes.
+
+**Input Data：**Click Upload to upload local analysis files. Single and
+multiple file uploads are supported. Uploaded files must comply with the
+pipeline's input file requirements; otherwise, an error will occur
+during execution.
+
+**Sample Name：**Click Add to enter the sample names, which should
+correspond to the uploaded analysis files.
+
+Items marked with \* are required fields.
+
+**Click the Run button to initiate the analysis：**For the scRNA-seq
+pipeline，this will trigger step1-4; for the st-seq pipeline, it will
+trigger step1-5.
+
+Each subsequent analysis step requires clicking Run on the relevant step
+page to submit. Before submission, ensure that the previous step has
+generated result files; otherwise, a notification will indicate that the
+analysis cannot proceed.
+
+**Load Demo Data**
+
+HemaScopeCloud supports loading pre-configured analysis demo files and
+default parameters to quickly initiate analysis projects. On the new
+project page, click Load Demo Data to load files from the demo project
+and fill the required fields. Then, click the Run button to execute the
+analysis for the demo project.
+
+```{r echo=FALSE,fig.cap="Load Demo Data", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/LoadDemoData.png")
+```
+
+After clicking Run, you will be redirected to the detailed page of the
+analysis project.
+
+**Analysis Project Detail Page Notifications**
+
+**Waiting for resources...Do not submit repeatedly:** This indicates
+that the submission is waiting for resources. Do not click the Run
+button again.
+
+**Analyzing...Do not submit repeatedly:** This indicates that the
+project is currently analyzing. Do not click the Run button again.
+
+**Analysis Steps, Current Analysis Step:** Displays all stepwise
+analysis processes and the current step. Click on different steps to
+navigate to the corresponding analysis step page. For the initial
+analysis, you must complete the previous step before proceeding to the
+next one.
+
+**Refresh Button:** Used to refresh the current page.
+
+**Results:** This tab stores the results of the completed step.
+
+**Visualization:** For steps that involve visualizations, the results
+will be found under the visualization tab.
+
+**History：**Click on Run History to view all historical runs of that
+step.
+
+**Status：**Corresponds to the analysis status of the project.
+
+**Log：**Click this button to view the run log.
+
+**Parameter Settings：**Used for entering parameter values.
+
+```{r echo=FALSE,fig.cap="Analysis Project Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/AnalysisProjectPage.png")
+```
+
+```{r echo=FALSE,fig.cap="Analysis Project Result Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/AnalysisProjectResultPage.png")
+```
+
+```{r echo=FALSE,fig.cap="This step of the analysis project displays 'Waiting for resources…Do not submit repeatedlly'", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/Thisstepoftheanalysisprojectdisplays.png")
+```
+
+```{r echo=FALSE,fig.cap="This step of the analysis project displays 'Analyzing…Do not submit repeatedly'", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/ThisstepoftheanalysisprojectdisplaysAnalyzing.png")
+```
+
+```{r echo=FALSE,fig.cap="History Page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/HistoryPage.png")
+```
+
+**Note:** For steps that have already been completed (except for the
+first step), you can adjust the parameters and click Run to perform
+multiple analyses. The results page will retain only the latest analysis
+results.
+
+## Projects page
+
+The homege includes analysis projects created by the user as well as
+pre-configured demo analysis projects provided by the system.
+
+```{r echo=FALSE,fig.cap="Demo projects and user’s personal projects", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/Demoprojectsanduserspersonalprojects.png")
+```
+
+Clicking "View" allows you to navigate to the analysis project for
+review and step-by-step analysis.
+
+```{r echo=FALSE,fig.cap="Click 'View' to access the analysis project", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/ClickViewtoaccesstheanalysisproject.png")
+```
+
+```{r echo=FALSE,fig.cap="Enter the detailed analysis project page", out.width = "800px" , fig.align = 'center'}
+knitr::include_graphics(path="./image/hemascopecloud/Enterthedetailedanalysisprojectpage.png")
+```
