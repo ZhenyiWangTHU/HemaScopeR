@@ -1,11 +1,11 @@
 #### Global variables ####
 .HemaScope_env <- new.env()
 .HemaScope_env$pythonPath.sc <- file.path(reticulate::miniconda_path(),
-                                          'envs/HemaScope_sc/bin/python')
+                                          'envs/HemaScope_sc/bin/python3')
 .HemaScope_env$pythonPath.ST <- file.path(reticulate::miniconda_path(),
-                                          'envs/HemaScope_ST/bin/python')
+                                          'envs/HemaScope_ST/bin/python3')
 .HemaScope_env$pythonPath.stereo <- file.path(reticulate::miniconda_path(),
-                                              'envs/HemaScope_stereo/bin/python')
+                                              'envs/HemaScope_stereo/bin/python3')
 
 #' The path to the miniconda environment of scRNA-seq pipeline
 #'
