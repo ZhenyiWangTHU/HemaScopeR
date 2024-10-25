@@ -47,6 +47,7 @@ st_CNV <- function(
                                assay = assay)
     }
 
+    require(copykat)
     copykat.test <- copykat::copykat(
         rawmat = as.matrix(rawmat),
         LOW.DR = LOW.DR,

@@ -33,7 +33,7 @@ st_Deconvolution <- function(
     species = 'mouse',
     sc.max.epoch = 1000,
     st.max.epoch = 10000,
-    # use.gpu = TRUE,
+    use.gpu = FALSE,
     pythonPath = python.path.ST()
 ){
   if(is.null(pythonPath)==FALSE){ reticulate::use_python(pythonPath) }else{stop('Please set the path of Python.')}
@@ -70,7 +70,7 @@ st_Deconvolution <- function(
         }
     }
 
-    use.gpu = FALSE
+    # use.gpu = FALSE
 
     run_cell2loc(st_data_path = st.data.dir,
                  sc_h5ad_path = sc.h5ad.dir,

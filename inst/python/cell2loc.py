@@ -19,7 +19,7 @@ def run_cell2loc(
     labels_key = 'seurat_clusters',
     sc_batch_key = None,
     st_batch_key = None, 
-    use_gpu = True, 
+    use_gpu = False, 
     cell_count_cutoff=5, 
     cell_percentage_cutoff2=0.03, 
     nonz_mean_cutoff=1.12, 
