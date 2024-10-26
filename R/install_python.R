@@ -92,7 +92,6 @@ init_miniconda <- function(){
     reticulate::conda_install(envname='HemaScope_sc', packages='scipy', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='seaborn', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='distributed', pip=TRUE)
-    reticulate::conda_install(envname='HemaScope_sc', packages='radian', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='matplotlib==3.6.2', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='dask==2022.2.1', pip=TRUE)
     reticulate::conda_install(envname='HemaScope_sc', packages='distributed==2022.2.1', pip=TRUE)
