@@ -207,7 +207,7 @@ ui <- shiny::fluidPage(
         shiny::column(12, align = "center", shiny::imageOutput('logo'))
       ),
       shiny::fluidRow(
-        shiny::column(12, align = "center", h1("HemaScope: a user-friendly and modular design toolkit tailored for analyzing single-cell and spatial transcriptome sequencing data of hematopoietic cells", 
+        shiny::column(12, align = "center", h1("HemaScope: A Tool for Analyzing Single-Cell and Spatial Transcriptomics Data of Hematopoietic Cells", 
                                         class = "h1-font",style = "font-family: 'arial'; font-size: 28pt;font-weight: bold;"))
       ),
       shiny::fluidRow(shiny::div(class = "spacer")),  # empty line
@@ -970,7 +970,7 @@ step11_fluidRow_st <- shiny::fluidRow(
 # server---------------------------------------------------------------------------------------------------------------------------------
 server = function(input, output, session){
   output$logo <- renderImage({
-    list(src = '../images/HemaScope_logo.png',width = "80%") 
+    list(src = system.file("images/HemaScope_logo.png", package = "HemaScopeR"),width = "80%")
   }, deleteFile = FALSE) 
   
   output$ui_styles <- renderUI({
