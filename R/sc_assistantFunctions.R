@@ -200,7 +200,7 @@ GPT_annotation = function(
     res <- gptcelltype(marker.genes, 
             tissuename = tissuename, 
             model = gptmodel)
-    write.txt(res, file = paste0(output.dir,'/GPT_annotation_results.txt'))
+    write.table(res, file = paste0(output.dir,'/GPT_annotation_results.txt'))
 }
                                                                                                 
 # # cbind matrix
