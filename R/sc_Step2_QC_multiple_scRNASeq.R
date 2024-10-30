@@ -170,7 +170,13 @@ QC_multiple_scRNASeq = function(seuratObjects = NULL,
       })
     
       # perform integration
-      merged.data.anchors <- FindIntegrationAnchors(object.list = ifnb.list, dims = PCs, anchor.features = nfeatures, reduction="rpca")
+      merged.data.anchors <- FindIntegrationAnchors(object.list = ifnb.list, 
+                                                    dims = PCs, 
+                                                    anchor.features = nfeatures, 
+                                                    reduction="rpca",
+                                                    k.anchor=10,
+                                                    k.filter=5,
+                                                    k.score=5)
       merged.data.combined <- IntegrateData(anchorset = merged.data.anchors, dims = PCs)
     
       # perform an integrated analysis
