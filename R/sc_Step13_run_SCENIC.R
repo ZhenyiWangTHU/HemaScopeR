@@ -61,6 +61,8 @@ run_SCENIC = function(countMatrix = NULL,
   cellInfo <- data.frame(cellTypes)
   colnames(cellInfo) <- 'CellTypes'
   dir.create(paste0(output.dir, "/int"))
+  print(paste0(output.dir, "/int"))
+  
   saveRDS(cellInfo, file=paste0(output.dir, "/int/cellInfo.Rds"))
   # Initialize SCENIC settings
   myDatasetTitle = "scRNASeq"
