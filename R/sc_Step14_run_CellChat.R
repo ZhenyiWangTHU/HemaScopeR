@@ -2,6 +2,7 @@
 #' 
 #' This function performs cell-cell communication analysis using the CellChat package. It takes expression data and cluster labels as input, identifies cell-cell communication networks, and visualizes the results, including interaction networks and signaling pathways.
 #'
+#' @param sc_object A Seurat object containing the single-cell RNA-seq data.
 #' @param data.input A matrix of expression data, where rows represent genes and columns represent cells. Row names should be in the format of gene symbols.
 #' @param labels A vector of cluster labels for each cell, corresponding to the columns of data.input.
 #' @param cell.orders A character vector specifying the order of cell types or clusters in the analysis.
@@ -30,7 +31,8 @@
 #' @author Zhenyi Wang <wangzy17@tsinghua.org.cn> and Yuxin Miao <miaoyx21@mails.tsinghua.edu.cn>
 #'
 #' @export
-run_CellChat = function(data.input=NULL,
+run_CellChat = function(sc_object=NULL,
+                        data.input=NULL,
                         labels = NULL,
                         cell.orders = NULL,
                         cell.colors = NULL,

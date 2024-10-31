@@ -1050,7 +1050,8 @@ scRNASeq_10x_pipeline = function(
         dir.create(paste0(output.dir, '/Step14.Cell_cell_interection/'))
       }
       tempwd <- getwd()
-      run_CellChat(data.input=countsSlot,
+      run_CellChat(sc_object = sc_object,
+                   data.input=countsSlot,
                    labels = sc_object@meta.data$selectLabels,
                    cell.orders = ViolinPlot.cellTypeOrders,
                    cell.colors = ViolinPlot.cellTypeColors,
