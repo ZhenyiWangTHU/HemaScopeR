@@ -107,9 +107,9 @@ run_CellChat = function(sc_object=NULL,
 
   # Calculate the aggregated cell-cell communication network
   cellchat <- aggregateNet(cellchat)
-  
-  cell.colors <- setNames(cell.colors,cell.orders) #zyt add this code
-  
+  if(!is.null(cell.colors)){
+    cell.colors <- setNames(cell.colors,cell.orders) #zyt add this code
+  }
   groupSize <- as.numeric(table(cellchat@idents))
   pdf(paste0(output.dir,'/circle plot of the number of interactions.pdf'), width = 8, height = 8)
       print(netVisual_circle(cellchat@net$count,
