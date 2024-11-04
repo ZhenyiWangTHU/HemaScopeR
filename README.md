@@ -7,4 +7,4 @@ Any suggestions and remarks might be addressed to Zhenyi Wang via wangzy17@tsing
 [HemaScope: A Tool for Analyzing Single-Cell and Spatial Transcriptomics Data of Hematopoietic Cells](under revision).
 
 # Tutorials
-* For installation and usage instructions, please follow the [HemaScope Tutorial](https://zhenyiwangthu.github.io/HemaScope_Tutorial/).
+* For detailed installation and usage instructions, refer to the [HemaScope Tutorial](https://zhenyiwangthu.github.io/HemaScope_Tutorial/).
