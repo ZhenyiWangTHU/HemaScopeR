@@ -601,7 +601,11 @@ scRNASeq_10x_pipeline = function(
       png(paste0(paste0(output.dir,'/Step5.Visualization/'), '/sc_object ','umap cell types.png'), width = 600, height = 600)
        print(DimPlot(sc_object, reduction = "umap", group.by = "ident", label = FALSE, pt.size = 0.1, raster = FALSE))
       dev.off()
-
+      
+      # run HematoMap
+      run_HematoMap(sc_object = sc_object,
+                    output.dir = paste0(output.dir,'/Step5.Visualization/'))
+      
       # Get the names of all variables in the current environment
       variable_names <- ls()
       # Loop through the variable names and save them as RDS files

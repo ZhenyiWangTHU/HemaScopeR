@@ -11,7 +11,7 @@ Imports: devtools, Seurat, Rfast2, hdf5r, ggpubr, SeuratWrappers, monocle, sling
          org.Hs.eg.db, scran, AUCell, RcisTarget, GENIE3, biomaRt, velocyto.R, limma, ComplexHeatmap, scmap, clusterProfiler,
          doMC, doRNG, shinyjs, shiny, shinyWidgets, shinydashboard, slickR, phateR, gelnet, parallelDist, kableExtra,
          transport, feather, markdown, ggalluvial, forcats, mcmc, MCMCpack, fields, CellChat, presto, SCENIC,
-         abcCellmap, copykat, DoubletFinder, SeuratDisk
+         abcCellmap, copykat, DoubletFinder, SeuratDisk, HematoMap
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
@@ -49,6 +49,7 @@ Collate:
     'sc_Step4_CNV_analysis.R'
     'sc_Step4_cellAnnotation.R'
     'sc_Step4_query_data.R'
+    'sc_Step5_run_HematoMap.R'
     'sc_Step5_run_phateR.R'
     'sc_Step7_assign_cell_cycle.R'
     'sc_Step8_heterogeneity.R'
