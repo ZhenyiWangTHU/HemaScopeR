@@ -51,7 +51,7 @@ st_MERFISH_pipeline(
   s.features = NULL,
   g2m.features = NULL,
   verbose = FALSE,
-  pythonPath = NULL
+  pythonPath = python.path.ST()
 )
 }
 \arguments{

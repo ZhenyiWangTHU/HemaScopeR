@@ -8,6 +8,12 @@ st_10x_visium_pipeline(
   input.data.dir,
   output.dir,
   sampleName = "Hema_ST",
+  rds.file = FALSE,
+  filename = "filtered_feature_bc_matrix.h5",
+  assay = "Spatial",
+  slice = "slice1",
+  filter.matrix = TRUE,
+  to.upper = FALSE,
   Step2_QC = TRUE,
   min.gene = 200,
   min.nUMI = 500,
@@ -57,7 +63,7 @@ st_10x_visium_pipeline(
   Niche.cluster.n = 4,
   verbose = FALSE,
   genReport = TRUE,
-  pythonPath = NULL
+  pythonPath = python.path.ST()
 )
 }
 \arguments{
@@ -141,8 +147,6 @@ and correlation converted distance include pearson and spearman.}
 \item{cell2loc.sc.max.epoch}{A integer representing the maximum epochs of training scRNA-seq data.}
 
 \item{cell2loc.st.max.epoch}{A integer representing the maximum epochs of training ST data.}
-
-\item{cell2loc.use.gpu}{A bool value indicating whether to use GPU.}
 
 \item{cell2loc.use.Dataset}{'HematoMap' or 'LymphNode'.}
 

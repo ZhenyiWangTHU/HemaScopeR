@@ -7,7 +7,13 @@
 Rds2H5(object, file.dir = ".", assay = "Spatial", slice = "slice1")
 }
 \arguments{
-\item{slice}{}
+\item{object}{A Seuratobject}
+
+\item{file.dir}{A path to store outputs}
+
+\item{assay}{The assay to store}
+
+\item{slice}{The slice to store}
 }
 \description{
 Save object to h5 file and spatial file

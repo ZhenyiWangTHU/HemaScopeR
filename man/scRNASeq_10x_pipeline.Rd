@@ -8,7 +8,7 @@ scRNASeq_10x_pipeline(
   input.data.dirs = NULL,
   project.names = NULL,
   output.dir = NULL,
-  pythonPath = NULL,
+  pythonPath = python.path.sc(),
   databasePath = NULL,
   gene.column = 2,
   min.cells = 10,

@@ -11,12 +11,12 @@ st_Deconvolution(
   st_obj = NULL,
   save_path = NULL,
   sc.labels.key = "seurat_clusters",
+  use.Dataset = "LymphNode",
   species = "mouse",
   sc.max.epoch = 1000,
   st.max.epoch = 10000,
-  use.gpu = TRUE,
-  pythonPath = NULL,
-  use.Dataset = "LymphNode"
+  use.gpu = FALSE,
+  pythonPath = python.path.ST()
 )
 }
 \arguments{
@@ -28,6 +28,8 @@ and spatial folder}
 \item{sc.labels.key}{A character indicating the key of scRNA-seq data labels
 used during running cell2location}
 
+\item{use.Dataset}{'HematoMap' or 'LymphNode'}
+
 \item{species}{A character, `human` or `mouse`}
 
 \item{sc.max.epoch}{A integer representing the maximum epochs of training scRNA-seq data}
@@ -37,8 +39,6 @@ used during running cell2location}
 \item{use.gpu}{A bool value indicating whether to use GPU}
 
 \item{pythonPath}{The path to the Python environment to use for the analysis.}
-
-\item{use.Dataset}{'HematoMap' or 'LymphNode'}
 
 \item{save.path}{A character of path to save data}
 }

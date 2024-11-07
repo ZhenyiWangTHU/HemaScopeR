@@ -16,7 +16,7 @@ st_Interaction(
   min_cell_pct = 0.05,
   dis_thr = 500,
   n_permutations = 100,
-  pythonPath = NULL
+  pythonPath = python.path.ST()
 )
 }
 \arguments{

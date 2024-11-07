@@ -4,7 +4,6 @@
 #'
 #' @param sc_object A Seurat object containing single-cell RNA-seq data.
 #' @param output.dir The directory where cluster tree plots will be saved.
-#' @param 
 #'
 #' @details
 #' This function performs dimension reduction using HematoMap on a Seurat object.
