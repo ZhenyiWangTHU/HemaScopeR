@@ -5,6 +5,7 @@
 \title{run_CellChat - Function for Cell-Cell Communication Analysis with CellChat}
 \usage{
 run_CellChat(
+  sc_object = NULL,
   data.input = NULL,
   labels = NULL,
   cell.orders = NULL,
@@ -16,6 +17,8 @@ run_CellChat(
 )
 }
 \arguments{
+\item{sc_object}{A Seurat object containing the single-cell RNA-seq data.}
+
 \item{data.input}{A matrix of expression data, where rows represent genes and columns represent cells. Row names should be in the format of gene symbols.}
 
 \item{labels}{A vector of cluster labels for each cell, corresponding to the columns of data.input.}

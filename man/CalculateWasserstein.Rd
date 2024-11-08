@@ -7,7 +7,11 @@
 CalculateWasserstein(a, b, p = 2)
 }
 \arguments{
-\item{p}{}
+\item{a}{A wpp object}
+
+\item{b}{A wpp object}
+
+\item{p}{The power}
 }
 \description{
 Calculate the wasserstein distance

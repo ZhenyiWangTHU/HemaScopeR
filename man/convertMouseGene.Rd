@@ -2,7 +2,25 @@
 % Please edit documentation in R/st_assistantFunctions.R
 \name{convertMouseGene}
 \alias{convertMouseGene}
-\title{Convert mouse genes to human genes}
+\title{#' @param envname The name of the conda environment
+#' @param python_version The version of python, 3.9 by default
+#' @import reticulate
+#' @export
+init_condaenv <- function(
+        envname = 'r-reticulate',
+        python_version = 3.9
+){
+    reticulate::conda_create(envname = envname,
+                             python_version = python_version)
+    reticulate::use_condaenv(condaenv = envname)
+    reticulate::py_install('commot[tradeSeq]',
+                           pip = TRUE)
+    reticulate::py_install('cell2location[tutorials]',
+                           pip = TRUE)
+    # print(paste0('The conda environment named ', envname,
+    #              ' is now already available for running cell2location and COMMOT'))
+}
+Convert mouse genes to human genes}
 \usage{
 convertMouseGene(mouse.genes, host = "https://dec2021.archive.ensembl.org/")
 }
@@ -12,5 +30,23 @@ convertMouseGene(mouse.genes, host = "https://dec2021.archive.ensembl.org/")
 \item{host}{Host to connect to in `useMart` function}
 }
 \description{
+#' @param envname The name of the conda environment
+#' @param python_version The version of python, 3.9 by default
+#' @import reticulate
+#' @export
+init_condaenv <- function(
+        envname = 'r-reticulate',
+        python_version = 3.9
+){
+    reticulate::conda_create(envname = envname,
+                             python_version = python_version)
+    reticulate::use_condaenv(condaenv = envname)
+    reticulate::py_install('commot[tradeSeq]',
+                           pip = TRUE)
+    reticulate::py_install('cell2location[tutorials]',
+                           pip = TRUE)
+    # print(paste0('The conda environment named ', envname,
+    #              ' is now already available for running cell2location and COMMOT'))
+}
 Convert mouse genes to human genes
 }
