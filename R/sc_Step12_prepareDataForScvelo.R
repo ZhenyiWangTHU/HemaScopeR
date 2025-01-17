@@ -44,7 +44,7 @@ prepareDataForScvelo = function(sc_object = NULL,
         ldat.seurat_object.temp <- subset(ldat.seurat_object.temp, subset = samplenames%in%colnames(sc_object))
         ldat.seurat_object.temp@meta.data$cellTypes <- plyr::mapvalues(rownames(ldat.seurat_object.temp@meta.data),
                                                                        from=rownames(sc_object@meta.data),
-                                                                       to=sc_object@meta.data[,scvelo.column],
+                                                                       to=as.character(sc_object@meta.data[,scvelo.column]),
                                                                        warn_missing=FALSE)
         splicedmat.temp <- ldat.seurat_object.temp@assays$spliced@counts
         umat.temp <- ldat.seurat_object.temp@assays$unspliced@counts
