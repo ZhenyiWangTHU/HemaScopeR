@@ -221,8 +221,7 @@ GPT_annotation = function(
 #   return(result)
 # }
 
-# Rename the genes in Seurat object-------------------------------------------------------------------------------------------------
-# This function is referenced from the forum https://www.jianshu.com/p/6495706bac53.
+# Rename the genes in Seurat object. This function is referenced from the forum https://www.jianshu.com/p/6495706bac53.-------------------------------------------------------------------------------------------------
 #' @export
 RenameGenesSeurat <- function(obj = NULL,
                               newnames = NULL,
