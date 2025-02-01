@@ -41,7 +41,7 @@ mytheme <- ggplot2::theme(panel.grid.major =element_blank(),
 
 # GO enrichment------------------------------------------------------------------
 #' HemaScopeREnrichment - Function for Gene Ontology (GO) Enrichment Analysis
-#' 
+#'
 #' This function performs Gene Ontology (GO) enrichment analysis for a set of differentially expressed genes (DEGs) grouped by clusters. It generates GO enrichment results in terms of Biological Process (BP) category, including barplots and CSV files.
 #'
 #' @param DEGs A data frame containing differential gene expression information with columns "cluster" and "gene". The "cluster" column specifies the cluster to which each gene belongs, and the "gene" column contains the gene names.
@@ -63,16 +63,16 @@ HemaScopeREnrichment = function(DEGs = NULL,
     for(i in uniqueClusters){
         DEGs_temp <- subset(DEGs, DEGs$cluster == i)
         DEGs_temp <- DEGs_temp$gene
-        
+
         #GO enrich
         GO_BP <- enrichGO(gene = DEGs_temp,
                           keyType = "SYMBOL",
-                          OrgDb = OrgDb, 
+                          OrgDb = OrgDb,
                           ont = "BP",
                           pAdjustMethod = "fdr",
                           pvalueCutoff = 0.2,
                           qvalueCutoff  = 0.2,
-                          minGSSize = 3, 
+                          minGSSize = 3,
                           maxGSSize = 500,
                           readable = FALSE)
 
@@ -83,14 +83,14 @@ HemaScopeREnrichment = function(DEGs = NULL,
         if(nrow(GO_BP.result) > 0){
             #plot
             pdf(file=paste(output.dir, as.character(i), '_BP_GOenrich.pdf',sep=''), width=6, height=15)
-            print(barplot(GO_BP, 
-                          x="Count", 
+            print(barplot(GO_BP,
+                          x="Count",
                           color="qvalue",
                           showCategory=30,
                           font.size=8,
                           title=paste(as.character(i),'_BP_GOenrich', sep=''))+scale_y_discrete(labels=function(x) str_wrap(x, width=60)))
             dev.off()
-                                                                                                 
+
             #data frame
             GO_BP.result <- GO_BP.result[order(GO_BP.result[,9], decreasing = TRUE),]
             write.csv(GO_BP.result, file=paste(output.dir, as.character(i),'_BP_GOenrich.csv',sep=''))
@@ -98,12 +98,12 @@ HemaScopeREnrichment = function(DEGs = NULL,
 
         #KEGG enrich
         if(OrgDb == 'org.Mm.eg.db'){
-           entrezID_symbol <- AnnotationDbi::select(org.Mm.eg.db, 
+           entrezID_symbol <- AnnotationDbi::select(org.Mm.eg.db,
                                                     keys = DEGs_temp,
                                                     columns = c("ENTREZID","SYMBOL"),
                                                     keytype = "SYMBOL")
           }else if(OrgDb == 'org.Hs.eg.db'){
-           entrezID_symbol <- AnnotationDbi::select(org.Hs.eg.db, 
+           entrezID_symbol <- AnnotationDbi::select(org.Hs.eg.db,
                                                     keys = DEGs_temp,
                                                     columns = c("ENTREZID","SYMBOL"),
                                                     keytype = "SYMBOL")
@@ -126,8 +126,8 @@ HemaScopeREnrichment = function(DEGs = NULL,
         if(nrow(KEGG_result.dataFrame) > 0){
           #plot
           pdf(file=paste(output.dir, as.character(i), '_KEGGenrich.pdf',sep=''), width=6, height=15)
-          print(barplot(KEGG_result, 
-                        x="Count", 
+          print(barplot(KEGG_result,
+                        x="Count",
                         color="qvalue",
                         showCategory=30,
                         font.size=8,
@@ -149,22 +149,22 @@ OpenXGR_SAG = function(sc_object.markers = NULL,
     for(i in unique(sc_object.markers$cluster)){
         SAGdata <- sc_object.markers[which(sc_object.markers$cluster == i), ]
         SAGdata <- SAGdata[,c('gene','p_val')]
-        #parameter 
+        #parameter
         placeholder <- "http://www.comptransmed.com/bigdata_openxgr"
         network <- "STRING_high"
-        
-        #subnetwork analysis 
+
+        #subnetwork analysis
         SAGig <- oDefineNet(network=network, STRING.only=c("experimental_score","database_score"), placeholder=placeholder)
         SAGig2 <- oNetInduce(SAGig, nodes_query=V(SAGig)$name, largest.comp=T) %>% as.undirected()
         SAGsubg <- oSubneterGenes(SAGdata, network.customised=SAGig2, subnet.size=subnet.size, placeholder=placeholder)
         if(!is.null(SAGsubg)){
-            #crosstalk table 
-            SAGdf_subg <- SAGsubg %>% oIG2TB("nodes") %>% 
+            #crosstalk table
+            SAGdf_subg <- SAGsubg %>% oIG2TB("nodes") %>%
                           transmute(Genes=name, Pvalue=as.numeric(significance),
                           Description=description) %>% arrange(Pvalue)
             write.csv(SAGdf_subg, paste0(output.dir,'/SAG-crosstalk','_cluster_', i ,'.csv'))
             if(nrow(SAGdf_subg) > 2){
-                #network 
+                #network
                 SAGsubg <- SAGsubg %>% oLayout(c("layout_with_kk","graphlayouts.layout_with_stress")[2])
                 SAGvec <- V(SAGsubg)$significance %>% as.numeric()
                 SAGvec[SAGvec==0] <- min(SAGvec[SAGvec!=0])
@@ -176,9 +176,9 @@ OpenXGR_SAG = function(sc_object.markers = NULL,
                   zlim <- c(0, floor(max(SAGvec)/10)*10)
                 }
                 SAGnetwork <- oGGnetwork(g=SAGsubg, node.label="name", node.label.size=3, node.label.color="black",
-                                         node.label.alpha=0.95, node.label.padding=0.5, node.label.arrow=0, 
+                                         node.label.alpha=0.95, node.label.padding=0.5, node.label.arrow=0,
                                          node.label.force=0.4, node.shape=19, node.xcoord="xcoord", node.ycoord="ycoord",
-                                         node.color="logP", node.color.title=expression(-log[10]("pvalue")), 
+                                         node.color="logP", node.color.title=expression(-log[10]("pvalue")),
                                          colormap="spectral.top", zlim=zlim, node.size.range=5, title="", edge.color="steelblue4",
                                          edge.color.alpha=0.5, edge.size=0.3, edge.curve=0.05)
                 ggsave(paste0(output.dir, '/SAG-network','_cluster_', i ,'.pdf'),SAGnetwork,width = 6, height = 6)
@@ -197,35 +197,36 @@ GPT_annotation = function(
     output.dir = './'
 ){
     Sys.setenv(OPENAI_API_KEY = your_openai_API_key)
-    res <- gptcelltype(marker.genes, 
-            tissuename = tissuename, 
+    res <- gptcelltype(marker.genes,
+            tissuename = tissuename,
             model = gptmodel)
     write.table(res, file = paste0(output.dir,'/GPT_annotation_results.txt'))
 }
-                                                                                                
+
 # # cbind matrix
 # cbind_all = function(matrix_list) {
-#   result <- matrix_list[[1]]  
+#   result <- matrix_list[[1]]
 #   for (i in 2:length(matrix_list)) {
-#     result <- cbind(result, matrix_list[[i]])  
+#     result <- cbind(result, matrix_list[[i]])
 #   }
 #   return(result)
 # }
 
 # # rbind matrix
 # rbind_all = function(matrix_list) {
-#   result <- matrix_list[[1]]  
+#   result <- matrix_list[[1]]
 #   for (i in 2:length(matrix_list)) {
-#     result <- rbind(result, matrix_list[[i]])  
+#     result <- rbind(result, matrix_list[[i]])
 #   }
 #   return(result)
 # }
 
-# Rename the genes in Seurat object. This function is referenced from the forum https://www.jianshu.com/p/6495706bac53.-------------------------------------------------------------------------------------------------
+#' Rename the genes in Seurat object.
+# This function is referenced from the forum https://www.jianshu.com/p/6495706bac53.-------------------------------------------------------------------------------------------------
 #' @export
-RenameGenesSeurat <- function(obj = NULL,
+RenameGenesSeurat = function(obj = NULL,
                               newnames = NULL,
-                              gene.use = NULL, 
+                              gene.use = NULL,
                               de.assay = "RNA",
                               lassays = "RNA") {
     # Replace gene names in different slots of a Seurat object. Run this before integration. Run this before integration.
@@ -240,7 +241,7 @@ RenameGenesSeurat <- function(obj = NULL,
      all_genenames <- gene.use
      obj <- subset(obj,features=gene.use)
     }
-    
+
     order_name <- function(v1,v2,ref){
      #v2 <- make.names(v2,unique=T)
      df1 <- data.frame(v1,v2)
@@ -248,20 +249,20 @@ RenameGenesSeurat <- function(obj = NULL,
      df1 <- df1[ref,]
      return(df1)
     }
-    
+
     df1 <- order_name(v1=all_genenames,
                       v2=newnames,
                       ref=rownames(obj))
     all_genenames <- df1$v1
     newnames <- df1$v2
-    
+
     if ('SCT' %in% lassays) {
       if ('SCTModel.list' %in%  slotNames(obj@assays$SCT)) {
         obj@assays$SCT@SCTModel.list$model1@feature.attributes <- obj@assays$SCT@SCTModel.list$model1@feature.attributes[all_genenames,]
         rownames(obj@assays$SCT@SCTModel.list$model1@feature.attributes) <- newnames
       }
     }
-    
+
     change_assay <- function(a1=de.assay,
                              obj,
                              newnames=NULL,
@@ -282,12 +283,12 @@ RenameGenesSeurat <- function(obj = NULL,
             newnames1 <- df1$v2
             rownames(RNA@scale.data) <- newnames1
         }
-    
+
       } else {"Unequal gene sets: nrow(RNA) != nrow(newnames)"}
       obj@assays[a1][[1]] <- RNA
       return(obj)
     }
-    
+
     for (a in lassays) {
       DefaultAssay(obj) <- a
       df1 <- order_name(v1=all_genenames,v2=newnames,ref=rownames(obj))
@@ -318,7 +319,7 @@ Load_previous_results = function(previous_results_path=NULL){
          var_name <- tools::file_path_sans_ext(basename(rds_file))
          if(!(var_name %in% c(   # input and output
                                  'input.data.dirs',
-                                 'project.names', 
+                                 'project.names',
                                  'output.dir',
                                  'pythonPath',
                                  # quality control and preprocessing
@@ -398,8 +399,8 @@ Load_previous_results = function(previous_results_path=NULL){
                                  'Step13_TF_Analysis.groups_colors',
                                  'Step14_Cell_Cell_Interaction',
                                  'Step15_Generate_the_Report'
-                                 ))){  
-           # Load the RDS file and assign it to the variable with the same name 
+                                 ))){
+           # Load the RDS file and assign it to the variable with the same name
            rds_file.temp <- base::readRDS(rds_file)
            assign(var_name, rds_file.temp, envir = .GlobalEnv)
           }

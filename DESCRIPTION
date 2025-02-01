@@ -11,7 +11,7 @@ Imports: devtools, Seurat, Rfast2, hdf5r, ggpubr, SeuratWrappers, monocle, sling
          org.Hs.eg.db, scran, AUCell, RcisTarget, GENIE3, biomaRt, velocyto.R, limma, ComplexHeatmap, scmap, clusterProfiler,
          doMC, doRNG, shinyjs, shiny, shinyWidgets, shinydashboard, slickR, phateR, gelnet, parallelDist, kableExtra,
          transport, feather, markdown, ggalluvial, forcats, mcmc, MCMCpack, fields, CellChat, presto, SCENIC,
-         abcCellmap, copykat, DoubletFinder, SeuratDisk, HematoMap
+         abcCellmap, copykat, DoubletFinder, SeuratDisk, HematoMap, roxygen2
 License: GPL-3
 Encoding: UTF-8
 LazyData: true
