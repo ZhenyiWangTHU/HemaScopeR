@@ -7,7 +7,7 @@
 #' @param GSVA.cellTypes A character vector specifying the cell types or labels for each cell.
 #' @param GSVA.cellTypes.orders A character vector specifying the order of cell types for visualization.
 #' @param GSVA.cellGroups A character vector specifying the cell groups or conditions for each cell.
-#' @param GSVA.identify.cellType.features Logical. If TRUE, identify cell type-specific features.
+# @param GSVA.identify.cellType.features Logical. If TRUE, identify cell type-specific features.
 #' @param GSVA.identify.diff.features Logical. If TRUE, identify differentially expressed features between cell groups.
 #' @param GSVA.comparison.design A list specifying the experimental design for differential GSVA analysis.
 #' @param OrgDB An organism-specific annotation database (OrgDb) for gene symbol conversion. e.g. org.Mm.eg.db or org.Hs.eg.db.
@@ -29,13 +29,13 @@ run_GSVA = function(sc_object=NULL,
                     GSVA.cellTypes=NULL,
                     GSVA.cellTypes.orders=NULL,
                     GSVA.cellGroups=NULL,
-                    GSVA.identify.cellType.features=TRUE,
+#                    GSVA.identify.cellType.features=TRUE,
                     GSVA.identify.diff.features=FALSE,
                     GSVA.comparison.design=NULL,
                     OrgDB=NULL,
                     output.dir=NULL){
     
-  if(GSVA.identify.cellType.features){
+#  if(GSVA.identify.cellType.features){
       dir.create(paste0(output.dir, '/GSVA.identify.cellType.features/'))
       filtered.data <- sc_object
       filtered.data@meta.data$cellTypes <- GSVA.cellTypes
@@ -188,7 +188,7 @@ run_GSVA = function(sc_object=NULL,
                                  cellheight=3
                                 )  
           }
-  }
+#  }
 
   if(GSVA.identify.diff.features&(!is.null(GSVA.comparison.design))){
       dir.create(paste0(output.dir, '/GSVA.identify.diff.features/'))
