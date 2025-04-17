@@ -39,6 +39,7 @@ run_GSVA = function(sc_object=NULL,
       dir.create(paste0(output.dir, '/GSVA.identify.cellType.features/'))
       filtered.data <- sc_object
       filtered.data@meta.data$cellTypes <- GSVA.cellTypes
+      filtered.data@meta.data$selectLabels <- as.character(filtered.data@meta.data$selectLabels)
       Idents(filtered.data) <- filtered.data@meta.data$selectLabels
       filtered.data@meta.data$pseudoGroup <- filtered.data@meta.data$selectLabels
 
